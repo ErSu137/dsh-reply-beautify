@@ -99,7 +99,7 @@ function BeautifyControl(props) {
     event.preventDefault(); store.setPreset(presetKeys[next]);
     panelRef.current?.querySelector(`[data-rb-preset="${presetKeys[next]}"]`)?.focus();
   };
-  return h('div', { className: 'dsh-rb-footer', 'data-wide': String(wide), 'data-reply-beautify': '0.6.0' },
+  return h('div', { className: 'dsh-rb-footer', 'data-wide': String(wide), 'data-reply-beautify': '0.6.1' },
     h(Tooltip, { label: '回复美化', delayMs: 350 },
       h('button', { ref: buttonRef, className: 'dsh-rb-launcher', type: 'button', 'aria-label': '回复美化', 'aria-expanded': open, 'aria-controls': 'dsh-rb-panel', onClick: () => setOpen(!open) }, h(BrushIcon))),
     h('section', { id: 'dsh-rb-panel', ref: panelRef, className: 'dsh-rb-panel', popover: 'manual', role: 'dialog', 'aria-label': '回复美化设置', 'aria-modal': false, 'data-open': open ? '' : undefined },
@@ -120,7 +120,7 @@ function BeautifyControl(props) {
           h('div', { className: 'dsh-rb-reset-row' }, h('span', { role: 'status', 'aria-live': 'polite' }, isCustom(p) ? '已微调' : '当前样式默认值'),
             h('button', { type: 'button', className: 'dsh-rb-reset', disabled, onClick: () => store.reset() }, '恢复当前样式')),
           h('p', { className: 'dsh-rb-note' }, '切换样式会应用该方案的默认参数，之后可继续微调。图示增强随美化开关启停，可随时查看原文。'))),
-      h('div', { className: 'dsh-rb-save-status', role: 'status' }, snapshot.storageAvailable ? '设置保存在此设备 · 0.6.0' : '暂时无法保存，当前调整仅本次生效')));
+      h('div', { className: 'dsh-rb-save-status', role: 'status' }, snapshot.storageAvailable ? '设置保存在此设备 · 0.6.1' : '暂时无法保存，当前调整仅本次生效')));
 }
 
 function ArtifactSidebar({useTabInfo,workspace,preferences,sidebarRight}) {

@@ -23,7 +23,7 @@
 
 为 DeepSeek Harness 提供三种排版预设、交互图表和表格、隔离 HTML 作品空间。通过客户端扩展位加载画笔与侧栏，通过Host只读格式指南帮助模型选择组件；保留原文与启停卸载入口，不自动发送操作结果。
 
-0.6.0为预览版，兼容依据Windows Desktop 0.2.1-rc.2，最终实机视觉与多设备验收待补。模型不一定每次出组件，任意作品也不保证绝对安全。欢迎按Release安装说明在新建测试对话体验，反馈脱敏复现步骤。
+0.6.1为预览版，兼容依据Windows Desktop 0.2.1-rc.2，最终实机视觉与多设备验收待补。模型不一定每次出组件，任意作品也不保证绝对安全。欢迎按Release安装说明在新建测试对话体验，反馈脱敏复现步骤。
 
 可使用已验收的[六张演示图](demo/README.md)。前四张标注为独立通用样例，后两张为裁去账号与会话侧栏的DSH实机组件截图；不要把两类来源混称为实机截图。
 
@@ -33,7 +33,7 @@
 
 Unofficial community project: https://github.com/ErSu137/dsh-reply-beautify
 
-Three typography presets, charts/tables and an isolated HTML artifact workspace. Integrates through DSH client slots and read-only Host format guidance, with original-content access and reversible controls. Version 0.6.0 is a preview based on Windows Desktop 0.2.1-rc.2 interfaces; final DSH acceptance and broader compatibility remain pending. The README provides a synthetic standalone demo and checksum-verified downloads. Feedback from real installs is welcome.
+Three typography presets, charts/tables and an isolated HTML artifact workspace. Integrates through DSH client slots and read-only Host format guidance, with original-content access and reversible controls. Version 0.6.1 is a preview based on Windows Desktop 0.2.1-rc.2 interfaces; final DSH acceptance and broader compatibility remain pending. The README provides a synthetic standalone demo and checksum-verified downloads. Feedback from real installs is welcome.
 
 ## 30秒演示顺序
 

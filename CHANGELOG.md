@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.1 — chart fitting and zoom preview (2026-10-19)
+
+- Prefer supported visual components for trends, comparisons, structures and processes; distinguish justified numeric plots from labelled conceptual schematics. Model compliance is not guaranteed; missing data is never guessed.
+- Fit ordinary SVG aspect ratios, retain scrolling for extreme diagrams and compact short numeric line-chart labels without dropping points.
+- Add hovered wheel zoom, buttons, keyboard controls and double-click reset. Keep exports independent of temporary display zoom.
+- Reattach sizing after range/slider redraws and release observers/listeners when graphics are replaced or disabled.
+- Preserve public 0.6.0 installer, artifact protocol and CSV security fixes. Add focused sizing tests and a standalone browser regression harness; retain preview compatibility limits.
+
 ## 0.6.0 — public preview (2026-10-19)
 
 First public source/release packaging. Retains the 0.6.0 feature set; final DSH acceptance remains pending.

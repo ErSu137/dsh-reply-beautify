@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const names=['core.cjs','expression.cjs','interactive-model.cjs','interactive-state.cjs','interactive-view.cjs','rich-model.cjs','rich-view.cjs','scenario-view.cjs','artifact-model.cjs','artifact-store.cjs','artifact-view.cjs','content-model.cjs','flow-layout.cjs','content-view.cjs','content-controller.cjs','client.cjs','panel.css','content.css'];
+const names=['core.cjs','expression.cjs','interactive-model.cjs','interactive-state.cjs','interactive-view.cjs','rich-model.cjs','rich-view.cjs','scenario-view.cjs','artifact-model.cjs','artifact-store.cjs','artifact-view.cjs','content-model.cjs','flow-layout.cjs','content-view.cjs','diagram-viewport.cjs','content-controller.cjs','client.cjs','panel.css','content.css'];
 const factories=names.map(name=>{
   const source=fs.readFileSync(path.join(root,'src',name),'utf8');
   return `${JSON.stringify('./'+name)}:(require,module,exports)=>{${name.endsWith('.css')?'module.exports='+JSON.stringify(source):source}\n}`;

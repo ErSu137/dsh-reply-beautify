@@ -91,7 +91,10 @@ function renderFlow(doc,model) {
   return svg;
 }
 function renderChart(doc,model) {
-  const w=Math.max(610,model.labels.length*52+108),left=76,right=24,top=32,plotH=232;
+  // Short numeric line-chart labels need less space than grouped bars. Keep
+  // every point while avoiding an unnecessarily wide canvas before fitting.
+  const bandSize=model.chartType==='line'?Math.max(24,...model.labels.map(s=>Math.min(52,visualWidth(s)*7+10))):52;
+  const w=Math.max(610,model.labels.length*bandSize+108),left=76,right=24,top=32,plotH=232;
   const plotW=w-left-right,band=plotW/model.labels.length;
   const labelWidth=Math.max(6,Math.floor(band/7)),labelLines=Math.max(...model.labels.map(s=>wrap(s,labelWidth).length));
   const legendContext=doc.createElement('canvas').getContext('2d');
@@ -171,6 +174,11 @@ function serializeSvg(svg) {
     for(const p of ['fill','stroke','stroke-width','font-family','font-size','font-weight','paint-order'])copies[i].style.setProperty(p,s.getPropertyValue(p));
   });
   clone.setAttribute('xmlns',SVG_NS);clone.removeAttribute('class');
+  // Export the original geometry, independently of temporary display zoom.
+  if(svg.hasAttribute('data-dsh-rb-sized')){
+    for(const p of ['width','height'])clone.style.removeProperty(p);
+    clone.removeAttribute('data-dsh-rb-sized');
+  }
   return new view.XMLSerializer().serializeToString(clone);
 }
 function exportSvg(svg) {

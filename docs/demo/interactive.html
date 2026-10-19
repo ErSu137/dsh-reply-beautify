@@ -30,6 +30,16 @@ body[data-ds-dark-theme] .dsh-rb-figure[data-preset=claude]{--rb-accent:#d97757;
 .dsh-rb-figure pre.dsh-rb-ruler{font:11px/1.6 Consolas,monospace;background:transparent;border:0;padding:0;margin:0 0 12px;white-space:pre;text-align:left;color:var(--rb-muted)}
 .dsh-rb-ruler:last-child{margin:12px 0 0}
 .dsh-rb-svg{display:block;max-width:none;margin-inline:auto;overflow:visible;font-family:inherit;font-variant-numeric:lining-nums tabular-nums}
+.dsh-rb-diagram-view{width:100%;max-width:100%;min-width:0;margin:8px 0 12px;box-sizing:border-box}
+.dsh-rb-zoom-bar{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;margin:0 0 10px;font-size:12px;line-height:1.5;color:var(--rb-muted);text-align:left}
+.dsh-rb-zoom-button{appearance:none;font:inherit;color:var(--rb-fg);border:1px solid var(--rb-line);background:var(--rb-fill);border-radius:5px;min-width:30px;min-height:28px;padding:3px 8px;cursor:pointer}
+.dsh-rb-zoom-button:hover{background:var(--rb-shade)}
+.dsh-rb-zoom-button:disabled{opacity:.4;cursor:default}
+.dsh-rb-zoom-button:focus-visible,.dsh-rb-diagram-scroll:focus-visible{outline:2px solid var(--rb-accent);outline-offset:2px}
+.dsh-rb-zoom-value{min-width:42px;text-align:center;font-variant-numeric:tabular-nums}
+.dsh-rb-zoom-hint{margin-left:6px}
+.dsh-rb-diagram-scroll{width:100%;max-width:100%;min-width:0;max-height:min(72vh,720px);overflow:auto;box-sizing:border-box}
+.dsh-rb-figure .dsh-rb-diagram-scroll>svg.dsh-rb-svg{display:block;min-width:0;max-width:none;max-height:none;margin-inline:auto;overflow:hidden}
 .dsh-rb-node{fill:var(--rb-fill);stroke:var(--rb-line);stroke-width:1.4}
 .dsh-rb-svg [data-shade="1"] .dsh-rb-node,.dsh-rb-svg [data-tone=muted] .dsh-rb-node{fill:var(--rb-shade)}
 .dsh-rb-svg [data-tone=accent] .dsh-rb-node{fill:color-mix(in srgb,var(--rb-accent) 16%,var(--rb-fill));stroke:var(--rb-accent)}
@@ -200,7 +210,7 @@ textarea.dsh-rb-field-input{min-height:78px;resize:vertical}
 .dsh-rb-artifact [hidden]{display:none!important}
 @media(max-width:480px){.dsh-rb-artifact-dialog{width:calc(100vw - 16px);height:calc(100dvh - 32px);padding:10px}.dsh-rb-artifact-library{padding:10px}.dsh-rb-artifact .dsh-rb-rich-bar{gap:6px}}
 </style><style id="reply-css"></style>
-<header><div class="eyebrow">DEEPSEEK HARNESS · UNOFFICIAL COMMUNITY PLUGIN</div><h1>让回复更易读，让数据可操作。</h1><p>DSH Reply Beautify 0.6.0 · 独立通用样例，使用真实组件代码。不是 DSH 实机截图。</p><div class="controls"><label>排版 <select id="preset"><option value="default">默认</option><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option></select></label><button id="theme">切换明暗</button><span>点击系列按钮、修改工时，或打开作品。</span></div></header>
+<header><div class="eyebrow">DEEPSEEK HARNESS · UNOFFICIAL COMMUNITY PLUGIN</div><h1>让回复更易读，让数据可操作。</h1><p>DSH Reply Beautify 0.6.1 · 独立通用样例，使用真实组件代码。不是 DSH 实机截图。</p><div class="controls"><label>排版 <select id="preset"><option value="default">默认</option><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option></select></label><button id="theme">切换明暗</button><span>点击系列按钮、修改工时，或打开作品。</span></div></header>
 <main><div class="comparison"><section class="pane before"><div class="panehead">增强前 · 原始组件文本示意</div><div class="panecontent"><h2>比较预算和实际</h2><p>以下为专门构造的通用数据。</p><details><summary>查看原始组件文本 / View source</summary><pre id="source"></pre></details><blockquote>完整且通过校验的组件可转换为视图；仍可查看原文。</blockquote></div></section><section class="pane after" data-chat-flow-kind="assistant-step"><div class="panehead">增强后 · 真实渲染器</div><div class="panecontent _markdown_demo" id="target"></div></section></div><section class="pane extras"><div class="panehead">作品预览 · HTML / CSS / JavaScript</div><div class="panecontent" id="artifact"></div></section></main><footer>本页不连接模型、不包含聊天记录。独立 Chromium 样例通过不代表 DSH、Electron 或其他平台已验收。风格名称仅作参考，无官方关联。</footer>
 <script>(()=>{const factories={"./artifact-model.cjs":(require,module,exports)=>{'use strict';
 const MAX_HTML=30000,MAX_STATE=24000;
@@ -353,6 +363,7 @@ const { REPLY_SELECTOR } = require('./core.cjs');
 const { parseContent } = require('./content-model.cjs');
 const { el,renderContent,exportSvg } = require('./content-view.cjs');
 const { renderInteractive } = require('./interactive-view.cjs');
+const { attachDiagramViewports } = require('./diagram-viewport.cjs');
 const { createInteractionState } = require('./interactive-state.cjs');
 const {TYPES:RICH_TYPES}=require('./rich-model.cjs');
 const LANGUAGE_SELECTOR='[data-code-block-banner] [class*="language"],[data-code-block-banner] [class*="infostring"],[class*="_infostring_"]';
@@ -406,7 +417,7 @@ function createContentController(doc,store,{mountMath,artifactWorkspace,settleMs
     const kind={fields:'结构图',flow:'流程图',chart:'数据图表',math:'公式',quiz:'选择与自测',explorer:'参数探索',form:'信息表单',table:'交互表格',calculator:'计算器',compare:'方案比较',schedule:'时间与排期',board:'清单与看板',tree:'层级与阅读',steps:'分步演示',wizard:'分支向导',diff:'内容对照',sources:'证据与来源',dashboard:'联动报告'}[model.kind] || '原文';
     toolbar.append(el(doc,'span',{class:'dsh-rb-toolbar-label'},model.kind==='artifact'?'交互作品':model.origin==='ascii'?'文本图 · 结构视图':kind));
     const viewport=el(doc,'div',{class:'dsh-rb-viewport',tabindex:'0','aria-label':`${kind}，宽内容可横向滚动`});
-    let showSource=!!model.error,mathCleanup,interactiveCleanup;
+    let showSource=!!model.error,mathCleanup,interactiveCleanup,diagramCleanup;
     const sourceButton=button(showSource?'原文已显示':'查看原文',()=>{
       if(model.error)return;
       showSource=!showSource;
@@ -424,11 +435,12 @@ function createContentController(doc,store,{mountMath,artifactWorkspace,settleMs
     if(model.title)figure.append(el(doc,'figcaption',{class:'dsh-rb-title'},model.title));
     figure.append(viewport,status);
     if(model.description)figure.append(el(doc,'p',{class:'dsh-rb-description'},model.description));
-    const entry={figure,source,language,stateKey,cleanup:()=>{mathCleanup?.();interactiveCleanup?.();}};track(node,entry,node.closest(REPLY_SELECTOR));
+    const entry={figure,source,language,stateKey,cleanup:()=>{diagramCleanup?.();mathCleanup?.();interactiveCleanup?.();}};track(node,entry,node.closest(REPLY_SELECTOR));
     node.after(figure);
     if(model.error) { viewport.hidden=true;status.textContent=model.error;return; }
     try {
       const result=model.kind==='artifact'?artifactWorkspace.render(model,node):interactive?renderInteractive(doc,model,{stateStore,stateKey}):renderContent(doc,model,mountMath);viewport.append(result.node);interactiveCleanup=result.cleanup;entry.setVisible=result.setVisible;
+      if(['flow','chart','explorer','table','dashboard'].includes(model.kind))diagramCleanup=attachDiagramViewports(viewport);
       if(model.kind==='math') {
         // Keep source visible until the native renderer has actually produced math.
         const mounted=result.mount?.();mathCleanup=mounted?.dispose;
@@ -888,7 +900,10 @@ function renderFlow(doc,model) {
   return svg;
 }
 function renderChart(doc,model) {
-  const w=Math.max(610,model.labels.length*52+108),left=76,right=24,top=32,plotH=232;
+  // Short numeric line-chart labels need less space than grouped bars. Keep
+  // every point while avoiding an unnecessarily wide canvas before fitting.
+  const bandSize=model.chartType==='line'?Math.max(24,...model.labels.map(s=>Math.min(52,visualWidth(s)*7+10))):52;
+  const w=Math.max(610,model.labels.length*bandSize+108),left=76,right=24,top=32,plotH=232;
   const plotW=w-left-right,band=plotW/model.labels.length;
   const labelWidth=Math.max(6,Math.floor(band/7)),labelLines=Math.max(...model.labels.map(s=>wrap(s,labelWidth).length));
   const legendContext=doc.createElement('canvas').getContext('2d');
@@ -968,6 +983,11 @@ function serializeSvg(svg) {
     for(const p of ['fill','stroke','stroke-width','font-family','font-size','font-weight','paint-order'])copies[i].style.setProperty(p,s.getPropertyValue(p));
   });
   clone.setAttribute('xmlns',SVG_NS);clone.removeAttribute('class');
+  // Export the original geometry, independently of temporary display zoom.
+  if(svg.hasAttribute('data-dsh-rb-sized')){
+    for(const p of ['width','height'])clone.style.removeProperty(p);
+    clone.removeAttribute('data-dsh-rb-sized');
+  }
   return new view.XMLSerializer().serializeToString(clone);
 }
 function exportSvg(svg) {
@@ -1166,6 +1186,118 @@ ${q} :where(code,pre,.katex){font-variant-numeric:normal}
 }
 
 module.exports = { STORAGE_KEY, CODE_FONT, PRESETS, RANGES, REPLY_SELECTOR, CAPITAL_D_PATH, BRAND_COLORS, ORANGE_SCALE, alignBrandCaption, normalize, parsePreferences, presetValues, isCustom, createPreferences, replyCSS, pageCSS };
+
+},
+"./diagram-viewport.cjs":(require,module,exports)=>{'use strict';
+
+// Display-only sizing. Never change the SVG viewBox, data or exported geometry.
+function automaticSize(width,height,available,screenHeight=1000) {
+  const ratio=width/height,extreme=ratio>5||ratio<1/3;
+  const heightLimit=Math.max(240,Math.min(720,screenHeight*.72));
+  const scale=Math.min(1,8192/width,8192/height,
+    extreme?1:Math.min(Math.max(1,available)/width,heightLimit/height));
+  return {width:width*scale,height:height*scale,extreme};
+}
+function zoomFactor(current,delta,base) {
+  const maximum=Math.min(4,8192/base.width,8192/base.height);
+  return Math.max(.25,Math.min(maximum,current*Math.exp(-Math.max(-240,Math.min(240,delta))*.002)));
+}
+function wheelDelta(event,pageHeight) {
+  return event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?pageHeight:1);
+}
+function attachDiagramViewports(root) {
+  const doc=root.ownerDocument,view=doc.defaultView;
+  if(!view?.MutationObserver||typeof root.getBoundingClientRect!=='function')return ()=>{};
+  const records=new Map();let disposed=false;
+  function create(svg) {
+    const box=(svg.getAttribute('viewBox')||'').trim().split(/[\s,]+/).map(Number);
+    const width=box.length===4?box[2]:Number(svg.getAttribute('width'));
+    const height=box.length===4?box[3]:Number(svg.getAttribute('height'));
+    if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)return;
+    const originalStyle=svg.getAttribute('style');
+    const node=(tag,className,text)=>{const n=doc.createElement(tag);n.className=className;if(text)n.textContent=text;return n;};
+    const shell=node('div','dsh-rb-diagram-view'),bar=node('div','dsh-rb-zoom-bar');
+    bar.setAttribute('role','group');bar.setAttribute('aria-label','图形显示缩放');
+    const scroll=node('div','dsh-rb-diagram-scroll');scroll.tabIndex=0;
+    scroll.setAttribute('role','region');scroll.setAttribute('aria-label','图形；图上滚轮缩放，双击或自动按钮恢复，放大后可滚动查看');
+    const readout=node('output','dsh-rb-zoom-value'),hint=node('span','dsh-rb-zoom-hint','图上滚轮缩放 · 双击恢复');
+    readout.setAttribute('aria-label','相对于自动尺寸的缩放比例');
+    let factor=1,base,lastWidth=0,lastHeight=0;
+    const listeners=[];
+    const listen=(target,type,fn,options)=>{target.addEventListener(type,fn,options);listeners.push(()=>target.removeEventListener(type,fn,options));};
+    function layout() {
+      if(disposed||!shell.isConnected||!scroll.clientWidth)return;
+      base=automaticSize(width,height,scroll.clientWidth,view.innerHeight);
+      factor=Math.min(factor,Math.min(4,8192/base.width,8192/base.height));
+      const w=base.width*factor,h=base.height*factor;
+      if(w!==lastWidth||h!==lastHeight){
+        svg.style.setProperty('width',w+'px');svg.style.setProperty('height',h+'px');
+        lastWidth=w;lastHeight=h;
+      }
+      readout.textContent=Math.round(factor*100)+'%';
+      shell.setAttribute('data-extreme',String(base.extreme));
+      minus.disabled=factor<=.25001;
+      plus.disabled=factor>=Math.min(4,8192/base.width,8192/base.height)-.00001;
+      auto.setAttribute('aria-pressed',String(Math.abs(factor-1)<.00001));
+    }
+    function zoom(next,point) {
+      if(!base)return;
+      const before=svg.getBoundingClientRect();
+      const x=point?.clientX??before.left+Math.min(scroll.clientWidth,before.width)/2;
+      const y=point?.clientY??before.top+Math.min(scroll.clientHeight,before.height)/2;
+      const fx=(x-before.left)/before.width,fy=(y-before.top)/before.height;
+      factor=next;layout();
+      const after=svg.getBoundingClientRect();
+      scroll.scrollLeft+=after.left+fx*after.width-x;
+      scroll.scrollTop+=after.top+fy*after.height-y;
+    }
+    const button=(text,label,action)=>{const b=node('button','dsh-rb-zoom-button',text);b.type='button';b.setAttribute('aria-label',label);listen(b,'click',action);return b;};
+    const minus=button('−','缩小图形',()=>zoom(zoomFactor(factor,100,base)));
+    const plus=button('+','放大图形',()=>zoom(zoomFactor(factor,-100,base)));
+    const reset=()=>{factor=1;layout();scroll.scrollLeft=0;scroll.scrollTop=0;};
+    const auto=button('自动','恢复图形自动尺寸',reset);
+    bar.append(minus,readout,plus,auto,hint);shell.append(bar,scroll);
+    svg.before(shell);scroll.append(svg);
+    svg.setAttribute('data-dsh-rb-sized','');
+    listen(svg,'wheel',event=>{
+      if(event.ctrlKey||event.metaKey||!Number.isFinite(event.deltaY)||!event.deltaY||!base)return;
+      const next=zoomFactor(factor,wheelDelta(event,scroll.clientHeight),base);
+      if(Math.abs(next-factor)<.00001)return;
+      event.preventDefault();zoom(next,event);
+    },{passive:false});
+    listen(svg,'dblclick',reset);
+    listen(scroll,'keydown',event=>{
+      if(event.target!==scroll||event.ctrlKey||event.metaKey||event.altKey||!base)return;
+      if(event.key==='+'||event.key==='='){event.preventDefault();zoom(zoomFactor(factor,-100,base));}
+      else if(event.key==='-'){event.preventDefault();zoom(zoomFactor(factor,100,base));}
+      else if(event.key==='0'){event.preventDefault();reset();}
+    });
+    const record={layout,dispose(){
+      resize?.unobserve(scroll);listeners.forEach(fn=>fn());
+      svg.removeAttribute('data-dsh-rb-sized');
+      if(originalStyle===null)svg.removeAttribute('style');else svg.setAttribute('style',originalStyle);
+      if(shell.parentElement){shell.before(svg);shell.remove();}
+    }};
+    records.set(svg,record);resize?.observe(scroll);layout();
+  }
+  const resize=view.ResizeObserver?new view.ResizeObserver(entries=>{
+    for(const entry of entries)for(const [svg,record]of records)if(svg.parentElement===entry.target)record.layout();
+  }):null;
+  function scan() {
+    if(disposed)return;
+    for(const [svg,record]of records)if(!root.contains(svg)){record.dispose();records.delete(svg);}
+    for(const svg of root.querySelectorAll('svg.dsh-rb-svg'))if(!records.has(svg))create(svg);
+  }
+  const observer=new view.MutationObserver(records=>{
+    if(records.some(r=>r.type==='childList'&&[...r.addedNodes,...r.removedNodes].some(n=>n.nodeType===1)))scan();
+  });
+  // Observe only this owned component, including plots rebuilt by filtering/sliders.
+  observer.observe(root,{subtree:true,childList:true});scan();
+  const onResize=()=>{for(const record of records.values())record.layout();};
+  view.addEventListener('resize',onResize);
+  return ()=>{disposed=true;observer.disconnect();resize?.disconnect();view.removeEventListener('resize',onResize);for(const record of records.values())record.dispose();records.clear();};
+}
+module.exports={automaticSize,zoomFactor,wheelDelta,attachDiagramViewports};
 
 },
 "./expression.cjs":(require,module,exports)=>{'use strict';
@@ -1637,4 +1769,4 @@ function createScenarios(doc,model,state,{plot,onRestore,copy,save,button}){
 }
 module.exports={createScenarios};
 
-}},cache={};function require(n){if(!cache[n]){cache[n]={exports:{}};factories[n](require,cache[n],cache[n].exports)}return cache[n].exports}const core=require('./core.cjs'),{parseContent}=require('./content-model.cjs'),{renderInteractive}=require('./interactive-view.cjs'),{createArtifactWorkspace}=require('./artifact-view.cjs');const preferences=core.createPreferences(null);function style(){document.getElementById('reply-css').textContent=core.replyCSS(preferences.getSnapshot().preferences);document.querySelectorAll('.dsh-rb-figure').forEach(n=>n.dataset.preset=preferences.getSnapshot().preferences.preset)}preferences.subscribe(style);style();document.getElementById('preset').onchange=e=>preferences.setPreset(e.target.value);document.getElementById('theme').onclick=()=>document.body.toggleAttribute('data-ds-dark-theme');const chart={"type":"bar","title":"预算与实际工时 · 示例数据","labels":["方案甲","方案乙","方案丙"],"series":[{"name":"预算","values":[12,18,9]},{"name":"实际","values":[10,20,8]}],"unit":"小时"},calc={"type":"calculator","title":"把答案变成可调整的计算","fields":[{"id":"hours","label":"投入工时","min":0,"max":100,"value":12,"unit":"h"},{"id":"rate","label":"每小时成本","min":0,"max":1000,"value":80,"unit":"元"}],"results":[{"label":"估算成本","expression":"hours*rate","unit":"元"}]},artifact={"type":"artifact","id":"public_counter","title":"隔离作品 · 点击计数","version":1,"html":"\u003ch2>一个本机小工具\u003c/h2>\u003cp>输入通过状态 API 恢复。\u003c/p>\u003cbutton id=\"increment\">点击 +1\u003c/button> \u003coutput id=\"count\">\u003c/output>\u003cscript>let n=Number(dshArtifact.getState().count)||0;const out=document.getElementById('count');out.textContent=n;document.getElementById('increment').onclick=()=>{out.textContent=++n;dshArtifact.setState({count:n})};\u003c/script>"};document.getElementById('source').textContent='```dsh-chart\n'+JSON.stringify(chart,null,2)+'\n```';for(const [lang,data]of [['dsh-chart',chart],['dsh-ui',calc]]){const figure=document.createElement('figure');figure.className='dsh-rb-figure';figure.dataset.preset='default';const caption=document.createElement('figcaption');caption.className='dsh-rb-title';caption.textContent=data.title;const viewport=document.createElement('div');viewport.className='dsh-rb-viewport';viewport.append(renderInteractive(document,parseContent(lang,JSON.stringify(data))).node);figure.append(caption,viewport);document.getElementById('target').append(figure)}const workspace=createArtifactWorkspace(document,preferences);const key=workspace.store.ingest('public-demo',parseContent('dsh-artifact',JSON.stringify(artifact)));workspace.mountSidebar(document.getElementById('artifact'),'public-demo');window.publicDemo={preferences,workspace};})();</script></html>
+}},cache={};function require(n){if(!cache[n]){cache[n]={exports:{}};factories[n](require,cache[n],cache[n].exports)}return cache[n].exports}const core=require('./core.cjs'),{parseContent}=require('./content-model.cjs'),{renderInteractive}=require('./interactive-view.cjs'),{createArtifactWorkspace}=require('./artifact-view.cjs');const {attachDiagramViewports}=require('./diagram-viewport.cjs'),plotCleanups=[];addEventListener('pagehide',()=>{for(const cleanup of plotCleanups)cleanup();},{once:true});const preferences=core.createPreferences(null);function style(){document.getElementById('reply-css').textContent=core.replyCSS(preferences.getSnapshot().preferences);document.querySelectorAll('.dsh-rb-figure').forEach(n=>n.dataset.preset=preferences.getSnapshot().preferences.preset)}preferences.subscribe(style);style();document.getElementById('preset').onchange=e=>preferences.setPreset(e.target.value);document.getElementById('theme').onclick=()=>document.body.toggleAttribute('data-ds-dark-theme');const chart={"type":"bar","title":"预算与实际工时 · 示例数据","labels":["方案甲","方案乙","方案丙"],"series":[{"name":"预算","values":[12,18,9]},{"name":"实际","values":[10,20,8]}],"unit":"小时"},calc={"type":"calculator","title":"把答案变成可调整的计算","fields":[{"id":"hours","label":"投入工时","min":0,"max":100,"value":12,"unit":"h"},{"id":"rate","label":"每小时成本","min":0,"max":1000,"value":80,"unit":"元"}],"results":[{"label":"估算成本","expression":"hours*rate","unit":"元"}]},artifact={"type":"artifact","id":"public_counter","title":"隔离作品 · 点击计数","version":1,"html":"\u003ch2>一个本机小工具\u003c/h2>\u003cp>输入通过状态 API 恢复。\u003c/p>\u003cbutton id=\"increment\">点击 +1\u003c/button> \u003coutput id=\"count\">\u003c/output>\u003cscript>let n=Number(dshArtifact.getState().count)||0;const out=document.getElementById('count');out.textContent=n;document.getElementById('increment').onclick=()=>{out.textContent=++n;dshArtifact.setState({count:n})};\u003c/script>"};document.getElementById('source').textContent='```dsh-chart\n'+JSON.stringify(chart,null,2)+'\n```';for(const [lang,data]of [['dsh-chart',chart],['dsh-ui',calc]]){const figure=document.createElement('figure');figure.className='dsh-rb-figure';figure.dataset.preset='default';const caption=document.createElement('figcaption');caption.className='dsh-rb-title';caption.textContent=data.title;const viewport=document.createElement('div');viewport.className='dsh-rb-viewport';viewport.append(renderInteractive(document,parseContent(lang,JSON.stringify(data))).node);figure.append(caption,viewport);document.getElementById('target').append(figure);plotCleanups.push(attachDiagramViewports(viewport))}const workspace=createArtifactWorkspace(document,preferences);const key=workspace.store.ingest('public-demo',parseContent('dsh-artifact',JSON.stringify(artifact)));workspace.mountSidebar(document.getElementById('artifact'),'public-demo');window.publicDemo={preferences,workspace};})();</script></html>

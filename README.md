@@ -2,7 +2,9 @@
 
 让 DeepSeek Harness 的助手回复更易读：三种排版风格、可操作的图表与表格，以及隔离的 HTML 小作品。保留 DSH 页面结构，随时查看原文。
 
-**非官方社区插件 · MIT · 0.6.0 预发布** · [English](README.en.md) · [下载与 Release](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.0)
+**非官方社区插件 · MIT · 0.6.1 预发布** · [English](README.en.md) · [下载与 Release](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.1)
+
+**0.6.1 更新**：更主动的可视化指引；普通比例图形完整适配，极端比例保留滚动；图上滚轮缩放，双击或“自动”恢复。短数字横轴的折线图更紧凑，保留全部数据。[使用与验收](docs/0.6.1.md)。模型仍可能不遵循指引，旧 ASCII 回复不会自动重绘。
 
 ![默认、ChatGPT、Claude 三种回复排版](docs/demo/01-reading.png)
 
@@ -10,12 +12,14 @@
 
 下载当前源码后，可打开 `docs/demo/index.html` 浏览图片，或打开[交互样例](docs/demo/interactive.html)切换系列、修改输入和运行作品；无需账号，不连接模型。
 
+已验收图片保留 0.6.0 时的展示；0.6.1 缩放可在交互样例中试用。
+
 ## 下载安装
 
 适用于 **Windows DSH Desktop，接口兼容依据 0.2.1-rc.2，默认安装路径**。其他平台、其他版本及自定义应用安装目录尚未验证。最终实机、视觉、长会话和真实卸载重装仍待验证；请先在专用测试对话验收。
 
-1. 从 [Release](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.0) 下载 `dsh-reply-beautify-0.6.0.zip` 与 `SHA256SUMS-0.6.0.txt`。选择命名的安装包；GitHub 自动生成的 Source code 归档供开发者使用。
-2. 用 `Get-FileHash .\dsh-reply-beautify-0.6.0.zip -Algorithm SHA256` 比对校验值，再解压至长期保留的文件夹，例如 `D:\Plugins\dsh-reply-beautify`。解压后进入包含 `install.ps1` 和 `package.json` 的内层目录。
+1. 从 [Release](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.1) 下载 `dsh-reply-beautify-0.6.1.zip` 与 `SHA256SUMS-0.6.1.txt`。选择命名的安装包；GitHub 自动生成的 Source code 归档供开发者使用。
+2. 用 `Get-FileHash .\dsh-reply-beautify-0.6.1.zip -Algorithm SHA256` 比对校验值，再解压至长期保留的文件夹，例如 `D:\Plugins\dsh-reply-beautify`。解压后进入包含 `install.ps1` 和 `package.json` 的内层目录。
 3. 确保 DSH 至少启动过一次，然后通过“应用 → 退出”完全退出。在该目录打开 PowerShell：
 
    ```powershell
@@ -23,7 +27,7 @@
    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
    ```
 
-4. 重新启动 DSH，打开左下账户行的画笔，确认版本 **0.6.0**。在新建的测试对话试用。
+4. 重新启动 DSH，打开左下账户行的画笔，确认版本 **0.6.1**。在新建的测试对话试用。
 
 `-Check` 只读，安装器调用安装目录内的官方 CLI，以 `link:`、`--offline --ignore-scripts` 添加插件，无需下载依赖。**插件持续从解压目录加载，不要移动或删除该目录。** 默认 profile 为 `%USERPROFILE%\.dsh\profiles\desktop`；设置了 `DSH_HOME` 时跟随该变量。备份保存在该插件目录的 `backups` 中，请勿上传。
 
@@ -70,7 +74,7 @@
 
 ## 验证与开发
 
-本次发布前：87 项 Node 测试、19 项隔离安装断言通过；独立 Chromium 样例、干净源码重建和归档核对见[发布检查报告](docs/RELEASE_CHECKS.md)。这不代表全平台、多版本或本轮真实 DSH 验收完成。[手工安装验收与周末测试清单](docs/TESTING.md)可直接照做。
+本次发布前：91 项 Node 测试、19 项隔离安装断言、26 项图形浏览器回归及 8 项公开样例检查通过；干净源码重建和归档核对见[发布检查报告](docs/RELEASE_CHECKS.md)。这不代表全平台、多版本或本轮真实 DSH 验收完成。[手工安装验收与周末测试清单](docs/TESTING.md)可直接照做。
 
 无需安装运行依赖。开发用 Node 22+（本轮 24.19.0）、Python 3.9+ 和 PowerShell：
 

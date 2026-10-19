@@ -3,6 +3,7 @@ const { REPLY_SELECTOR } = require('./core.cjs');
 const { parseContent } = require('./content-model.cjs');
 const { el,renderContent,exportSvg } = require('./content-view.cjs');
 const { renderInteractive } = require('./interactive-view.cjs');
+const { attachDiagramViewports } = require('./diagram-viewport.cjs');
 const { createInteractionState } = require('./interactive-state.cjs');
 const {TYPES:RICH_TYPES}=require('./rich-model.cjs');
 const LANGUAGE_SELECTOR='[data-code-block-banner] [class*="language"],[data-code-block-banner] [class*="infostring"],[class*="_infostring_"]';
@@ -56,7 +57,7 @@ function createContentController(doc,store,{mountMath,artifactWorkspace,settleMs
     const kind={fields:'结构图',flow:'流程图',chart:'数据图表',math:'公式',quiz:'选择与自测',explorer:'参数探索',form:'信息表单',table:'交互表格',calculator:'计算器',compare:'方案比较',schedule:'时间与排期',board:'清单与看板',tree:'层级与阅读',steps:'分步演示',wizard:'分支向导',diff:'内容对照',sources:'证据与来源',dashboard:'联动报告'}[model.kind] || '原文';
     toolbar.append(el(doc,'span',{class:'dsh-rb-toolbar-label'},model.kind==='artifact'?'交互作品':model.origin==='ascii'?'文本图 · 结构视图':kind));
     const viewport=el(doc,'div',{class:'dsh-rb-viewport',tabindex:'0','aria-label':`${kind}，宽内容可横向滚动`});
-    let showSource=!!model.error,mathCleanup,interactiveCleanup;
+    let showSource=!!model.error,mathCleanup,interactiveCleanup,diagramCleanup;
     const sourceButton=button(showSource?'原文已显示':'查看原文',()=>{
       if(model.error)return;
       showSource=!showSource;
@@ -74,11 +75,12 @@ function createContentController(doc,store,{mountMath,artifactWorkspace,settleMs
     if(model.title)figure.append(el(doc,'figcaption',{class:'dsh-rb-title'},model.title));
     figure.append(viewport,status);
     if(model.description)figure.append(el(doc,'p',{class:'dsh-rb-description'},model.description));
-    const entry={figure,source,language,stateKey,cleanup:()=>{mathCleanup?.();interactiveCleanup?.();}};track(node,entry,node.closest(REPLY_SELECTOR));
+    const entry={figure,source,language,stateKey,cleanup:()=>{diagramCleanup?.();mathCleanup?.();interactiveCleanup?.();}};track(node,entry,node.closest(REPLY_SELECTOR));
     node.after(figure);
     if(model.error) { viewport.hidden=true;status.textContent=model.error;return; }
     try {
       const result=model.kind==='artifact'?artifactWorkspace.render(model,node):interactive?renderInteractive(doc,model,{stateStore,stateKey}):renderContent(doc,model,mountMath);viewport.append(result.node);interactiveCleanup=result.cleanup;entry.setVisible=result.setVisible;
+      if(['flow','chart','explorer','table','dashboard'].includes(model.kind))diagramCleanup=attachDiagramViewports(viewport);
       if(model.kind==='math') {
         // Keep source visible until the native renderer has actually produced math.
         const mounted=result.mount?.();mathCleanup=mounted?.dispose;

@@ -8,4 +8,7 @@ test('model receives one small guide tool and a separately owned prompt section'
  for(const kind of tool.parameters.properties.kind.enum){const guide=await tool.execute({kind});assert.ok(guide.length<8192);assert.ok(guide.includes('```'));assert.equal(tool.output.render({},guide)[0].text,guide);}
  await assert.rejects(()=>tool.execute({kind:'unknown'}));await assert.rejects(()=>tool.execute({kind:'quiz',path:'secret'}));
  assert.ok(section.text.includes('user need not'));assert.ok(section.text.includes('not new messages'));
+ assert.ok(section.text.includes('Do not default to an ASCII drawing'));
+ assert.ok(section.text.includes('never guess values just to force a chart'));
+ assert.ok(section.text.includes('Follow explicit requests for plain text'));
 });
