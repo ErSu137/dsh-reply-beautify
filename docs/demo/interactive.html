@@ -1096,7 +1096,7 @@ function validPreset(value) { return typeof value === 'string' && Object.hasOwn(
 function normalize(input) {
   const data = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
   const preset = validPreset(data.preset) ? data.preset : 'default';
-  const result = { schema: 1, enabled: typeof data.enabled === 'boolean' ? data.enabled : true, preset };
+  const result = { schema: 1, enabled: typeof data.enabled === 'boolean' ? data.enabled : true, welcomeMascot: typeof data.welcomeMascot === 'boolean' ? data.welcomeMascot : true, preset };
   for (const [key, [min, max, step]] of Object.entries(RANGES)) {
     const value = typeof data[key] === 'number' && Number.isFinite(data[key]) ? data[key] : PRESETS[preset][key];
     result[key] = Number((Math.round(Math.min(max, Math.max(min, value)) / step) * step).toFixed(2));
@@ -1768,5 +1768,125 @@ function createScenarios(doc,model,state,{plot,onRestore,copy,save,button}){
  return{node,update};
 }
 module.exports={createScenarios};
+
+},
+"./welcome-model.cjs":(require,module,exports)=>{'use strict';
+const ASPECT={default:1207/1303,chatgpt:2/3,claude:2/3};
+const overlaps=(a,b)=>a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.height>b.y;
+function welcomeLayout(width,height,preset,composer) {
+  if(width<300||height<320||!composer)return null;
+  const ratio=ASPECT[preset]||ASPECT.default,margin=24,gap=28;
+  let h=(height-48)*(preset==='default'?1/3:2/3),lane=0;
+  if(width<900||height<520){
+    const below=height-composer.y-composer.height-margin-gap,above=composer.y-margin-gap;
+    const useBelow=below>=112||below>=above,available=useBelow?below:above;
+    h=Math.min(190,available,(width*.38)/ratio);
+    if(h<100)return null;
+    const image={x:width-margin-h*ratio,y:useBelow?height-margin-h:margin,width:h*ratio,height:h};
+    const bubble={x:Math.max(12,image.x-194),y:Math.max(margin,image.y+h*.10),width:182,height:76};
+    if(overlaps(bubble,composer)||overlaps(image,composer))return null;
+    return{image,bubble,lane:0,compact:true};
+  }
+  // Keep a useful composer width even on tall/narrow desktop windows.
+  h=Math.min(h,Math.max(130,(width-520-margin*2-gap)/ratio));
+  const image={x:width-margin-h*ratio,y:height-margin-h,width:h*ratio,height:h};
+  const bubble={x:Math.max(margin,image.x+image.width*(preset==='default'?0:.3)-248-16),y:image.y+h*.08,width:248,height:82};
+  const verticalOverlap=rect=>rect.y<composer.y+composer.height&&rect.y+rect.height>composer.y;
+  if(preset!=='default'||verticalOverlap(image)||verticalOverlap(bubble)){
+    // Reserve the whole decoration column, including the bubble's left edge.
+    // Place the bubble above the composer when that avoids excessive shrinkage.
+    if(verticalOverlap(bubble)&&bubble.x<image.x-gap){bubble.y=Math.max(margin,composer.y-bubble.height-gap);}
+    lane=width-image.x+gap;
+    if(overlaps(bubble,{x:margin,y:composer.y,width:width-lane-margin,height:composer.height}))return null;
+  }
+  return{image,bubble,lane,compact:false};
+}
+module.exports={welcomeLayout,overlaps};
+
+},
+"./welcome-view.cjs":(require,module,exports)=>{'use strict';
+const {welcomeLayout}=require('./welcome-model.cjs');
+const HERO='[data-conversation-content][data-content-phase="hero"]';
+function createWelcomeController(doc,preferences,{assets}={}){
+  const view=doc.defaultView;
+  if(!view?.MutationObserver||!doc.body||!doc.querySelectorAll)return{dispose(){}};
+  assets=assets||require('./welcome-assets.cjs');
+  let entry=null,disposed=false,frame=null,observer=null,appearance=0,listening=false;
+  const set=(node,name,value)=>{if(node.style.getPropertyValue(name)!==value)node.style.setProperty(name,value);};
+  function clear(){
+    if(!entry)return;
+    const old=entry;entry=null;old.resize?.disconnect();
+    view.removeEventListener('scroll',queue,true);
+    old.img.removeEventListener('load',old.loaded);old.img.removeEventListener('error',old.failed);
+    old.img.removeAttribute('src');old.shell.remove();
+    old.seat.removeAttribute('data-dsh-rb-welcome-seat');
+    if(old.oldLane)old.seat.style.setProperty('--dsh-rb-welcome-lane',old.oldLane,old.oldPriority);
+    else old.seat.style.removeProperty('--dsh-rb-welcome-lane');
+  }
+  function position(){
+    if(!entry||entry.error)return;
+    const {content,composer,seat,shell,img,bubble}=entry,r=content.getBoundingClientRect();
+    const left=Math.max(0,r.left),top=Math.max(0,r.top),right=Math.min(view.innerWidth,r.right),bottom=Math.min(view.innerHeight,r.bottom);
+    const width=right-left,height=bottom-top;
+    const protectedNode=width>=900&&height>=520?composer.querySelector('[data-composer-card]')||composer:composer;
+    const c=protectedNode.getBoundingClientRect();
+    const layout=welcomeLayout(width,height,entry.preset,{x:c.left-left,y:c.top-top,width:c.width,height:c.height});
+    shell.hidden=!layout;
+    if(!layout){seat.removeAttribute('data-dsh-rb-welcome-seat');return;}
+    for(const [name,value]of Object.entries({left,top,width,height}))set(shell,name,value+'px');
+    for(const [node,box]of [[img,layout.image],[bubble,layout.bubble]]){
+      for(const [name,value]of Object.entries({left:box.x,top:box.y,width:box.width,height:box.height}))set(node,name,value+'px');
+    }
+    if(layout.lane){set(seat,'--dsh-rb-welcome-lane',layout.lane+'px');if(!seat.hasAttribute('data-dsh-rb-welcome-seat'))seat.setAttribute('data-dsh-rb-welcome-seat','');}
+    else seat.removeAttribute('data-dsh-rb-welcome-seat');
+  }
+  function sync(){
+    if(disposed)return;
+    const p=preferences.getSnapshot().preferences;
+    if(!p.enabled||!p.welcomeMascot){clear();return;}
+    const content=[...doc.querySelectorAll(HERO)].find(node=>{
+      if(node.classList?.contains('Dc7zOa_embeddedBody')||!node.closest('.Dc7zOa_root[data-phase="hero"]'))return false;
+      const r=node.getBoundingClientRect?.();return r&&r.width>0&&r.height>0&&view.getComputedStyle(node).visibility!=='hidden';
+    });
+    const composer=content?.querySelector('.Dc7zOa_composerHero'),seat=composer?.closest('[data-composer-seat]');
+    if(!content||!composer||!seat){clear();return;}
+    const session=content.getAttribute('data-conversation-session')||'';
+    if(entry&&(entry.content!==content||entry.composer!==composer||entry.preset!==p.preset||entry.session!==session))clear();
+    if(!entry){
+      const shell=doc.createElement('div'),img=doc.createElement('img'),bubble=doc.createElement('div');
+      shell.className='dsh-rb-welcome';shell.setAttribute('data-dsh-rb-owned','');shell.setAttribute('data-dsh-rb-welcome','');shell.setAttribute('data-preset',p.preset);shell.setAttribute('aria-hidden','true');shell.setAttribute('data-appearance',String(++appearance));
+      img.className='dsh-rb-welcome-character';img.alt='';img.draggable=false;img.decoding='async';
+      bubble.className='dsh-rb-welcome-bubble';for(const text of ['你好，请问','可以怎么帮你']){const line=doc.createElement('span');line.textContent=text;bubble.append(line);}shell.append(img,bubble);
+      const current={content,composer,seat,shell,img,bubble,preset:p.preset,session,oldLane:seat.style.getPropertyValue('--dsh-rb-welcome-lane'),oldPriority:seat.style.getPropertyPriority('--dsh-rb-welcome-lane')};
+      current.loaded=()=>{if(entry===current&&!current.error)shell.setAttribute('data-ready','');};
+      current.failed=()=>{if(entry!==current)return;current.error=true;current.resize?.disconnect();view.removeEventListener('scroll',queue,true);shell.hidden=true;seat.removeAttribute('data-dsh-rb-welcome-seat');};
+      img.addEventListener('load',current.loaded);img.addEventListener('error',current.failed);entry=current;
+      doc.body.append(shell);
+      view.addEventListener('scroll',queue,true);
+      if(view.ResizeObserver){current.resize=new view.ResizeObserver(()=>queue());current.resize.observe(content);current.resize.observe(composer);}
+      position();img.src=assets[p.preset]||assets.default;
+    }else position();
+  }
+  function queue(){if(disposed||frame!==null)return;frame=view.requestAnimationFrame(()=>{frame=null;sync();});}
+  function relevant(record){
+    const target=record.target.nodeType===1?record.target:record.target.parentElement;
+    if(target?.closest('[data-dsh-rb-owned]'))return false;
+    if(record.type==='attributes')return target?.matches('[data-conversation-content],.Dc7zOa_root')||target?.contains(entry?.content)||!entry&&!!target?.querySelector?.(HERO);
+    const changed=[...record.addedNodes,...record.removedNodes].filter(n=>n.nodeType===1&&!n.hasAttribute('data-dsh-rb-owned'));
+    if(!changed.length)return false;
+    if(target?.closest('[data-conversation-content][data-content-phase="active"]'))return false;
+    return true;
+  }
+  function update(){
+    const p=preferences.getSnapshot().preferences;
+    if(!p.enabled||!p.welcomeMascot){observer?.disconnect();observer=null;if(listening)view.removeEventListener('resize',queue);listening=false;if(frame!==null)view.cancelAnimationFrame(frame);frame=null;clear();return;}
+    if(!listening){view.addEventListener('resize',queue);listening=true;}
+    if(!observer){observer=new view.MutationObserver(records=>{if(records.some(relevant))queue();});observer.observe(doc.body,{subtree:true,childList:true,attributes:true,attributeFilter:['data-content-phase','data-conversation-session','data-phase','hidden','aria-hidden','class','style']});}
+    sync();
+  }
+  const off=preferences.subscribe(update);update();
+  return{dispose(){disposed=true;off();observer?.disconnect();if(frame!==null)view.cancelAnimationFrame(frame);view.removeEventListener('resize',queue);view.removeEventListener('scroll',queue,true);clear();}};
+}
+module.exports={createWelcomeController};
 
 }},cache={};function require(n){if(!cache[n]){cache[n]={exports:{}};factories[n](require,cache[n],cache[n].exports)}return cache[n].exports}const core=require('./core.cjs'),{parseContent}=require('./content-model.cjs'),{renderInteractive}=require('./interactive-view.cjs'),{createArtifactWorkspace}=require('./artifact-view.cjs');const {attachDiagramViewports}=require('./diagram-viewport.cjs'),plotCleanups=[];addEventListener('pagehide',()=>{for(const cleanup of plotCleanups)cleanup();},{once:true});const preferences=core.createPreferences(null);function style(){document.getElementById('reply-css').textContent=core.replyCSS(preferences.getSnapshot().preferences);document.querySelectorAll('.dsh-rb-figure').forEach(n=>n.dataset.preset=preferences.getSnapshot().preferences.preset)}preferences.subscribe(style);style();document.getElementById('preset').onchange=e=>preferences.setPreset(e.target.value);document.getElementById('theme').onclick=()=>document.body.toggleAttribute('data-ds-dark-theme');const chart={"type":"bar","title":"预算与实际工时 · 示例数据","labels":["方案甲","方案乙","方案丙"],"series":[{"name":"预算","values":[12,18,9]},{"name":"实际","values":[10,20,8]}],"unit":"小时"},calc={"type":"calculator","title":"把答案变成可调整的计算","fields":[{"id":"hours","label":"投入工时","min":0,"max":100,"value":12,"unit":"h"},{"id":"rate","label":"每小时成本","min":0,"max":1000,"value":80,"unit":"元"}],"results":[{"label":"估算成本","expression":"hours*rate","unit":"元"}]},artifact={"type":"artifact","id":"public_counter","title":"隔离作品 · 点击计数","version":1,"html":"\u003ch2>一个本机小工具\u003c/h2>\u003cp>输入通过状态 API 恢复。\u003c/p>\u003cbutton id=\"increment\">点击 +1\u003c/button> \u003coutput id=\"count\">\u003c/output>\u003cscript>let n=Number(dshArtifact.getState().count)||0;const out=document.getElementById('count');out.textContent=n;document.getElementById('increment').onclick=()=>{out.textContent=++n;dshArtifact.setState({count:n})};\u003c/script>"};document.getElementById('source').textContent='```dsh-chart\n'+JSON.stringify(chart,null,2)+'\n```';for(const [lang,data]of [['dsh-chart',chart],['dsh-ui',calc]]){const figure=document.createElement('figure');figure.className='dsh-rb-figure';figure.dataset.preset='default';const caption=document.createElement('figcaption');caption.className='dsh-rb-title';caption.textContent=data.title;const viewport=document.createElement('div');viewport.className='dsh-rb-viewport';viewport.append(renderInteractive(document,parseContent(lang,JSON.stringify(data))).node);figure.append(caption,viewport);document.getElementById('target').append(figure);plotCleanups.push(attachDiagramViewports(viewport))}const workspace=createArtifactWorkspace(document,preferences);const key=workspace.store.ingest('public-demo',parseContent('dsh-artifact',JSON.stringify(artifact)));workspace.mountSidebar(document.getElementById('artifact'),'public-demo');window.publicDemo={preferences,workspace};})();</script></html>

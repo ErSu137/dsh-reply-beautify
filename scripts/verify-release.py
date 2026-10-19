@@ -18,6 +18,8 @@ dist = root / 'dist'
 report = {'version': version, 'checks': []}
 manifest = json.loads((root / 'release-files.json').read_text(encoding='utf-8'))
 public_images = {'dsh-reply-beautify/docs/demo/04-artifact.png', 'dsh-reply-beautify/docs/demo/01-reading.png', 'dsh-reply-beautify/docs/demo/02-chart.png', 'dsh-reply-beautify/docs/demo/05-dsh-chart.png', 'dsh-reply-beautify/docs/demo/03-table.png', 'dsh-reply-beautify/docs/demo/preview.png', 'dsh-reply-beautify/docs/demo/06-dsh-curve.png'}
+public_images.update('dsh-reply-beautify/assets/welcome/' + n + '.png' for n in ('deepseek','gpt','claude'))
+
 def check(name, success):
     if not success:
         raise AssertionError(name)

@@ -19,6 +19,9 @@
 .dsh-rb-enable input:before{content:"";position:absolute;left:3px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--dsw-alias-label-secondary)}
 .dsh-rb-enable input:checked{background:var(--dsw-alias-label-primary)}
 .dsh-rb-enable input:checked:before{left:17px;background:var(--dsw-alias-bg-base)}
+.dsh-rb-mascot-setting{padding-top:0}
+.dsh-rb-mascot-setting small{display:block;font-size:10px;color:var(--dsw-alias-label-tertiary);margin-top:3px}
+.dsh-rb-enable input:disabled{opacity:.4;cursor:default}
 .dsh-rb-tabs{display:flex;gap:3px;padding:3px;border-radius:7px;background:var(--dsw-alias-interactive-bg-hover)}
 .dsh-rb-tabs button{flex:1;min-width:0;border:0;padding:7px 3px;border-radius:5px;font-size:12px;background:transparent}
 .dsh-rb-tabs button[aria-selected=true]{background:var(--dsw-alias-bg-layer-2,var(--dsw-specific-menu));font-weight:500}

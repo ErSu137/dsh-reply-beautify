@@ -32,3 +32,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Welcome character artwork
+
+The three AI-assisted fan illustrations in assets/welcome are embedded into lib/client.js. They are excluded from the program MIT grant. Sources, attribution, non-commercial conditions and the maintainer-confirmed permission to publicly distribute the adapted illustrations are recorded in [WELCOME_ASSETS.md](docs/WELCOME_ASSETS.md). No original reference screenshots are included.

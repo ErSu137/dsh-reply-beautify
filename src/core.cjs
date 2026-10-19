@@ -96,7 +96,7 @@ function validPreset(value) { return typeof value === 'string' && Object.hasOwn(
 function normalize(input) {
   const data = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
   const preset = validPreset(data.preset) ? data.preset : 'default';
-  const result = { schema: 1, enabled: typeof data.enabled === 'boolean' ? data.enabled : true, preset };
+  const result = { schema: 1, enabled: typeof data.enabled === 'boolean' ? data.enabled : true, welcomeMascot: typeof data.welcomeMascot === 'boolean' ? data.welcomeMascot : true, preset };
   for (const [key, [min, max, step]] of Object.entries(RANGES)) {
     const value = typeof data[key] === 'number' && Number.isFinite(data[key]) ? data[key] : PRESETS[preset][key];
     result[key] = Number((Math.round(Math.min(max, Math.max(min, value)) / step) * step).toFixed(2));

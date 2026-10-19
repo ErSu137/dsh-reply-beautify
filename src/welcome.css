@@ -1,0 +1,19 @@
+.dsh-rb-welcome{position:fixed;z-index:6;overflow:hidden;pointer-events:none!important;contain:layout style;isolation:isolate}
+.dsh-rb-welcome[hidden]{display:none!important}
+.dsh-rb-welcome *{box-sizing:border-box;pointer-events:none!important;user-select:none}
+.dsh-rb-welcome-character{position:absolute;object-fit:contain;display:block;opacity:0;max-width:none!important;max-height:none!important;border:0;background:none}
+.dsh-rb-welcome-bubble{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:12px 20px;border:1px solid #576b8a;border-radius:18px;background:#eaf1ff;color:#263a58;font:500 16px/1.65 "Segoe UI","Microsoft YaHei",sans-serif;box-shadow:0 6px 24px #0001;opacity:0;text-align:center;letter-spacing:.02em;white-space:normal}
+.dsh-rb-welcome-bubble:after{content:"";position:absolute;right:-8px;bottom:20px;width:14px;height:14px;transform:rotate(45deg);background:inherit;border-top:1px solid #576b8a;border-right:1px solid #576b8a}
+.dsh-rb-welcome-bubble>span{display:block;flex:none;max-width:100%;text-align:center}
+.dsh-rb-welcome[data-preset=chatgpt] .dsh-rb-welcome-bubble{background:#ecf4ef;border-color:#627c6c;color:#30483b}
+.dsh-rb-welcome[data-preset=claude] .dsh-rb-welcome-bubble{background:#fbf0e4;border-color:#a38160;color:#624931}
+.dsh-rb-welcome[data-preset=chatgpt] .dsh-rb-welcome-bubble:after{border-color:#627c6c}
+.dsh-rb-welcome[data-preset=claude] .dsh-rb-welcome-bubble:after{border-color:#a38160}
+body[data-ds-dark-theme] .dsh-rb-welcome-bubble{background:#252e3c;color:#e5eeff}
+body[data-ds-dark-theme] .dsh-rb-welcome[data-preset=chatgpt] .dsh-rb-welcome-bubble{background:#28322c;color:#e7f0ea}
+body[data-ds-dark-theme] .dsh-rb-welcome[data-preset=claude] .dsh-rb-welcome-bubble{background:#342b24;color:#f5e8db}
+.dsh-rb-welcome[data-ready] .dsh-rb-welcome-character{animation:dsh-rb-welcome-enter .46s cubic-bezier(.22,.8,.3,1) both}
+.dsh-rb-welcome[data-ready] .dsh-rb-welcome-bubble{animation:dsh-rb-welcome-enter .32s ease-out .14s both}
+@keyframes dsh-rb-welcome-enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+[data-dsh-rb-welcome-seat]{box-sizing:border-box!important;padding-inline-start:24px!important;padding-inline-end:var(--dsh-rb-welcome-lane)!important}
+@media(prefers-reduced-motion:reduce){.dsh-rb-welcome[data-ready] .dsh-rb-welcome-character,.dsh-rb-welcome[data-ready] .dsh-rb-welcome-bubble{animation:none;opacity:1;transform:none}}

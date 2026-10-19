@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.3 — startup characters and greeting layout (2026-10-20)
+
+- Add three local character illustrations on the main new-conversation screen, with a persistent brush toggle and finite reduced-motion-aware entrance.
+- Reserve input space without replacing the native input or changing drafts; shrink or hide the decoration when space is insufficient.
+- Center both greeting lines in dark/light themes; use ivory lace-up boots for Claude.
+- Preserve public artifact, CSV and installer security fixes. Artwork is outside the MIT code grant; see docs/WELCOME_ASSETS.md.
+- Merge the locally developed 0.6.2 feature and 0.6.3 refinement into one public preview.
+
 ## 0.6.1 — chart fitting and zoom preview (2026-10-19)
 
 - Prefer supported visual components for trends, comparisons, structures and processes; distinguish justified numeric plots from labelled conceptual schematics. Model compliance is not guaranteed; missing data is never guessed.

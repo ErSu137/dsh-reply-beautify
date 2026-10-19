@@ -5,6 +5,8 @@ const { createRoot } = require('react-dom/client');
 const { STORAGE_KEY, PRESETS, RANGES, isCustom, createPreferences, replyCSS, pageCSS, alignBrandCaption } = require('./core.cjs');
 const PANEL_CSS = require('./panel.css');
 const CONTENT_CSS = require('./content.css');
+const WELCOME_CSS = require('./welcome.css');
+const { createWelcomeController } = require('./welcome-view.cjs');
 const { createContentController } = require('./content-controller.cjs');
 const { createArtifactWorkspace,TAB_KIND,TAB_ID } = require('./artifact-view.cjs');
 const h = React.createElement;
@@ -99,7 +101,7 @@ function BeautifyControl(props) {
     event.preventDefault(); store.setPreset(presetKeys[next]);
     panelRef.current?.querySelector(`[data-rb-preset="${presetKeys[next]}"]`)?.focus();
   };
-  return h('div', { className: 'dsh-rb-footer', 'data-wide': String(wide), 'data-reply-beautify': '0.6.1' },
+  return h('div', { className: 'dsh-rb-footer', 'data-wide': String(wide), 'data-reply-beautify': '0.6.3' },
     h(Tooltip, { label: '回复美化', delayMs: 350 },
       h('button', { ref: buttonRef, className: 'dsh-rb-launcher', type: 'button', 'aria-label': '回复美化', 'aria-expanded': open, 'aria-controls': 'dsh-rb-panel', onClick: () => setOpen(!open) }, h(BrushIcon))),
     h('section', { id: 'dsh-rb-panel', ref: panelRef, className: 'dsh-rb-panel', popover: 'manual', role: 'dialog', 'aria-label': '回复美化设置', 'aria-modal': false, 'data-open': open ? '' : undefined },
@@ -107,6 +109,8 @@ function BeautifyControl(props) {
         h('button', { ref: closeRef, type: 'button', className: 'dsh-rb-close', 'aria-label': '关闭美化设置', onClick: () => close(true) }, '×')),
       h('label', { className: 'dsh-rb-enable' }, h('span', null, '启用美化'),
         h('input', { type: 'checkbox', role: 'switch', 'aria-label': '启用美化', checked: p.enabled, onChange: event => store.update({ enabled: event.target.checked }) })),
+      h('label', { className: 'dsh-rb-enable dsh-rb-mascot-setting' }, h('span', null, '启动页卡通形象',h('small', null, '仅新会话启动页显示')),
+        h('input', { type: 'checkbox', role: 'switch', 'aria-label': '启动页卡通形象', checked: p.welcomeMascot, disabled, onChange: event => store.update({ welcomeMascot: event.target.checked }) })),
       h('div', { className: 'dsh-rb-adjustable', 'data-disabled': disabled ? '' : undefined },
         h('div', { className: 'dsh-rb-tabs', role: 'tablist', 'aria-label': '正文样式' }, presetKeys.map((key, index) =>
           h('button', { key, id: 'dsh-rb-preset-' + key, type: 'button', role: 'tab', 'data-rb-preset': key, 'aria-selected': p.preset === key, 'aria-controls': sectionId,
@@ -120,7 +124,7 @@ function BeautifyControl(props) {
           h('div', { className: 'dsh-rb-reset-row' }, h('span', { role: 'status', 'aria-live': 'polite' }, isCustom(p) ? '已微调' : '当前样式默认值'),
             h('button', { type: 'button', className: 'dsh-rb-reset', disabled, onClick: () => store.reset() }, '恢复当前样式')),
           h('p', { className: 'dsh-rb-note' }, '切换样式会应用该方案的默认参数，之后可继续微调。图示增强随美化开关启停，可随时查看原文。'))),
-      h('div', { className: 'dsh-rb-save-status', role: 'status' }, snapshot.storageAvailable ? '设置保存在此设备 · 0.6.1' : '暂时无法保存，当前调整仅本次生效')));
+      h('div', { className: 'dsh-rb-save-status', role: 'status' }, snapshot.storageAvailable ? '设置保存在此设备 · 0.6.3' : '暂时无法保存，当前调整仅本次生效')));
 }
 
 function ArtifactSidebar({useTabInfo,workspace,preferences,sidebarRight}) {
@@ -144,7 +148,9 @@ function apply(ctx) {
     const pageStyle = document.createElement('style'); pageStyle.dataset.plugin = PLUGIN_ID; pageStyle.dataset.pluginCss = PLUGIN_ID + '/page';
     const render = () => { const p = preferences.getSnapshot().preferences; replyStyle.textContent = replyCSS(p); pageStyle.textContent = pageCSS(p); };
     const contentStyle = document.createElement('style'); contentStyle.dataset.plugin = PLUGIN_ID; contentStyle.dataset.pluginCss = PLUGIN_ID + '/content'; contentStyle.textContent = CONTENT_CSS;
-    render(); document.head.append(panelStyle, replyStyle, pageStyle, contentStyle);
+    const welcomeStyle = document.createElement('style'); welcomeStyle.dataset.plugin = PLUGIN_ID; welcomeStyle.dataset.pluginCss = PLUGIN_ID + '/welcome'; welcomeStyle.textContent = WELCOME_CSS;
+    render(); document.head.append(panelStyle, replyStyle, pageStyle, contentStyle, welcomeStyle);
+    const welcome = createWelcomeController(document,preferences);
     const workspace=createArtifactWorkspace(document,preferences,{storage,sidebar:ctx.sidebarRight});
     const releaseType=ctx.sidebarRightTabs?.register({id:TAB_ID,kind:TAB_KIND,title:()=> '作品空间',keepMounted:false});
     const releaseSeat=ctx.sidebarRightTabs?ctx.slots.inject('sidebar.right.pane.tab',()=>ctx.slots.register({name:'sidebar.right.pane.tab',key:TAB_ID,inject:()=>({workspace,preferences,sidebarRight:ctx.sidebarRight})},ArtifactSidebar)):null;
@@ -160,7 +166,7 @@ function apply(ctx) {
     const unsubscribe = preferences.subscribe(render);
     const receive = event => { if (event.key === STORAGE_KEY && event.storageArea === storage) preferences.receive(event.newValue); };
     window.addEventListener('storage', receive);
-    return () => { unsubscribe(); content.dispose(); releaseSeat?.();releaseType?.();workspace.dispose();window.removeEventListener('storage', receive); panelStyle.remove(); replyStyle.remove(); pageStyle.remove(); contentStyle.remove(); preferences.dispose(); };
+    return () => { unsubscribe(); welcome.dispose();content.dispose(); releaseSeat?.();releaseType?.();workspace.dispose();window.removeEventListener('storage', receive); panelStyle.remove(); replyStyle.remove(); pageStyle.remove(); contentStyle.remove(); welcomeStyle.remove();preferences.dispose(); };
   });
   ctx.slots.inject('sidebar.footer.action', () => ctx.slots.register({
     name: 'sidebar.footer.action', id: PLUGIN_ID, order: 100,

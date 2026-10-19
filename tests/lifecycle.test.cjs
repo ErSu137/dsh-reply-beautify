@@ -22,7 +22,7 @@ test('native loader registers a footer control; disposal removes styles and stor
   const registered=[];
   plugin.apply({effect:effect=>{cleanup=effect();},slots:{inject:(name,run)=>{assert.ok(['sidebar.footer.action','conversation.composer.dock'].includes(name));run();},register:(value,view)=>{registered.push(value.name);if(value.name==='sidebar.footer.action'){registration=value;component=view;}}}});
   assert.equal(registered.length,2);
-  assert.equal(typeof component,'function');assert.equal(mounted.size,4);assert.equal(listeners.size,1);
+  assert.equal(typeof component,'function');assert.equal(mounted.size,5);assert.equal(listeners.size,1);
   const store=registration.inject().preferences;
   const reply=[...mounted].find(style=>style.dataset.pluginCss.endsWith('/reply'));
   const page=[...mounted].find(style=>style.dataset.pluginCss.endsWith('/page'));

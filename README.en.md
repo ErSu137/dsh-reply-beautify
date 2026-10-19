@@ -1,10 +1,10 @@
 # DSH Reply Beautify
 
-An unofficial MIT community plugin for DeepSeek Harness: readable assistant replies, interactive charts and tables, and isolated HTML mini apps. It preserves the application layout and provides access to original content.
+An unofficial community plugin (MIT code; character artwork has separate terms) for DeepSeek Harness: readable assistant replies, interactive charts and tables, and isolated HTML mini apps. It preserves the application layout and provides access to original content.
 
-[中文说明](README.md) · [Download v0.6.1 preview](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.1)
+[中文说明](README.md) · [Download v0.6.3 preview](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.3)
 
-**New in 0.6.1:** stronger visual guidance, automatic fitting for ordinary SVG diagrams, scrolling for extreme aspect ratios, hovered wheel zoom, buttons and double-click reset. Numeric-label line charts use a compact canvas without dropping data. [Details and acceptance](docs/0.6.1.md). Model compliance remains variable; old ASCII replies are not regenerated.
+**New in 0.6.3:** style-specific characters on the new-conversation screen, centered two-line greeting bubbles, a one-time entrance animation, input avoidance and a persistent independent toggle. Claude wears ivory lace-up block-heel boots. [Details and acceptance](docs/0.6.3.md). Previous chart fitting and wheel zoom are retained. [Artwork sources and scope](docs/WELCOME_ASSETS.md).
 
 ![Default, ChatGPT and Claude typography presets](docs/demo/01-reading.png)
 
@@ -16,7 +16,7 @@ From the current source checkout, open `docs/demo/index.html` for the gallery or
 
 Compatibility baseline: **DSH Desktop 0.2.1-rc.2, default application installation path**. Other platforms/versions/custom application paths have not been validated. Final DSH visual, restart, long-conversation and real uninstall/reinstall acceptance remains pending. This release is a preview.
 
-1. Download the named `dsh-reply-beautify-0.6.1.zip` and `SHA256SUMS-0.6.1.txt` from the Release. Compare `Get-FileHash .\dsh-reply-beautify-0.6.1.zip -Algorithm SHA256` with the checksum.
+1. Download the named `dsh-reply-beautify-0.6.3.zip` and `SHA256SUMS-0.6.3.txt` from the Release. Compare `Get-FileHash .\dsh-reply-beautify-0.6.3.zip -Algorithm SHA256` with the checksum.
 2. Extract into a permanent directory; enter the inner folder containing `install.ps1` and `package.json`. Launch DSH once to initialize its desktop profile, then fully quit it.
 3. In PowerShell in that folder, run:
 
@@ -25,7 +25,7 @@ Compatibility baseline: **DSH Desktop 0.2.1-rc.2, default application installati
    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
    ```
 
-4. Restart DSH, open the brush next to the account row, and confirm 0.6.1. Use a new test conversation.
+4. Restart DSH, open the brush next to the account row, and confirm 0.6.3. Use a new test conversation.
 
 The installer invokes the installed official CLI with `link:`, `--offline --ignore-scripts`. **Keep the extracted directory in place.** It backs up profile configuration under `backups/` before changes. The desktop profile follows `DSH_HOME` if set, otherwise `%USERPROFILE%\.dsh\profiles\desktop`. No npm or custom marketplace publication is claimed.
 
@@ -62,4 +62,4 @@ python scripts/package.py
 python scripts/verify-release.py
 ```
 
-91 Node tests, 19 isolated installer assertions, 26 diagram browser regressions and 8 public demo checks passed. Standalone Chromium checks do not substitute for real DSH/Electron acceptance. Existing approved screenshots retain the 0.6.0 display; try the updated interactive sample for zoom. See [release evidence](docs/RELEASE_CHECKS.md), [manual testing](docs/TESTING.md), [security scope](SECURITY.md), [third-party notices](THIRD_PARTY_NOTICES.md) and [changelog](CHANGELOG.md). No bundled fonts, original DSH assets or private conversations. ChatGPT and Claude presets are style references without official affiliation.
+95 Node tests, 19 isolated installer assertions and 50 startup browser checks passed. Standalone Chromium checks do not substitute for real DSH/Electron acceptance. Existing approved screenshots retain the 0.6.0 display; try the updated interactive sample for zoom. See [release evidence](docs/RELEASE_CHECKS.md), [manual testing](docs/TESTING.md), [security scope](SECURITY.md), [third-party notices](THIRD_PARTY_NOTICES.md) and [changelog](CHANGELOG.md). No bundled fonts, original DSH assets or private conversations. ChatGPT and Claude presets are style references without official affiliation.

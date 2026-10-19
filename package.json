@@ -1,9 +1,9 @@
 {
   "name": "dsh-reply-beautify",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "Unofficial DeepSeek Harness reply typography, interactive charts/tables and isolated HTML artifacts.",
   "type": "module",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "./lib/index.js",
   "exports": {
     ".": "./lib/index.js",
@@ -47,7 +47,9 @@
     "docs/demo/README.md",
     "docs/demo/interactive.html",
     "docs/demo/gallery.template.html",
-    "docs/0.6.1.md"
+    "docs/0.6.1.md",
+    "docs/0.6.3.md",
+    "docs/WELCOME_ASSETS.md"
   ],
   "dsh": {
     "bundle": {
