@@ -4,9 +4,11 @@ An unofficial MIT community plugin for DeepSeek Harness: readable assistant repl
 
 [中文说明](README.md) · [Download v0.6.0 preview](https://github.com/ErSu137/dsh-reply-beautify/releases/tag/v0.6.0)
 
-![Synthetic before/after sample rendered with actual component code](docs/demo/preview.png)
+![Default, ChatGPT and Claude typography presets](docs/demo/01-reading.png)
 
-This is a standalone synthetic demo, **not a DSH screenshot**. Open `docs/demo/index.html` from the extracted package to try series toggles, calculator inputs, presets and a sandboxed counter. No account or model connection is needed.
+The image above uses actual plugin code with synthetic content. The [six-image gallery](docs/demo/README.md) contains four standalone samples and two cropped screenshots of generic test components running in DSH. Sources are labeled; account details and conversation sidebars are excluded.
+
+From the current source checkout, open `docs/demo/index.html` for the gallery or [interactive.html](docs/demo/interactive.html) to try series toggles, calculator inputs, presets and a sandboxed counter. No account or model connection is needed.
 
 ## Install on Windows
 
@@ -36,6 +38,14 @@ Brush off restores original display and stops previews, while model guides remai
 Preferences, interaction inputs, artifact code and API state stay in local DSH browser storage and are not actively deleted on disable/uninstall. Retention is bounded: 80 persistent interaction records/~280000 characters; 160 temporary records/560000 characters; 12 artifacts with up to 6 revisions each/~1.8M total characters, 24000 per API state. Old records may be evicted. No cross-device or permanent storage promise.
 
 Artifacts use nested opaque-origin `sandbox="allow-scripts"` frames and CSP restrictions; no filesystem, Node/Electron, chat-history or model-tool bridge is provided. **This is not a guarantee that arbitrary generated apps are safe, nor a CPU/memory quota.** Ordinary calculations use a limited arithmetic parser. CSV text escaping may be affected by subsequent spreadsheet save/import behavior. Complex Mermaid syntax and unsupported diagrams fall back to source.
+
+## Visual examples
+
+![Interactive chart with separated controls, plot and data](docs/demo/02-chart.png)
+
+![Isolated artifact: a synthetic activity budget planner](docs/demo/04-artifact.png)
+
+These two images are standalone samples. See the gallery for the [editable table](docs/demo/03-table.png), [real DSH chart](docs/demo/05-dsh-chart.png) and [real DSH parameter explorer](docs/demo/06-dsh-curve.png). Screenshot approval does not imply complete DSH or cross-platform acceptance.
 
 ## Development and verification
 

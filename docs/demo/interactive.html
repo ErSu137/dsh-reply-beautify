@@ -1,0 +1,1640 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DSH Reply Beautify · Public samples</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f5f4ef;color:#242722;font:15px/1.65 "Segoe UI","Microsoft YaHei",sans-serif}header,main,footer{max-width:1440px;margin:auto;padding:28px 42px}header{padding-bottom:12px}small,.eyebrow{color:#647160}.eyebrow{letter-spacing:2px;font-size:12px}h1{font-size:36px;letter-spacing:-1px;line-height:1.2;margin:12px 0}header p{color:#62665d;margin:10px 0}.controls{display:flex;gap:12px;align-items:center;margin:22px 0 8px}button,select,input{font:inherit}button,select{padding:7px 12px;border:1px solid #d5d7cc;border-radius:7px;background:white;color:inherit;cursor:pointer}.comparison{display:grid;grid-template-columns:1fr;gap:28px}.before{order:2}.after{order:1}.pane{background:white;border:1px solid #dedfd6;border-radius:14px;overflow:hidden}.panehead{padding:15px 22px;background:#eeefe8;border-bottom:1px solid #dedfd6;font-weight:600}.panecontent{padding:12px 24px 24px}.before pre{white-space:pre-wrap;word-break:break-word;font:12px/1.7 Consolas,monospace;color:#70766b}.before h2{font-size:20px}.before blockquote{margin:18px 0;padding:10px;border-left:3px solid #d9ddd1;color:#73786d}.after{min-width:0}.after .dsh-rb-svg{max-width:100%;height:auto}footer{font-size:12px;color:#6a7062;padding-top:10px}#artifact .dsh-rb-artifact-screen{height:260px;min-height:260px}body[data-ds-dark-theme]{background:#141713;color:#e9eade}body[data-ds-dark-theme] .pane{background:#20251e;border-color:#48523e}body[data-ds-dark-theme] .panehead{background:#2c3427}body[data-ds-dark-theme] button,body[data-ds-dark-theme] select{background:#30392a;color:#eee}.extras{margin-top:22px}.dsh-rb-figure{margin:14px 0!important}@media(max-width:900px){.comparison{grid-template-columns:1fr}header,main,footer{padding:20px}h1{font-size:28px}}
+</style><style id="component-css">.dsh-rb-figure{--rb-fg:var(--dsw-alias-label-primary,#252525);--rb-muted:var(--dsw-alias-label-secondary,#626262);--rb-line:var(--dsw-alias-border-l2,#d4d4d4);--rb-fill:var(--dsw-alias-bg-layer-1,#f8f8f8);--rb-shade:var(--dsw-alias-bg-layer-2,#eeeeef);--rb-accent:#4d6bfe;--rb-series-0:#587dd7;--rb-series-1:#8e72c7;--rb-series-2:#47956c;--rb-series-3:#c88137;color:var(--rb-fg);background:transparent;border:1px solid var(--rb-line);border-radius:12px;margin:var(--dsh-rb-content-gap,16px) 0;max-width:100%;min-width:0;box-sizing:border-box;font-family:inherit;font-size:inherit;line-height:1.6}
+body[data-ds-dark-theme] .dsh-rb-figure{--rb-fg:var(--dsw-alias-label-primary,#eee);--rb-muted:var(--dsw-alias-label-secondary,#aaa);--rb-line:var(--dsw-alias-border-l2,#444);--rb-fill:var(--dsw-alias-bg-layer-1,#1a1a1c);--rb-shade:var(--dsw-alias-bg-layer-2,#2b2b2d);--rb-series-0:#91b0fb;--rb-series-1:#b39bf5;--rb-series-2:#7fbc96;--rb-series-3:#dfb45c}
+.dsh-rb-figure[data-preset=claude]{--rb-accent:#b55c3d;--rb-series-0:#b55c3d;--rb-series-1:#7650bf;--rb-series-2:#43835f;--rb-series-3:#956600}
+body[data-ds-dark-theme] .dsh-rb-figure[data-preset=claude]{--rb-accent:#d97757;--rb-series-0:#d9957b;--rb-series-1:#b39bf5;--rb-series-2:#7fbc96;--rb-series-3:#dfb45c}
+[data-dsh-rb-source=hidden]{display:none!important}
+.dsh-rb-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;padding:9px 12px;border-bottom:1px solid var(--rb-line);font:inherit;font-size:12px;line-height:1.5;color:var(--rb-muted)}
+.dsh-rb-toolbar-label{margin-right:auto}
+.dsh-rb-toolbar button{appearance:none;background:transparent;border:1px solid transparent;border-radius:5px;color:inherit;padding:3px 6px;cursor:pointer;font:inherit}
+.dsh-rb-toolbar button:hover{background:var(--rb-shade);color:var(--rb-fg)}
+.dsh-rb-toolbar button:focus-visible,.dsh-rb-chart-data summary:focus-visible{outline:2px solid var(--rb-accent);outline-offset:2px}
+.dsh-rb-viewport{overflow-x:auto;max-width:100%;padding:20px;box-sizing:border-box;text-align:center}
+.dsh-rb-viewport[hidden],.dsh-rb-figure [hidden]{display:none!important}
+.dsh-rb-figure .dsh-rb-title{font:inherit;font-weight:600;font-size:1.05em;line-height:1.5;margin:0;padding:16px 20px 0;color:var(--rb-fg)}
+.dsh-rb-description{margin:0!important;padding:0 20px 16px;color:var(--rb-muted);font-size:.88em;white-space:pre-wrap}
+.dsh-rb-status{font-size:12px;color:var(--rb-muted);padding:0 12px 8px;white-space:pre-wrap}
+.dsh-rb-status:empty{display:none}
+.dsh-rb-fields{width:max-content;min-width:min(100%,640px);max-width:100%;margin-inline:auto;text-align:center}
+.dsh-rb-field-grid{border:1px solid var(--rb-line);overflow:hidden;border-radius:7px}
+.dsh-rb-field-row{display:flex;align-items:stretch}
+.dsh-rb-field-row+.dsh-rb-field-row{border-top:1px solid var(--rb-line)}
+.dsh-rb-field-cells{display:grid;flex:1;min-width:0}
+.dsh-rb-field{padding:12px 8px;white-space:pre-wrap;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;overflow-wrap:anywhere;font-variant-numeric:lining-nums tabular-nums}
+.dsh-rb-field+.dsh-rb-field{border-left:1px solid var(--rb-line)}
+.dsh-rb-field-row[data-shade="1"] .dsh-rb-field,.dsh-rb-field[data-tone=muted]{background:var(--rb-shade)}
+.dsh-rb-field[data-tone=accent]{background:color-mix(in srgb,var(--rb-accent) 14%,var(--rb-fill))}
+.dsh-rb-field-bits{font-size:.76em;color:var(--rb-muted);margin-top:2px}
+.dsh-rb-row-note{width:42px;flex:none;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--rb-line);font-size:.8em;color:var(--rb-muted)}
+.dsh-rb-figure pre.dsh-rb-ruler{font:11px/1.6 Consolas,monospace;background:transparent;border:0;padding:0;margin:0 0 12px;white-space:pre;text-align:left;color:var(--rb-muted)}
+.dsh-rb-ruler:last-child{margin:12px 0 0}
+.dsh-rb-svg{display:block;max-width:none;margin-inline:auto;overflow:visible;font-family:inherit;font-variant-numeric:lining-nums tabular-nums}
+.dsh-rb-node{fill:var(--rb-fill);stroke:var(--rb-line);stroke-width:1.4}
+.dsh-rb-svg [data-shade="1"] .dsh-rb-node,.dsh-rb-svg [data-tone=muted] .dsh-rb-node{fill:var(--rb-shade)}
+.dsh-rb-svg [data-tone=accent] .dsh-rb-node{fill:color-mix(in srgb,var(--rb-accent) 16%,var(--rb-fill));stroke:var(--rb-accent)}
+.dsh-rb-svg-text{fill:var(--rb-fg);font-size:15px}
+.dsh-rb-edge{stroke:var(--rb-muted);stroke-width:1.6;fill:none}
+.dsh-rb-arrow{fill:var(--rb-muted)}
+.dsh-rb-edge-label-bg{fill:var(--rb-fill)}
+.dsh-rb-edge-label{fill:var(--rb-muted);font:12px Arial,"Microsoft YaHei",sans-serif}
+.dsh-rb-gridline{stroke:var(--rb-line);stroke-width:.7;stroke-dasharray:3 5}
+.dsh-rb-zero-line{stroke:var(--rb-muted);stroke-width:1}
+.dsh-rb-axis-text{fill:var(--rb-muted);font:12px/1.4 Arial,"Microsoft YaHei",sans-serif}
+.dsh-rb-series-line{stroke:var(--rb-series);stroke-width:2.5}
+.dsh-rb-series-point{fill:var(--rb-series)}
+.dsh-rb-figure [data-series="0"]{--rb-series:var(--rb-series-0)}
+.dsh-rb-figure [data-series="1"]{--rb-series:var(--rb-series-1)}
+.dsh-rb-figure [data-series="2"]{--rb-series:var(--rb-series-2)}
+.dsh-rb-figure [data-series="3"]{--rb-series:var(--rb-series-3)}
+.dsh-rb-legend{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;font-size:12px;margin-top:12px}
+.dsh-rb-legend>span::before{content:"";display:inline-block;background:var(--rb-series);width:12px;height:8px;border-radius:2px;margin-right:6px}
+.dsh-rb-chart-data{text-align:left;font-size:.85em;margin-top:12px;max-width:100%;overflow-x:auto}
+.dsh-rb-chart-data summary{cursor:pointer;width:max-content;color:var(--rb-muted)}
+.dsh-rb-chart-data table{width:100%;min-width:100%;margin-top:8px}
+.dsh-rb-figure .dsh-rb-chart-data :is(th,td){text-align:left;vertical-align:top;font-variant-numeric:lining-nums tabular-nums}
+.dsh-rb-figure .dsh-rb-math{padding:12px 0}
+.dsh-rb-figure .dsh-rb-math .katex-display{margin:0}
+.dsh-rb-image-caption{display:block;text-align:center;font-size:.85em;color:var(--dsw-alias-label-secondary,#888);line-height:1.6;margin:-4px 0 16px;overflow-wrap:anywhere}
+@media(max-width:480px){.dsh-rb-viewport{padding:12px}.dsh-rb-figure .dsh-rb-title{padding:12px 12px 0}.dsh-rb-toolbar{padding:7px 8px;gap:4px}.dsh-rb-field{padding:10px 5px}}
+.dsh-rb-interactive{min-width:0;text-align:left;line-height:1.65;font:inherit}
+.dsh-rb-interactive[data-interactive-kind=explorer]{width:100%;max-width:812px;margin-inline:auto}
+.dsh-rb-question{margin:0 0 20px;padding:0;border:0;min-width:0}
+.dsh-rb-question legend{font:inherit;font-weight:600;margin:0 0 10px;padding:0;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.dsh-rb-option{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--rb-line);border-radius:8px;margin:7px 0;background:transparent;cursor:pointer;font:inherit;overflow-wrap:anywhere}
+.dsh-rb-option:has(input:checked){border-color:var(--rb-accent);background:color-mix(in srgb,var(--rb-accent) 11%,transparent)}
+.dsh-rb-option input{flex:none;accent-color:var(--rb-accent);margin-top:.4em}
+.dsh-rb-interactive input:focus-visible,.dsh-rb-interactive textarea:focus-visible,.dsh-rb-interactive button:focus-visible{outline:2px solid var(--rb-accent);outline-offset:3px}
+.dsh-rb-interaction-actions{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px}
+.dsh-rb-action{font:inherit;font-size:.88em;color:var(--rb-fg);border:1px solid var(--rb-line);border-radius:7px;background:var(--rb-shade);padding:7px 12px;cursor:pointer}
+.dsh-rb-action:first-child{border-color:color-mix(in srgb,var(--rb-accent) 65%,var(--rb-line))}
+.dsh-rb-action:hover{background:color-mix(in srgb,var(--rb-accent) 14%,var(--rb-shade))}
+.dsh-rb-local-note{font-size:12px!important;color:var(--rb-muted);margin:8px 0 0!important}
+.dsh-rb-interaction-status{font-size:.88em;margin:8px 0;color:var(--rb-muted);white-space:pre-wrap}
+.dsh-rb-interaction-status:empty{display:none}
+.dsh-rb-answer-feedback{font-size:.9em;margin-top:10px;padding:10px 12px;border-radius:7px;background:var(--rb-shade);white-space:pre-wrap}
+.dsh-rb-answer-feedback[data-verdict=correct]{border-left:3px solid #68a879}
+.dsh-rb-answer-feedback[data-verdict=incorrect]{border-left:3px solid #c67a67}
+.dsh-rb-answer-feedback[hidden]{display:none!important}
+.dsh-rb-field-input,.dsh-rb-copy-fallback{display:block;width:100%;min-width:0;background:var(--rb-fill);color:var(--rb-fg);font:inherit;padding:9px 10px;border:1px solid var(--rb-line);border-radius:7px;box-sizing:border-box}
+textarea.dsh-rb-field-input{min-height:78px;resize:vertical}
+.dsh-rb-copy-fallback{min-height:100px;max-height:220px;margin-top:12px;font-size:12px}
+.dsh-rb-field-error{font-size:.85em;margin-top:6px;color:var(--rb-muted)}
+.dsh-rb-field-error:empty{display:none}
+.dsh-rb-form-summary{font-size:.9em;padding:10px 12px;background:var(--rb-shade);border-radius:6px}
+.dsh-rb-parameters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px 24px;margin-bottom:18px}
+.dsh-rb-parameter{display:grid;grid-template-columns:minmax(0,1fr) 86px;gap:6px 12px;min-width:0}
+.dsh-rb-parameter-heading{display:flex;justify-content:space-between;gap:10px;grid-column:1/-1;align-items:baseline}
+.dsh-rb-parameter-heading label{font-weight:600;overflow-wrap:anywhere}
+.dsh-rb-parameter-heading output{font-size:.85em;color:var(--rb-muted);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.dsh-rb-parameter input[type=range]{width:100%;min-width:0;margin:0;accent-color:var(--rb-accent)}
+.dsh-rb-number-input{width:100%;min-width:0;background:var(--rb-fill);color:var(--rb-fg);border:1px solid var(--rb-line);border-radius:6px;font:inherit;font-size:.88em;padding:5px 7px}
+.dsh-rb-explorer-body{container:rb-explorer/inline-size;min-width:0}
+.dsh-rb-explorer-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+.dsh-rb-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:10px;margin:0}
+.dsh-rb-metric{background:var(--rb-shade);border:1px solid var(--rb-line);border-radius:8px;padding:9px 14px;min-width:100px;display:flex;flex-direction:column;gap:3px}
+.dsh-rb-metric span{font-size:.8em;color:var(--rb-muted)}
+.dsh-rb-metric strong{font-size:1.2em;font-weight:600;font-variant-numeric:lining-nums tabular-nums}
+.dsh-rb-live-chart{min-width:0;max-width:100%}
+.dsh-rb-live-chart .dsh-rb-numeric-plot{width:100%;min-width:480px;max-width:640px;height:auto}
+@container rb-explorer (min-width:720px){
+ .dsh-rb-explorer-layout[data-has-metrics=true]{grid-template-columns:152px minmax(0,1fr);gap:20px}
+ .dsh-rb-explorer-layout[data-has-metrics=true]>.dsh-rb-live-chart{grid-column:2;grid-row:1}
+ .dsh-rb-explorer-layout[data-has-metrics=true]>.dsh-rb-metrics{grid-column:1;grid-row:1;grid-template-columns:minmax(0,1fr);margin-top:38px}
+ .dsh-rb-metric{min-width:0;overflow-wrap:anywhere}
+}
+.dsh-rb-plot-scroll{overflow-x:auto;max-width:100%;padding:8px 0}
+.dsh-rb-explorer-data{min-width:0;max-width:100%;margin-top:18px}
+.dsh-rb-explorer-data .dsh-rb-chart-data{margin-top:0}
+.dsh-rb-explorer-data .dsh-rb-chart-data p{font-size:12px;margin:8px 0!important;color:var(--rb-muted)}
+.dsh-rb-rich{min-width:0;max-width:100%;text-align:left;font:inherit}
+.dsh-rb-rich-bar,.dsh-rb-rich-tabs,.dsh-rb-range-controls{display:flex;align-items:flex-end;flex-wrap:wrap;gap:8px;min-width:0;margin:0}
+.dsh-rb-rich-bar{margin-bottom:16px}
+.dsh-rb-rich-body>.dsh-rb-rich-tabs{margin-bottom:16px}
+.dsh-rb-rich-bar>.dsh-rb-rich-tabs,.dsh-rb-rich-bar>.dsh-rb-range-controls{max-width:100%;margin:0;align-self:flex-end}
+.dsh-rb-rich-bar .dsh-rb-action{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:38px;margin:0;padding:8px 12px;font-size:.88em;line-height:20px}
+.dsh-rb-rich-bar .dsh-rb-field-input:not([type=checkbox]):not([type=radio]){box-sizing:border-box;height:38px;min-height:38px;margin:0;padding:8px 10px;font-size:.88em;line-height:20px}
+.dsh-rb-rich-bar .dsh-rb-rich-label{margin:0;font-size:inherit}
+.dsh-rb-rich-bar .dsh-rb-rich-label>span{font-size:.85em;line-height:1.4}
+.dsh-rb-range-controls select{min-width:84px}
+.dsh-rb-rich-bar>.dsh-rb-field-input{width:min(100%,260px)}
+.dsh-rb-rich-label{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:.9em}
+.dsh-rb-rich-label:has(input[type=checkbox]),.dsh-rb-rich-label:has(input[type=radio]){flex-direction:row;align-items:center;gap:10px;margin:8px 0}
+.dsh-rb-rich-label input[type=checkbox],.dsh-rb-rich-label input[type=radio]{width:auto;accent-color:var(--rb-accent)}
+.dsh-rb-rich-label input[type=range]{width:100%;accent-color:var(--rb-accent)}
+.dsh-rb-rich-grid,.dsh-rb-dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin:14px 0;min-width:0}
+.dsh-rb-rich-card{border:1px solid var(--rb-line);background:var(--rb-shade);border-radius:9px;padding:14px;min-width:0;overflow-wrap:anywhere;margin:8px 0}
+.dsh-rb-rich-card>p{white-space:pre-wrap;margin:10px 0!important}
+.dsh-rb-rich-card>code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8em;margin-top:8px}
+.dsh-rb-rich-card a{color:var(--rb-accent);overflow-wrap:anywhere}
+.dsh-rb-rich :is(input,select,textarea,button):focus-visible{outline:2px solid var(--rb-accent);outline-offset:2px}
+.dsh-rb-rich [aria-pressed=true]{border-color:var(--rb-accent);background:color-mix(in srgb,var(--rb-accent) 13%,var(--rb-fill))}
+.dsh-rb-rich [data-highlight],.dsh-rb-step-scene [data-active=true]{outline:1px solid var(--rb-accent);background:color-mix(in srgb,var(--rb-accent) 12%,var(--rb-fill))}
+.dsh-rb-rich [data-highlight=false]{outline:none}
+.dsh-rb-rich [aria-invalid=true]{border-color:#c67a67}
+.dsh-rb-rich-hint,.dsh-rb-chart-readout{font-size:.85em;color:var(--rb-muted);margin:10px 0!important;white-space:pre-wrap}
+.dsh-rb-rich-bar>.dsh-rb-rich-hint{display:flex;align-items:center;min-height:38px;margin:0!important;line-height:20px}
+.dsh-rb-rich-bar>strong{display:flex;align-items:center;min-height:38px}
+.dsh-rb-rich-bar>.dsh-rb-chart-data{margin:0}
+.dsh-rb-chart-readout{min-height:1.7em}
+.dsh-rb-table-scroll{max-width:100%;overflow-x:auto;min-width:0}
+.dsh-rb-figure .dsh-rb-data-table{width:100%;border-collapse:collapse;margin:10px 0}
+.dsh-rb-figure .dsh-rb-data-table :is(th,td){text-align:left;vertical-align:top;border-bottom:1px solid var(--rb-line);padding:10px 12px;font-variant-numeric:lining-nums tabular-nums;white-space:pre-wrap}
+.dsh-rb-data-table .dsh-rb-field-input{min-width:110px}
+.dsh-rb-data-table th button{white-space:nowrap;padding:4px 6px}
+.dsh-rb-custom-chart{overflow-x:auto;max-width:100%}
+.dsh-rb-rich .dsh-rb-svg{touch-action:pan-y}
+.dsh-rb-rich [data-label-index]{cursor:crosshair}
+.dsh-rb-rich [data-label-index][data-highlight=true]{stroke:var(--rb-fg);stroke-width:2px}
+.dsh-rb-rich-legend{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:center;font-size:12px;margin:20px 0}
+.dsh-rb-rich-legend i{display:inline-block;width:12px;height:9px;border-radius:2px;margin-right:8px}
+.dsh-rb-rich progress{display:block;max-width:100%;width:100%;height:10px;accent-color:var(--rb-accent);margin:12px 0}
+.dsh-rb-timeline{list-style:none;padding-left:18px!important;border-left:2px solid var(--rb-accent)}
+.dsh-rb-gantt-row{display:grid;grid-template-columns:160px minmax(0,1fr);align-items:center;gap:12px;margin:12px 0}
+.dsh-rb-gantt-track{height:28px;position:relative;background:var(--rb-shade);border-radius:4px}
+.dsh-rb-gantt-bar{position:absolute;height:100%;background:var(--rb-accent);border-radius:4px;font:12px/28px Arial,sans-serif;text-align:center;color:var(--rb-fill);overflow:hidden}
+.dsh-rb-calendar{display:grid;grid-template-columns:repeat(7,minmax(80px,1fr));min-width:600px;gap:5px}
+.dsh-rb-calendar-day{min-height:90px;border:1px solid var(--rb-line);padding:6px;font-size:.85em}
+.dsh-rb-calendar-day[data-muted=true]{opacity:.5}
+.dsh-rb-calendar-event{padding:4px 6px;background:color-mix(in srgb,var(--rb-accent) 15%,var(--rb-fill));border-left:2px solid var(--rb-accent);margin-top:5px;overflow-wrap:anywhere}
+.dsh-rb-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
+.dsh-rb-board .dsh-rb-rich-card .dsh-rb-rich-card{background:var(--rb-fill)}
+.dsh-rb-outline{list-style:none!important;padding-left:16px!important;margin:8px 0!important}
+.dsh-rb-outline-node{border-left:1px solid var(--rb-line);padding:6px 12px}
+.dsh-rb-outline-node summary{cursor:pointer;font-weight:600}
+.dsh-rb-outline-node p{white-space:pre-wrap;margin:8px 0!important}
+.dsh-rb-outline-mindmap{overflow-x:auto;max-width:100%}
+.dsh-rb-outline-mindmap .dsh-rb-outline{display:flex;flex-direction:column;gap:10px;min-width:180px}
+.dsh-rb-outline-mindmap .dsh-rb-outline-node[open]{display:grid;grid-template-columns:minmax(150px,220px) auto;gap:12px;align-items:center}
+.dsh-rb-outline-mindmap .dsh-rb-outline-node>p{grid-column:1}
+.dsh-rb-outline-mindmap .dsh-rb-outline-node>.dsh-rb-outline{grid-column:2;grid-row:1/span 2}
+.dsh-rb-outline-accordion>.dsh-rb-outline{padding-left:0!important}
+.dsh-rb-step-scene{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.dsh-rb-step-scene>.dsh-rb-rich-card{flex:1;min-width:120px;text-align:center}
+.dsh-rb-figure .dsh-rb-diff-table{width:100%;min-width:500px;border-collapse:collapse;font:13px/1.7 "Cascadia Code",Consolas,"Microsoft YaHei",monospace}
+.dsh-rb-figure .dsh-rb-diff-table :is(td,th){text-align:left;vertical-align:top;white-space:pre-wrap;padding:7px 10px;border:1px solid var(--rb-line)}
+.dsh-rb-figure[data-content-kind=diff] .dsh-rb-rich .dsh-rb-diff-table :is(td,th){font-family:"Cascadia Code",Consolas,"Microsoft YaHei",monospace;font-size:13px;line-height:1.7}
+.dsh-rb-diff-table tr[data-change=add]{background:color-mix(in srgb,#68a879 15%,var(--rb-fill))}
+.dsh-rb-diff-table tr[data-change=delete]{background:color-mix(in srgb,#c67a67 15%,var(--rb-fill))}
+.dsh-rb-dashboard{grid-template-columns:minmax(0,1fr)}
+.dsh-rb-scenarios{margin:20px 0;max-width:100%;min-width:0}
+.dsh-rb-scenarios>summary{cursor:pointer;color:var(--rb-muted);font-size:.9em;margin-bottom:12px}
+.dsh-rb-scenarios .dsh-rb-numeric-plot{max-width:100%;height:auto}
+.dsh-rb-artifact{min-width:0;max-width:100%;text-align:left;font:inherit}
+.dsh-rb-artifact .dsh-rb-rich-select{width:min(100%,170px)}
+.dsh-rb-artifact-screen{min-width:0;max-width:100%;min-height:100px;margin-top:12px;border:1px solid var(--rb-line);border-radius:10px;overflow:hidden;background:var(--rb-fill);display:flex;align-items:center;justify-content:center;color:var(--rb-muted)}
+.dsh-rb-artifact-frame{display:block;width:100%;height:100%;border:0;background:var(--rb-fill);min-width:0}
+.dsh-rb-artifact-status{font-size:12px;color:var(--rb-muted);white-space:pre-wrap;overflow-wrap:anywhere;margin:10px 0 0}
+.dsh-rb-artifact-editor{margin-top:12px;min-width:0;max-width:100%}
+.dsh-rb-artifact-editor>textarea{height:300px;resize:vertical;margin-bottom:10px;font:13px/1.6 Consolas,"Microsoft YaHei",monospace;tab-size:2;white-space:pre}
+.dsh-rb-artifact-library,.dsh-rb-artifact-dialog{--rb-fg:var(--dsw-alias-label-primary,#eee);--rb-muted:var(--dsw-alias-label-secondary,#aaa);--rb-line:var(--dsw-alias-border-l2,#444);--rb-fill:var(--dsw-alias-bg-layer-1,#181818);--rb-shade:var(--dsw-alias-bg-layer-2,#282828);--rb-accent:var(--dsw-alias-state-business-primary,#6b87ec);color:var(--rb-fg);background:var(--rb-fill);font:14px/1.6 "Segoe UI","Microsoft YaHei",sans-serif;box-sizing:border-box}
+.dsh-rb-artifact-sidebar{height:100%;min-width:0;overflow:auto}
+.dsh-rb-artifact-library{min-height:100%;padding:16px;min-width:0;max-width:100%}
+.dsh-rb-artifact-library>h3{font:inherit;font-size:16px;font-weight:600;margin:0 0 14px}
+.dsh-rb-artifact[data-mode=sidebar] .dsh-rb-artifact-screen{height:65dvh;min-height:300px}
+.dsh-rb-artifact-dialog{width:calc(100vw - 40px);max-width:1600px;height:calc(100dvh - 64px);max-height:none;padding:16px;border:1px solid var(--rb-line);border-radius:12px;overflow:auto}
+.dsh-rb-artifact-dialog::backdrop{background:#0009}
+.dsh-rb-artifact-dialog-body{height:calc(100% - 50px);margin-top:12px;min-width:0}
+.dsh-rb-artifact[data-mode=fullscreen]{height:100%;display:flex;flex-direction:column}
+.dsh-rb-artifact[data-mode=fullscreen] .dsh-rb-artifact-screen{flex:1;min-height:200px}
+.dsh-rb-artifact [hidden]{display:none!important}
+@media(max-width:480px){.dsh-rb-artifact-dialog{width:calc(100vw - 16px);height:calc(100dvh - 32px);padding:10px}.dsh-rb-artifact-library{padding:10px}.dsh-rb-artifact .dsh-rb-rich-bar{gap:6px}}
+</style><style id="reply-css"></style>
+<header><div class="eyebrow">DEEPSEEK HARNESS · UNOFFICIAL COMMUNITY PLUGIN</div><h1>让回复更易读，让数据可操作。</h1><p>DSH Reply Beautify 0.6.0 · 独立通用样例，使用真实组件代码。不是 DSH 实机截图。</p><div class="controls"><label>排版 <select id="preset"><option value="default">默认</option><option value="chatgpt">ChatGPT</option><option value="claude">Claude</option></select></label><button id="theme">切换明暗</button><span>点击系列按钮、修改工时，或打开作品。</span></div></header>
+<main><div class="comparison"><section class="pane before"><div class="panehead">增强前 · 原始组件文本示意</div><div class="panecontent"><h2>比较预算和实际</h2><p>以下为专门构造的通用数据。</p><details><summary>查看原始组件文本 / View source</summary><pre id="source"></pre></details><blockquote>完整且通过校验的组件可转换为视图；仍可查看原文。</blockquote></div></section><section class="pane after" data-chat-flow-kind="assistant-step"><div class="panehead">增强后 · 真实渲染器</div><div class="panecontent _markdown_demo" id="target"></div></section></div><section class="pane extras"><div class="panehead">作品预览 · HTML / CSS / JavaScript</div><div class="panecontent" id="artifact"></div></section></main><footer>本页不连接模型、不包含聊天记录。独立 Chromium 样例通过不代表 DSH、Electron 或其他平台已验收。风格名称仅作参考，无官方关联。</footer>
+<script>(()=>{const factories={"./artifact-model.cjs":(require,module,exports)=>{'use strict';
+const MAX_HTML=30000,MAX_STATE=24000;
+function normalizeArtifact(d){
+ if(!d||d.type!=='artifact')return{error:'作品类型无效，保留原文'};
+ if(typeof d.id!=='string'||!/^[a-zA-Z][\w-]{0,63}$/.test(d.id))return{error:'作品需要稳定的英文 id'};
+ if(typeof d.title!=='string'||!d.title.trim()||d.title.length>120)return{error:'作品标题无效'};
+ if(!Number.isInteger(d.version)||d.version<1||d.version>9999)return{error:'作品版本必须是1–9999的整数'};
+ if(typeof d.html!=='string'||!d.html.trim()||d.html.length>MAX_HTML)return{error:'作品页面为空或超过30000字符'};
+ if(d.description!==undefined&&(typeof d.description!=='string'||d.description.length>600))return{error:'作品说明过长'};
+ return{kind:'artifact',id:d.id,title:d.title,version:d.version,html:d.html,description:d.description||'',height:Number.isFinite(d.height)?Math.round(Math.min(900,Math.max(260,d.height))):460};
+}
+function stateCopy(value){const text=JSON.stringify(value);if(!text||text.length>MAX_STATE)throw Error('作品状态超过24000字符');const result=JSON.parse(text);if(!result||typeof result!=='object'||Array.isArray(result))throw Error('作品状态必须是JSON对象');return result;}
+const scriptJSON=value=>JSON.stringify(value).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+// Two distinct opaque-origin sandboxes. The trusted outer document restricts
+// its child's navigations as well as forwarding only the documented messages.
+function artifactDocument(model,{channel,state={},theme='dark',preset='default'}={}){
+ const safe=stateCopy(state),colors=theme==='dark'?{bg:'#141414',fg:'#ededed',card:'#262626',line:'#444'}:{bg:'#faf9f6',fg:'#242424',card:'#f0efea',line:'#d8d5ce'};
+ const accent=preset==='claude'?'#d97757':preset==='chatgpt'?'#79b89d':'#6b87ec';
+ const font=preset==='claude'?'Georgia,"Microsoft YaHei",serif':'Arial,"Microsoft YaHei",sans-serif';
+ const innerPolicy="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+ const bridge=`(()=>{const channel=${scriptJSON(channel)};let state=${scriptJSON(safe)};const clone=v=>JSON.parse(JSON.stringify(v));const send=(action,value)=>parent.postMessage({dshArtifact:channel,action,value},'*');Object.defineProperty(window,'dshArtifact',{value:Object.freeze({getState:()=>clone(state),setState(value){const s=JSON.stringify(value);if(!s||s.length>${MAX_STATE})throw Error('状态过长');const v=JSON.parse(s);if(!v||typeof v!=='object'||Array.isArray(v))throw Error('状态必须是对象');state=v;send('state',v);}})});addEventListener('message',e=>{if(e.source!==parent||e.data?.dshArtifact!==channel||e.data.action!=='restore')return;state=e.data.value;dispatchEvent(new CustomEvent('dsh-artifact-state',{detail:clone(state)}));});addEventListener('error',e=>send('error',String(e.message).slice(0,300)));addEventListener('unhandledrejection',e=>send('error',String(e.reason?.message||e.reason).slice(0,300)));send('ready',null);})();`;
+ const inner=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="${innerPolicy}"><style>:root{color-scheme:${theme};--bg:${colors.bg};--fg:${colors.fg};--card:${colors.card};--line:${colors.line};--accent:${accent}}*{box-sizing:border-box}body{margin:0;padding:18px;background:var(--bg);color:var(--fg);font:15px/1.65 ${font}}button,input,select,textarea{font:inherit}button{cursor:pointer}canvas,svg{max-width:100%}</style><script>${bridge}<\/script></head><body>${model.html}</body></html>`;
+ const outerPolicy="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; frame-src about:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+ const outer=`(()=>{const channel=${scriptJSON(channel)},frame=document.createElement('iframe');frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('allow',"camera 'none'; microphone 'none'; geolocation 'none'; clipboard-read 'none'; clipboard-write 'none'; fullscreen 'none'");frame.referrerPolicy='no-referrer';frame.title=${scriptJSON(model.title)};frame.style='border:0;width:100%;height:100%;display:block';addEventListener('message',e=>{const d=e.data;if(!d||d.dshArtifact!==channel)return;if(e.source===frame.contentWindow&&['ready','state','error'].includes(d.action)){let value=null;if(d.action==='state'){try{const text=JSON.stringify(d.value);if(!text||text.length>${MAX_STATE})return;value=JSON.parse(text);if(!value||typeof value!=='object'||Array.isArray(value))return;}catch{return;}}else if(d.action==='error'){if(typeof d.value!=='string')return;value=d.value.slice(0,300);}parent.postMessage({dshArtifact:channel,action:d.action,value},'*');}else if(e.source===parent&&d.action==='restore')frame.contentWindow.postMessage({dshArtifact:channel,action:'restore',value:d.value},'*');});frame.srcdoc=${scriptJSON(inner)};document.body.append(frame);})();`;
+ return `<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${outerPolicy}"><style>html,body{height:100%;margin:0;overflow:hidden}</style></head><body><script>${outer}<\/script></body></html>`;
+}
+module.exports={normalizeArtifact,artifactDocument,stateCopy,MAX_HTML,MAX_STATE};
+
+},
+"./artifact-store.cjs":(require,module,exports)=>{'use strict';
+const {normalizeArtifact,stateCopy,MAX_HTML}=require('./artifact-model.cjs');
+const {fingerprint}=require('./interactive-state.cjs');
+const KEY='dsh.reply-beautify.artifacts.v1';
+function createArtifactStore(storage){
+ let records=Object.create(null),selected=Object.create(null),available=!!storage,snapshot=0,stamp=Date.now();const listeners=new Set();
+ try{const raw=storage?.getItem(KEY);if(raw&&raw.length<=1800000){const d=JSON.parse(raw);if(d?.schema===1&&d.records&&typeof d.records==='object'){
+  for(const [key,r]of Object.entries(d.records).slice(0,12)){
+   if(!r||typeof r.session!=='string'||typeof r.id!=='string'||key!=='a:'+fingerprint(r.session+'\n'+r.id)||!Array.isArray(r.versions)||!r.versions.length)continue;
+   const versions=r.versions.filter(v=>v&&typeof v.key==='string'&&typeof v.html==='string'&&v.html.length<=MAX_HTML&&typeof v.label==='string'&&['model','local'].includes(v.origin)&&Number.isInteger(v.number)).slice(-6);
+   if(!versions.length)continue;const model=normalizeArtifact({type:'artifact',id:r.id,title:r.title,version:1,html:versions[0].html,height:r.height,description:r.description});if(model.error)continue;
+   let state={};try{state=stateCopy(r.state||{});}catch{}
+   records[key]={id:model.id,title:model.title,description:model.description,height:model.height,session:r.session,versions,latestModel:Math.max(Number.isInteger(r.latestModel)?r.latestModel:0,...versions.filter(v=>v.origin==='model').map(v=>v.number)),active:versions.some(v=>v.key===r.active)?r.active:versions.at(-1).key,state,draft:typeof r.draft==='string'&&r.draft.length<=MAX_HTML?r.draft:null,updated:Number.isFinite(r.updated)?r.updated:0};
+   stamp=Math.max(stamp,records[key].updated);
+  }
+  if(d.selected&&typeof d.selected==='object')for(const [session,key]of Object.entries(d.selected))if(records[key]?.session===session)selected[session]=key;
+ }}}catch{available=false;}
+ function notify(){snapshot++;for(const fn of [...listeners])fn();}
+ function touch(){stamp=Math.max(stamp+1,Date.now());return stamp;}
+ function commit(){
+  const sorted=Object.keys(records).sort((a,b)=>records[b].updated-records[a].updated);for(const key of sorted.slice(12))delete records[key];
+  for(const r of Object.values(records))while(r.versions.length>6){const i=r.versions.findIndex(v=>v.key!==r.active);r.versions.splice(i,1);}
+  let text;for(;;){for(const [s,k]of Object.entries(selected))if(!records[k])delete selected[s];text=JSON.stringify({schema:1,records,selected});if(text.length<=1800000)break;const key=Object.keys(records).sort((a,b)=>records[a].updated-records[b].updated)[0];if(Object.keys(records).length<=1)break;delete records[key];}
+  try{storage.setItem(KEY,text);available=true;}catch{available=false;}notify();
+ }
+ function get(key){return records[key];}
+ function current(key){const r=get(key);return r?.versions.find(v=>v.key===r.active);}
+ return{get,current,getSnapshot:()=>snapshot,subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},persistent:()=>available,
+  list(session){return Object.keys(records).filter(k=>records[k].session===session).sort((a,b)=>records[b].updated-records[a].updated);},
+  selected(session){return records[selected[session]]?selected[session]:this.list(session)[0];},
+  select(key){const r=get(key);if(r){selected[r.session]=key;r.updated=touch();commit();}},
+  ingest(session,model){if(typeof session!=='string'||!session)throw Error('尚未取得会话标记，原文已保留');const key='a:'+fingerprint(session+'\n'+model.id),versionKey='m:'+model.version+':'+fingerprint(model.html);let r=get(key);
+   if(r?.versions.some(v=>v.key===versionKey))return key;
+   if(r?.versions.some(v=>v.origin==='model'&&v.number===model.version))throw Error('相同作品版本包含不同内容，请让模型增加version后重新输出');
+   if(!r){r={id:model.id,title:model.title,description:model.description,height:model.height,session,versions:[],latestModel:0,active:null,state:{},draft:null,updated:0};records[key]=r;}
+   const newer=model.version>r.latestModel;r.latestModel=Math.max(r.latestModel,model.version);
+   r.versions.push({key:versionKey,number:model.version,origin:'model',label:'模型 v'+model.version,html:model.html});
+   if(newer){r.active=versionKey;r.title=model.title;r.description=model.description;r.height=model.height;}
+   r.updated=touch();commit();return key;
+  },
+  activate(key,version){const r=get(key);if(r?.versions.some(v=>v.key===version)){r.active=version;r.updated=touch();commit();}},
+  edit(key,html){if(typeof html!=='string'||!html.trim()||html.length>MAX_HTML)throw Error('源码须为1–30000字符');const r=get(key);if(!r)throw Error('作品不存在');const number=Math.max(0,...r.versions.filter(v=>v.origin==='local').map(v=>v.number))+1,v={key:'l:'+number+':'+fingerprint(html),number,origin:'local',label:'本机修改 '+number,html};r.versions.push(v);r.active=v.key;r.draft=null;r.updated=touch();commit();},
+  draft(key,value){const r=get(key);if(r&&typeof value==='string'&&value.length<=MAX_HTML){r.draft=value;r.updated=touch();commit();}},
+  saveState(key,value){const r=get(key);if(!r)return false;const safe=stateCopy(value);if(JSON.stringify(r.state)===JSON.stringify(safe))return false;r.state=safe;r.updated=touch();commit();return true;},
+  dispose(){listeners.clear();}
+ };
+}
+module.exports={KEY,createArtifactStore};
+
+},
+"./artifact-view.cjs":(require,module,exports)=>{'use strict';
+const {el}=require('./content-view.cjs');
+const {artifactDocument,stateCopy}=require('./artifact-model.cjs');
+const {createArtifactStore}=require('./artifact-store.cjs');
+const TAB_KIND='reply-beautify-artifacts',TAB_ID='dsh-reply-beautify/artifacts';
+function createArtifactWorkspace(doc,preferences,{sidebar,storage}={}){
+ const view=doc.defaultView,store=createArtifactStore(storage),cleanups=new Set(),modals=new Set();let disposed=false;
+ const unmodals=preferences.subscribe(()=>{if(!preferences.getSnapshot().preferences.enabled)for(const end of [...modals])end();});
+ function own(cleanup){cleanups.add(cleanup);return()=>{cleanup();cleanups.delete(cleanup);};}
+ function openSidebar(key){if(!sidebar?.openTab)throw Error('当前DSH没有可用的作品侧栏接口');store.select(key);sidebar.openTab(TAB_KIND);}
+ function fullscreen(key){
+  const dialog=el(doc,'dialog',{class:'dsh-rb-artifact-dialog','data-dsh-rb-owned':'','aria-label':'作品全屏预览'}),close=el(doc,'button',{type:'button',class:'dsh-rb-action'},'关闭全屏'),body=el(doc,'div',{class:'dsh-rb-artifact-dialog-body'});
+  dialog.append(close,body);doc.body.append(dialog);const preview=previewFor(key,{mode:'fullscreen'});body.append(preview.node);
+  const trigger=doc.activeElement;
+  let ended=false;const end=()=>{if(ended)return;ended=true;preview.cleanup();dialog.remove();cleanups.delete(end);modals.delete(end);if(trigger?.isConnected)trigger.focus();};cleanups.add(end);modals.add(end);close.addEventListener('click',end);dialog.addEventListener('cancel',e=>{e.preventDefault();end();});
+  if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');close.focus();
+ }
+ function previewFor(key,{mode='inline'}={}){
+  const host=el(doc,'section',{class:'dsh-rb-artifact','data-dsh-rb-owned':'','data-mode':mode}),bar=el(doc,'div',{class:'dsh-rb-rich-bar'}),versions=el(doc,'select',{'aria-label':'作品版本',class:'dsh-rb-field-input dsh-rb-rich-select'}),status=el(doc,'p',{class:'dsh-rb-artifact-status',role:'status','aria-live':'polite'}),screen=el(doc,'div',{class:'dsh-rb-artifact-screen'}),editor=el(doc,'div',{class:'dsh-rb-artifact-editor'}),area=el(doc,'textarea',{class:'dsh-rb-field-input',spellcheck:'false','aria-label':'作品HTML源码',maxlength:'30000'});
+  let frame=null,channel='',running=false,ended=false,active='',optionStamp='',editorOpen=false,lastState='',lastTheme='',themeObserver;
+  const action=(label,fn)=>{const b=el(doc,'button',{type:'button',class:'dsh-rb-action'},label);b.addEventListener('click',()=>{try{fn();}catch(e){status.textContent=e.message;}});return b;};
+  function stop(){running=false;view.removeEventListener('message',receive);themeObserver?.disconnect();themeObserver=null;frame?.remove();frame=null;channel='';screen.style.height='';run.textContent='运行预览';screen.textContent='点击“运行预览”打开作品。';}
+  function start(){if(!preferences.getSnapshot().preferences.enabled){status.textContent='请先开启美化';return;}const r=store.get(key),v=store.current(key);if(!r||!v)return;stop();running=true;channel=view.crypto?.randomUUID?.()||'rb-'+Date.now()+'-'+Math.random().toString(36).slice(2);frame=el(doc,'iframe',{class:'dsh-rb-artifact-frame',title:r.title,sandbox:'allow-scripts',allow:"camera 'none'; microphone 'none'; geolocation 'none'; clipboard-read 'none'; clipboard-write 'none'; fullscreen 'none'",referrerpolicy:'no-referrer'});
+   const p=preferences.getSnapshot().preferences,theme=doc.body.hasAttribute('data-ds-dark-theme')?'dark':'light';lastTheme=theme+'|'+p.preset;lastState=JSON.stringify(r.state);
+   view.addEventListener('message',receive);if(view.MutationObserver){themeObserver=new view.MutationObserver(sync);themeObserver.observe(doc.body,{attributes:true,attributeFilter:['data-ds-dark-theme']});}
+   frame.srcdoc=artifactDocument({...r,html:v.html},{channel,state:r.state,theme,preset:p.preset});screen.replaceChildren(frame);screen.style.height=mode==='inline'?r.height+'px':'';run.textContent='停止预览';status.textContent='正在载入作品…';
+  }
+  const run=action('运行预览',()=>running?stop():start()),edit=action('编辑源码',()=>{editorOpen=!editorOpen;editor.hidden=!editorOpen;edit.textContent=editorOpen?'收起源码':'编辑源码';if(editorOpen){area.value=store.get(key)?.draft??store.current(key)?.html??'';area.focus();}});
+  bar.append(run,versions,edit);
+  if(mode==='inline')bar.append(action('在侧栏打开',()=>{openSidebar(key);stop();}));
+  if(mode!=='fullscreen')bar.append(action('全屏预览',()=>{stop();fullscreen(key);}));
+  bar.append(action('复制当前源码',async()=>{try{await view.navigator.clipboard.writeText(store.current(key).html);status.textContent='当前源码已复制';}catch{editorOpen=true;editor.hidden=false;edit.textContent='收起源码';area.value=store.current(key).html;area.focus();area.select();status.textContent='请复制选中的源码';}}));
+  versions.addEventListener('change',()=>store.activate(key,versions.value));
+  const editBar=el(doc,'div',{class:'dsh-rb-rich-bar'});editBar.append(action('应用为新版本',()=>{store.edit(key,area.value);status.textContent=store.persistent()?'已保存本机修改，可通过版本菜单切换':'存储不可用，修改版仅保留在本次页面';}),action('恢复当前版本源码',()=>{area.value=store.current(key).html;store.draft(key,area.value);status.textContent='已恢复当前版本源码';}));
+  area.addEventListener('input',()=>{store.draft(key,area.value);if(!store.persistent())status.textContent='存储不可用，源码草稿仅保留在本次页面';});editor.append(area,editBar);editor.hidden=true;host.append(bar,screen,editor,status);stop();
+  function sync(){if(ended)return;const r=store.get(key),v=store.current(key);if(!r||!v){stop();status.textContent='此作品已超出本机保留范围，请重新打开原回复';return;}
+   const stamp=r.versions.map(v=>v.key).join('|');if(stamp!==optionStamp){versions.replaceChildren(...r.versions.map(v=>el(doc,'option',{value:v.key},v.label)));optionStamp=stamp;}versions.value=r.active;
+   const p=preferences.getSnapshot().preferences;host.dataset.preset=p.preset;
+   const theme=(doc.body.hasAttribute('data-ds-dark-theme')?'dark':'light')+'|'+p.preset;
+   if(active!==v.key||running&&theme!==lastTheme){active=v.key;if(running)start();if(editorOpen&&r.draft===null)area.value=v.html;}
+   const state=JSON.stringify(r.state);if(running&&frame&&state!==lastState){lastState=state;frame.contentWindow?.postMessage({dshArtifact:channel,action:'restore',value:stateCopy(r.state)},'*');}
+  }
+  function receive(e){if(ended||!running||!frame||e.source!==frame.contentWindow||!e.data||e.data.dshArtifact!==channel)return;const d=e.data;
+   if(d.action==='state'){try{store.saveState(key,d.value);status.textContent=store.persistent()?'作品状态已保存在本机':'本机存储不可用，状态仅保留在本次页面';}catch(err){status.textContent=err.message;}}
+   else if(d.action==='error'&&typeof d.value==='string')status.textContent='作品运行错误：'+d.value.slice(0,300);
+   else if(d.action==='ready')status.textContent=store.persistent()?'作品已就绪；已接入状态API的操作可在本机恢复':'作品已就绪；状态仅在本次页面保留';
+  }
+  const unsub=store.subscribe(sync),unpref=preferences.subscribe(()=>{if(!preferences.getSnapshot().preferences.enabled)stop();sync();});sync();
+  const cleanup=own(()=>{if(ended)return;ended=true;stop();unsub();unpref();themeObserver?.disconnect();view.removeEventListener('message',receive);});
+  return{node:host,cleanup,setVisible(visible){if(!visible)stop();}};
+ }
+ function mountSidebar(node,session){
+  const shell=el(doc,'section',{class:'dsh-rb-artifact-library','data-dsh-rb-owned':''}),list=el(doc,'div',{class:'dsh-rb-rich-bar'}),body=el(doc,'div');shell.append(el(doc,'h3',{},'作品空间'),list,body);node.append(shell);let mountedKey,preview;
+  function sync(){if(disposed)return;const keys=store.list(session),key=store.selected(session);list.replaceChildren();for(const k of keys){const b=el(doc,'button',{type:'button',class:'dsh-rb-action','aria-pressed':String(k===key)},store.get(k).title);b.addEventListener('click',()=>store.select(k));list.append(b);}
+   if(key===mountedKey)return;preview?.cleanup();body.replaceChildren();mountedKey=key;
+   if(key){preview=previewFor(key,{mode:'sidebar'});body.append(preview.node);}else body.append(el(doc,'p',{},'此对话还没有作品。在回复中的作品卡片选择“在侧栏打开”。'));
+  }
+  const unsub=store.subscribe(sync);sync();return own(()=>{unsub();preview?.cleanup();shell.remove();});
+ }
+ return{store,openSidebar,mountSidebar,
+  render(model,source){const session=source.closest('[data-dsh-rb-session]')?.getAttribute('data-dsh-rb-session');const key=store.ingest(session,model);return previewFor(key);},
+  dispose(){disposed=true;unmodals();for(const cleanup of [...cleanups])cleanup();cleanups.clear();modals.clear();store.dispose();}
+ };
+}
+module.exports={createArtifactWorkspace,TAB_KIND,TAB_ID};
+
+},
+"./content-controller.cjs":(require,module,exports)=>{'use strict';
+const { REPLY_SELECTOR } = require('./core.cjs');
+const { parseContent } = require('./content-model.cjs');
+const { el,renderContent,exportSvg } = require('./content-view.cjs');
+const { renderInteractive } = require('./interactive-view.cjs');
+const { createInteractionState } = require('./interactive-state.cjs');
+const {TYPES:RICH_TYPES}=require('./rich-model.cjs');
+const LANGUAGE_SELECTOR='[data-code-block-banner] [class*="language"],[data-code-block-banner] [class*="infostring"],[class*="_infostring_"]';
+
+function readBlock(block) {
+  const content=block.querySelector('[data-code-block-content]') || block;
+  const code=content.querySelector('code');
+  // Native highlighted text has nested spans, but textContent retains source.
+  const source=(code || content).textContent || '';
+  const banner=block.querySelector(LANGUAGE_SELECTOR);
+  let language=(banner?.textContent || code?.className?.match(/language-([\w-]+)/)?.[1] || '').trim();
+  if(/^(?:代码块|code block)$/i.test(language))language='';
+  return {language,source};
+}
+function createContentController(doc,store,{mountMath,artifactWorkspace,settleMs=650}={}) {
+  const view=doc.defaultView;
+  if (!view?.MutationObserver) return {dispose(){}};
+  const entries=new Map(),byRoot=new Map(),pending=new Map(),blocksByRoot=new Map(),sourcesByFigure=new WeakMap();
+  let storage;try{storage=view.localStorage;}catch{}
+  const stateStore=createInteractionState(storage);
+  let observer,disposed=false,enabled=false,timer=null,lastStyle='';
+  const now=()=>view.performance?.now?.()??Date.now();
+  function track(node,entry,root) {
+    entry.root=root;entries.set(node,entry);sourcesByFigure.set(entry.figure,node);
+    if(!byRoot.has(root))byRoot.set(root,new Set());byRoot.get(root).add(node);
+  }
+  function remove(node) {
+    const entry=entries.get(node);if(!entry)return;
+    try{entry.cleanup?.();}catch{}finally{
+      entry.figure.remove();node.removeAttribute('data-dsh-rb-source');entries.delete(node);sourcesByFigure.delete(entry.figure);
+      const nodes=byRoot.get(entry.root);nodes?.delete(node);if(!nodes?.size)byRoot.delete(entry.root);
+      const block=blocksByRoot.get(entry.root)?.get(node);if(block){block.done=false;block.due=now()+settleMs;}
+    }
+  }
+  function clear() {
+    if(timer!==null)view.clearTimeout(timer);timer=null;pending.clear();
+    [...entries.keys()].forEach(remove);byRoot.clear();blocksByRoot.clear();
+  }
+  function eligible(node) { return node.isConnected && node.closest(REPLY_SELECTOR) && !node.closest('[data-dsh-rb-owned]'); }
+  function button(label,callback) { const b=el(doc,'button',{type:'button'},label);b.addEventListener('click',callback);return b; }
+  function render(node,language,source) {
+    if (!eligible(node) || entries.has(node)) return;
+    const model=parseContent(language,source);
+    if (!model) return;
+    const p=store.getSnapshot().preferences;
+    const figure=el(doc,'figure',{class:'dsh-rb-figure','data-dsh-rb-owned':'','data-preset':p.preset,'data-content-kind':model.kind || 'fallback'});
+    figure.style.setProperty('--dsh-rb-content-gap',p.paragraph+'px');
+    const toolbar=el(doc,'div',{class:'dsh-rb-toolbar'}),status=el(doc,'div',{class:'dsh-rb-status',role:'status','aria-live':'polite'});
+    const interactive=['quiz','explorer','form','chart',...RICH_TYPES].includes(model.kind);
+    const stateKey=interactive?stateStore.keyFor(node,source):null;
+    const kind={fields:'结构图',flow:'流程图',chart:'数据图表',math:'公式',quiz:'选择与自测',explorer:'参数探索',form:'信息表单',table:'交互表格',calculator:'计算器',compare:'方案比较',schedule:'时间与排期',board:'清单与看板',tree:'层级与阅读',steps:'分步演示',wizard:'分支向导',diff:'内容对照',sources:'证据与来源',dashboard:'联动报告'}[model.kind] || '原文';
+    toolbar.append(el(doc,'span',{class:'dsh-rb-toolbar-label'},model.kind==='artifact'?'交互作品':model.origin==='ascii'?'文本图 · 结构视图':kind));
+    const viewport=el(doc,'div',{class:'dsh-rb-viewport',tabindex:'0','aria-label':`${kind}，宽内容可横向滚动`});
+    let showSource=!!model.error,mathCleanup,interactiveCleanup;
+    const sourceButton=button(showSource?'原文已显示':'查看原文',()=>{
+      if(model.error)return;
+      showSource=!showSource;
+      node.setAttribute('data-dsh-rb-source',showSource?'shown':'hidden');viewport.hidden=showSource;
+      entries.get(node)?.setVisible?.(!showSource);
+      sourceButton.textContent=showSource?'返回图示':'查看原文';sourceButton.setAttribute('aria-pressed',String(showSource));
+    });
+    sourceButton.setAttribute('aria-pressed',String(showSource));
+    if(model.error)sourceButton.disabled=true;
+    toolbar.append(sourceButton,button('复制原文',async()=>{
+      try {await view.navigator.clipboard.writeText(source);status.textContent='原文已复制';}
+      catch {node.setAttribute('data-dsh-rb-source','shown');viewport.hidden=true;entries.get(node)?.setVisible?.(false);showSource=true;sourceButton.textContent='返回图示';sourceButton.setAttribute('aria-pressed','true');status.textContent='无法自动复制，请在上方原文中选择并复制';}
+    }));
+    figure.append(toolbar);
+    if(model.title)figure.append(el(doc,'figcaption',{class:'dsh-rb-title'},model.title));
+    figure.append(viewport,status);
+    if(model.description)figure.append(el(doc,'p',{class:'dsh-rb-description'},model.description));
+    const entry={figure,source,language,stateKey,cleanup:()=>{mathCleanup?.();interactiveCleanup?.();}};track(node,entry,node.closest(REPLY_SELECTOR));
+    node.after(figure);
+    if(model.error) { viewport.hidden=true;status.textContent=model.error;return; }
+    try {
+      const result=model.kind==='artifact'?artifactWorkspace.render(model,node):interactive?renderInteractive(doc,model,{stateStore,stateKey}):renderContent(doc,model,mountMath);viewport.append(result.node);interactiveCleanup=result.cleanup;entry.setVisible=result.setVisible;
+      if(model.kind==='math') {
+        // Keep source visible until the native renderer has actually produced math.
+        const mounted=result.mount?.();mathCleanup=mounted?.dispose;
+        let attempts=0;
+        const check=()=>{
+          if(disposed || entries.get(node)!==entry)return;
+          if(result.node.querySelector('.katex-error') || mounted?.failed?.()) {status.textContent='公式无法渲染，原文已保留';viewport.hidden=true;sourceButton.disabled=true;sourceButton.textContent='原文已显示';sourceButton.setAttribute('aria-pressed','true');return;}
+          if(result.node.querySelector('.katex')) {if(!showSource)node.setAttribute('data-dsh-rb-source','hidden');return;}
+          if(++attempts<20)mathTimer=view.setTimeout(check,50);
+          else {status.textContent='公式渲染未完成，原文已保留';viewport.hidden=true;sourceButton.disabled=true;sourceButton.textContent='原文已显示';sourceButton.setAttribute('aria-pressed','true');}
+        };
+        let mathTimer=view.setTimeout(check,0);
+        const disposeRoot=mathCleanup;mathCleanup=()=>{view.clearTimeout(mathTimer);disposeRoot?.();};
+      } else node.setAttribute('data-dsh-rb-source','hidden');
+      const svg=viewport.querySelector('svg');
+      if(svg&&model.kind!=='chart')toolbar.append(button('导出 SVG',()=>{try{exportSvg(viewport.querySelector('svg'));status.textContent='已生成 SVG 文件';}catch{status.textContent='导出失败，仍可查看和复制原文';}}));
+    } catch(error) {
+      node.removeAttribute('data-dsh-rb-source');viewport.hidden=true;status.textContent=model.kind==='artifact'?'作品无法打开：'+String(error.message).slice(0,200)+'；原文已保留':'增强显示失败，原文已保留';sourceButton.disabled=true;sourceButton.textContent='原文已显示';
+    }
+  }
+  function candidates(root) {
+    return [...root.querySelectorAll('.md-code-block'),...root.querySelectorAll('p'),...root.querySelectorAll('img[alt]')].filter(n=>!n.closest('[data-dsh-rb-owned]')&&(n.matches('.md-code-block,img')||(/^\\\[[\s\S]*\\\]$/.test(n.textContent.trim()) && !n.querySelector('code,img,.katex'))));
+  }
+  function dataFor(node) {
+    return node.matches('img')?{language:'image-alt',source:node.getAttribute('alt')||''}:node.matches('.md-code-block')?readBlock(node):{language:'math',source:node.textContent};
+  }
+  function delayFor(node,data,root) {
+    // Structured components are complete only after the whole JSON validates.
+    // For non-JSON diagrams, subsequent native Markdown is an end-of-block hint.
+    let following=false;
+    for(let n=node;n&&n!==root;n=n.parentElement){let s=n.nextElementSibling;while(s){if(!s.hasAttribute('data-dsh-rb-owned')&&s.textContent.trim()){following=true;break;}s=s.nextElementSibling;}if(following)break;}
+    if(data.language!=='image-alt'&&(/^\s*\{[\s\S]*\}\s*$/.test(data.source)||following)){
+      const model=parseContent(data.language,data.source);
+      if(model&&!model.error)return Math.min(120,settleMs);
+    }
+    return settleMs;
+  }
+  function schedule(root) {
+    if(!enabled || !root)return;
+    if(!root.isConnected || !root.matches(REPLY_SELECTOR)) {
+      [...(byRoot.get(root)||[])].forEach(remove);pending.delete(root);blocksByRoot.delete(root);return;
+    }
+    // If streaming updates a previously rendered block, reveal the updated native
+    // source immediately; never leave a stale diagram in place.
+    for(const node of [...(byRoot.get(root)||[])]) {
+      const entry=entries.get(node);
+      if(!eligible(node)||node.closest(REPLY_SELECTOR)!==root||!entry.figure.isConnected){remove(node);continue;}
+      if(entry.image){if(entry.figure.textContent!==node.getAttribute('alt')?.trim())remove(node);continue;}
+      const next=node.matches('.md-code-block')?readBlock(node):{language:'math',source:node.textContent};
+      if(next.source!==entry.source || next.language!==entry.language)remove(node);
+      else if(entry.stateKey&&entry.stateKey!==stateStore.keyFor(node,next.source))remove(node);
+    }
+    const blocks=blocksByRoot.get(root)||new Map(),present=new Set(candidates(root));let due=Infinity;
+    blocksByRoot.set(root,blocks);
+    for(const node of present){
+      const data=dataFor(node);let block=blocks.get(node);
+      if(!block||block.source!==data.source||block.language!==data.language){block={...data,due:now()+delayFor(node,data,root),done:entries.has(node)};blocks.set(node,block);}
+      if(!block.done){
+        // A following paragraph can confirm a previously open Mermaid block.
+        block.due=Math.min(block.due,now()+delayFor(node,data,root));
+        due=Math.min(due,block.due);
+      }
+    }
+    for(const node of blocks.keys())if(!present.has(node)){blocks.delete(node);remove(node);}
+    if(due<Infinity)pending.set(root,due);else pending.delete(root);
+  }
+  function renderRoot(root) {
+      if(!enabled || !root.isConnected || !root.matches(REPLY_SELECTOR))return;
+      const blocks=blocksByRoot.get(root);if(!blocks)return;
+      const started=now();let count=0;
+      for(const [node,block] of blocks) {
+        if(!eligible(node)){blocks.delete(node);remove(node);continue;}
+        if(block.done||block.due>now())continue;
+        const data=dataFor(node);
+        if(data.source!==block.source||data.language!==block.language){blocks.set(node,{...data,done:false,due:now()+delayFor(node,data,root)});continue;}
+        block.done=true;
+        if(data.language==='image-alt')renderImage(node,root);else render(node,data.language,data.source);
+        if(++count>=8||now()-started>=8)break;
+      }
+      let due=Infinity;for(const b of blocks.values())if(!b.done)due=Math.min(due,b.due);
+      if(due<Infinity)pending.set(root,due);
+  }
+  function renderImage(img,root) {
+      // Preserve native image/lightbox behavior. Add only an adjacent caption.
+        if(entries.has(img) || img.closest('[data-dsh-rb-owned]'))return;
+        const alt=img.getAttribute('alt')?.trim();
+        if(!alt || alt.length>400 || /^(?:(?:image|img|图片|图像)$|https?:\/\/|[\w.-]+\.(?:png|jpg|jpeg|gif|svg|webp)$)/i.test(alt))return;
+        const parent=img.closest('p');
+        if(!parent || parent.textContent.trim() || parent.querySelectorAll('img').length!==1)return;
+        const figure=el(doc,'span',{class:'dsh-rb-image-caption','data-dsh-rb-owned':''},alt);parent.after(figure);track(img,{figure,image:true},root);
+  }
+  // Per-block deadlines share one timer; prose cannot postpone completed blocks.
+  // Historical replies are rendered in
+  // bounded batches, yielding between batches instead of blocking one long task.
+  function arm() {
+    if(timer!==null)view.clearTimeout(timer);timer=null;
+    if(!enabled||disposed||!pending.size)return;
+    let due=Infinity;for(const t of pending.values())due=Math.min(due,t);
+    timer=view.setTimeout(flush,Math.max(0,due-now()));
+  }
+  function flush() {
+    timer=null;if(!enabled||disposed)return;
+    const started=now();let count=0;
+    for(const [root,due] of pending)if(due<=now()) {
+      pending.delete(root);renderRoot(root);
+      if(++count>=6||now()-started>=8)break;
+    }
+    arm();
+  }
+  function collect(node,roots) {
+    const target=node.nodeType===1?node:node.parentElement;
+    if(!target || target.closest('[data-dsh-rb-owned]'))return;
+    if(byRoot.has(target)||pending.has(target)||blocksByRoot.has(target))roots.add(target);
+    const nearest=target.closest(REPLY_SELECTOR);if(nearest)roots.add(nearest);
+    target.querySelectorAll?.(REPLY_SELECTOR).forEach(root=>roots.add(root));
+    // Native rows/Markdown nodes may be reused with different role/class attrs.
+    // Include formerly tracked roots even if the current selector no longer fits.
+    target.querySelectorAll?.('[class*="_markdown_"]').forEach(root=>{if(byRoot.has(root)||pending.has(root)||blocksByRoot.has(root))roots.add(root);});
+  }
+  function detached(node) {
+    if(node.isConnected)return;
+    for(const item of [node,...(node.querySelectorAll?.('*')||[])]) {
+      if(entries.has(item))remove(item);
+      if(byRoot.has(item))[...byRoot.get(item)].forEach(remove);
+      pending.delete(item);blocksByRoot.delete(item);
+    }
+  }
+  function start() {
+    if(observer)return;
+    observer=new view.MutationObserver(records=>{
+      const roots=new Set();
+      for(const record of records) {
+        if(record.type==='characterData' || record.type==='attributes')collect(record.target,roots);
+        else {
+          const changes=[...record.addedNodes,...record.removedNodes];
+          if(changes.length && changes.every(n=>n.nodeType===1 && n.hasAttribute('data-dsh-rb-owned'))){
+            for(const figure of record.removedNodes){const source=sourcesByFigure.get(figure);if(source&&!figure.isConnected){remove(source);collect(source,roots);}}
+            continue;
+          }
+          collect(record.target,roots);record.addedNodes.forEach(n=>collect(n,roots));record.removedNodes.forEach(detached);
+        }
+      }
+      roots.forEach(schedule);arm();
+    });
+    observer.observe(doc.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['alt','class','data-dsh-rb-session','data-chat-flow-kind','data-chat-group-part','data-chat-node-key','data-markdown-variant']});
+    doc.querySelectorAll(REPLY_SELECTOR).forEach(schedule);arm();
+  }
+  function update() {
+    const p=store.getSnapshot().preferences;enabled=p.enabled;
+    if(!enabled) {observer?.disconnect();observer=null;clear();return;}
+    const style=p.preset+'|'+p.paragraph;
+    if(style!==lastStyle){entries.forEach(e=>{if(!e.image){e.figure.dataset.preset=p.preset;e.figure.style.setProperty('--dsh-rb-content-gap',p.paragraph+'px');}});lastStyle=style;}
+    start();
+  }
+  const unsubscribe=store.subscribe(update);update();
+  return {dispose(){disposed=true;enabled=false;unsubscribe();observer?.disconnect();observer=null;clear();}};
+}
+module.exports={readBlock,createContentController};
+
+},
+"./content-model.cjs":(require,module,exports)=>{'use strict';
+const {normalizeInteractive}=require('./interactive-model.cjs');
+const {TYPES:RICH_TYPES,normalizeRich}=require('./rich-model.cjs');
+const {normalizeArtifact}=require('./artifact-model.cjs');
+
+// Parse data only. No code execution, HTML, remote resources or guessed values.
+const MAX_SOURCE = 40000;
+const text = (value, max=240) => typeof value === 'string' && value.trim().length > 0 && value.length <= max ? value : null;
+const fail = reason => ({ error: reason });
+function label(value) { return text(value,240); }
+function normalizeDiagram(data) {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return fail('图示必须是一个 JSON 对象');
+  if (data.title !== undefined && !text(data.title,160)) return fail('标题无效或过长');
+  if (data.description !== undefined && !text(data.description,600)) return fail('说明无效或过长');
+  const common = { title:data.title || '', description:data.description || '' };
+  if (data.type === 'flow') {
+    if (!['TD','LR',undefined].includes(data.direction)) return fail('流程方向只支持 TD / LR');
+    if (!Array.isArray(data.nodes) || !data.nodes.length || data.nodes.length > 30 || !Array.isArray(data.edges) || data.edges.length > 50) return fail('流程最多 30 个节点、50 条连线');
+    const ids = new Set(), nodes = [];
+    for (const node of data.nodes) {
+      if (!node || !text(node.id,60) || !/^[\w-]+$/.test(node.id) || ids.has(node.id) || !label(node.label)) return fail('流程节点的 id 或文字无效');
+      if (![undefined,'plain','accent','muted'].includes(node.tone) || ![undefined,'box','decision','round'].includes(node.shape)) return fail('不支持的节点样式');
+      ids.add(node.id); nodes.push({id:node.id,label:node.label,tone:node.tone || 'plain',shape:node.shape || 'box'});
+    }
+    const edges = [];
+    for (const edge of data.edges) {
+      if (!edge || !ids.has(edge.from) || !ids.has(edge.to) || edge.from===edge.to || (edge.label !== undefined && edge.label!=='' && !text(edge.label,80))) return fail('连线引用不存在的节点或含无效文字');
+      edges.push({from:edge.from,to:edge.to,label:edge.label || ''});
+    }
+    // DAG layout is deliberate: cycles must fall back, never silently lose an edge.
+    const degree = new Map(nodes.map(n=>[n.id,0])), ranks = new Map(nodes.map(n=>[n.id,0]));
+    edges.forEach(e=>degree.set(e.to,degree.get(e.to)+1));
+    const queue = nodes.filter(n=>degree.get(n.id)===0).map(n=>n.id);
+    let visited=0;
+    for (let i=0;i<queue.length;i++) {
+      const id=queue[i];visited++;
+      for (const e of edges.filter(e=>e.from===id)) { ranks.set(e.to,Math.max(ranks.get(e.to),ranks.get(id)+1));degree.set(e.to,degree.get(e.to)-1);if(degree.get(e.to)===0)queue.push(e.to); }
+    }
+    if (visited!==nodes.length) return fail('暂不支持带回环的流程，请查看原文');
+    return {...common,kind:'flow',direction:data.direction || 'TD',nodes:nodes.map(n=>({...n,rank:ranks.get(n.id)})),edges};
+  }
+  if (data.type === 'fields') {
+    if (!Array.isArray(data.rows) || !data.rows.length || data.rows.length>24) return fail('字段图需要 1–24 行');
+    const rows=[];
+    let total=null;
+    for (const row of data.rows) {
+      if (!row || !Array.isArray(row.cells) || !row.cells.length || row.cells.length>16) return fail('每行需要 1–16 个字段');
+      const cells=[];
+      for (const cell of row.cells) {
+        if (!cell || !label(cell.label) || ![undefined,'plain','accent','muted'].includes(cell.tone)) return fail('字段文字或样式无效');
+        const bits=cell.bits;
+        if (bits!==undefined && (!Number.isInteger(bits) || bits<1 || bits>1024)) return fail('字段位数必须是正整数');
+        cells.push({label:cell.label,weight:bits || 1,bits,tone:cell.tone || 'plain'});
+      }
+      if (cells.some(c=>c.bits!==undefined) && !cells.every(c=>c.bits!==undefined)) return fail('同一行字段必须全部标注位数或全部不标注');
+      if (cells.every(c=>c.bits!==undefined)) {
+        const sum=cells.reduce((s,c)=>s+c.bits,0);
+        if (total!==null && total!==sum) return fail('各行位数合计不一致，保留原文以免误导');
+        total=sum;
+      }
+      if (row.note!==undefined && !text(row.note,80)) return fail('行说明无效');
+      rows.push({cells,note:row.note || ''});
+    }
+    return {...common,kind:'fields',rows,totalBits:total,origin:'structured'};
+  }
+  return fail('暂不支持这种图示类型');
+}
+
+function normalizeChart(data) {
+  if (!data || !['bar','line','pie','donut','stacked'].includes(data.type)) return fail('图表支持 bar / line / pie / donut / stacked');
+  if (data.title!==undefined && !text(data.title,160)) return fail('标题无效');
+  if (data.unit!==undefined && !text(data.unit,32)) return fail('单位无效');
+  if (data.description!==undefined && !text(data.description,600)) return fail('说明无效');
+  if (!Array.isArray(data.labels) || !data.labels.length || data.labels.length>24 || !data.labels.every(v=>text(v,80))) return fail('图表需要 1–24 个分类标签');
+  if (!Array.isArray(data.series) || !data.series.length || data.series.length>4) return fail('图表需要 1–4 组数据');
+  const series=[];
+  for (const s of data.series) {
+    if (!s || !text(s.name,80) || !Array.isArray(s.values) || s.values.length!==data.labels.length || !s.values.every(v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<=1e12)) return fail('每组数据必须与标签一一对应，且全部为有限数字');
+    series.push({name:s.name,values:[...s.values]});
+  }
+  if(['pie','donut'].includes(data.type)&&(series.length!==1||series[0].values.some(v=>v<0)||!series[0].values.some(v=>v>0)))return fail('比例图只支持一组非负且总和大于零的数据');
+  return {kind:'chart',chartType:data.type,title:data.title || '',description:data.description || '',unit:data.unit || '',labels:[...data.labels],series};
+}
+
+function parseMermaid(source) {
+  const lines=source.split(/\r?\n/).map(v=>v.trim()).filter(v=>v&&!v.startsWith('%%'));
+  const head=/^(?:flowchart|graph)\s+(TD|TB|LR)\s*;?$/.exec(lines.shift() || '');
+  if (!head) return fail('目前支持 Mermaid flowchart TD / LR；其他语法保留原文');
+  const nodes=new Map(), edges=[];
+  function node(raw) {
+    const m=/^([A-Za-z_][\w-]*)(?:\[([^\[\]]+)\]|\{([^{}]+)\}|\(([^()]+)\))?$/.exec(raw.trim());
+    if (!m) return null;
+    let value=m[2]??m[3]??m[4];
+    if (value?.startsWith('"') && value.endsWith('"')) value=value.slice(1,-1);
+    if (value && /<|>|&(?:#|\w+;)|\[|\]/.test(value)) return null;
+    const existing=nodes.get(m[1]);
+    if (existing && value && existing.explicit && existing.label!==value) return null;
+    if (!existing || value) nodes.set(m[1],{id:m[1],label:value || m[1],shape:m[3]?'decision':m[4]?'round':'box',explicit:!!value});
+    return m[1];
+  }
+  for (const statement of lines.flatMap(l=>l.split(';')).map(l=>l.trim()).filter(Boolean)) {
+    if (/^(?:style|classDef|class|click|subgraph|end|linkStyle|direction|accTitle|accDescr)\b/.test(statement)) return fail('此 Mermaid 使用了暂不支持的指令，保留完整原文');
+    const parts=statement.split(/\s*-->(?:\|([^|]{1,80})\|)?\s*/);
+    if (parts.length===1) { if (!node(statement)) return fail('无法可靠解析此 Mermaid 节点');continue; }
+    let from=node(parts[0]);
+    if (!from) return fail('无法可靠解析流程节点');
+    for (let i=1;i<parts.length;i+=2) {const to=node(parts[i+1] || '');if(!to)return fail('无法可靠解析流程连线');edges.push({from,to,label:parts[i] || ''});from=to;}
+  }
+  return normalizeDiagram({type:'flow',direction:head[1]==='LR'?'LR':'TD',nodes:[...nodes.values()],edges});
+}
+
+// A conservative ASCII grid recognizer. Each bounded section is one row; cells
+// are joined only when all physical lines have the same number of pipes.
+function visualWidth(s) { return [...s].reduce((n,c)=>n+(/[^\u0000-\u00ff]/.test(c)?2:1),0); }
+function parseAscii(source) {
+  const lines=source.replace(/\r/g,'').replace(/\t/g,'    ').split('\n');
+  const border = s => /^\s*\+(?:[-=]{2,}\+)+\s*$/.test(s);
+  const boundaries=lines.map((s,i)=>border(s)?i:-1).filter(i=>i>=0);
+  if (boundaries.length<3 || boundaries.length>25) return null;
+  const first=boundaries[0],last=boundaries.at(-1);
+  // Rulers/titles above the frame are kept verbatim, not inferred as bit counts.
+  const prefix=lines.slice(0,first).join('\n').trim(),suffix=lines.slice(last+1).join('\n').trim();
+  if (prefix.length>500 || suffix.length>300) return null;
+  const rows=[];
+  for (let b=0;b<boundaries.length-1;b++) {
+    const raw=lines.slice(boundaries[b]+1,boundaries[b+1]).filter(l=>l.trim());
+    if (!raw.length || raw.length>5) return null;
+    const parsed=[];
+    for (const line of raw) {
+      const m=/^\s*\|(.+)\|\s*([^|]*)$/.exec(line);
+      if (!m || m[2].trim().length>32) return null;
+      const parts=m[1].split('|');
+      if (!parts.length || parts.length>16 || parts.some(p=>p.trim().length>240)) return null;
+      parsed.push({parts,note:m[2].trim()});
+    }
+    if (parsed.some(r=>r.parts.length!==parsed[0].parts.length) || new Set(parsed.map(r=>r.note).filter(Boolean)).size>1) return null;
+    const cells=parsed[0].parts.map((_,i)=>({label:parsed.map(r=>r.parts[i].trim()).filter(Boolean).join('\n'),weight:Math.max(1,...parsed.map(r=>visualWidth(r.parts[i]))),tone:'plain'}));
+    if (cells.some(c=>!c.label)) return null;
+    // Reject program-like blocks rather than relabeling their content as a diagram.
+    if (cells.some(c=>/(?:=>|\b(?:function|return|const|let|class)\b|[{};])/.test(c.label))) return null;
+    rows.push({cells,note:parsed.find(r=>r.note)?.note || ''});
+  }
+  if (!rows.length) return null;
+  return {kind:'fields',origin:'ascii',title:'',description:'',rows,prefix,suffix,totalBits:null};
+}
+
+function parseTextFlow(source) {
+  const lines=source.trim().split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  let labels;
+  if(lines.length===1) {
+    labels=lines[0].split(/\s*→\s*|\s+(?:-->|->)\s+/);
+    if(labels.length<3)return null;
+  } else {
+    if(lines.length<3 || lines.length%2===0 || !lines.every((s,i)=>i%2===0 || /^(?:↓|⬇)$/.test(s)))return null;
+    labels=lines.filter((_,i)=>i%2===0);
+  }
+  if(labels.length>20 || labels.some(s=>!text(s,120) || /[{};\\]|\b(?:function|return|const|let|class|import)\b/.test(s)))return null;
+  const nodes=labels.map((s,i)=>({id:'n'+i,label:s.replace(/^\[([^\[\]]+)\]$/,'$1')}));
+  const result=normalizeDiagram({type:'flow',direction:lines.length===1?'LR':'TD',nodes,edges:nodes.slice(1).map((n,i)=>({from:nodes[i].id,to:n.id}))});
+  return result.error?null:{...result,origin:'text-flow'};
+}
+
+function parseContent(language,source) {
+  const lang=String(language || '').trim().toLowerCase();
+  if (typeof source!=='string' || source.length>MAX_SOURCE) return ['dsh-artifact','dsh-ui',...RICH_TYPES.map(t=>'dsh-'+t),'dsh-diagram','dsh-chart','dsh-quiz','dsh-form','dsh-explorer','mermaid','math','latex','tex'].includes(lang) ? fail('内容过长，显示原文') : null;
+  if(lang==='dsh-artifact') {let data;try{data=JSON.parse(source);}catch{return fail('作品JSON尚未完整或格式有误');}return normalizeArtifact(data);}
+  if(lang==='dsh-ui'||RICH_TYPES.some(t=>lang==='dsh-'+t)){
+    let data;try{data=JSON.parse(source);}catch{return fail('组件JSON尚未完整或格式有误');}
+    return lang==='dsh-ui'||data?.type===lang.slice(4)?(data?.type==='artifact'?normalizeArtifact(data):normalizeRich(data)):fail('组件类型与围栏不一致');
+  }
+  if (['dsh-quiz','dsh-explorer','dsh-form'].includes(lang)){
+    let data;try{data=JSON.parse(source);}catch{return fail('交互 JSON 尚未完整或格式有误，显示原文');}
+    const expected={'dsh-quiz':'quiz','dsh-explorer':'explorer','dsh-form':'form'}[lang];
+    return data?.type===expected?normalizeInteractive(data):fail('交互类型与围栏不一致');
+  }
+  if (lang==='dsh-diagram' || lang==='dsh-chart') {
+    let data;try {data=JSON.parse(source);} catch {return fail('JSON 尚未完整或格式有误，显示原文');}
+    return lang==='dsh-diagram'?normalizeDiagram(data):normalizeChart(data);
+  }
+  if (lang==='mermaid') return parseMermaid(source);
+  // DSH 0.2.1 labels unknown fence languages as “代码块” and does not expose
+  // their original tag in the DOM. Recognize only self-identifying grammars in
+  // unlabelled/plain blocks; never inspect a Python/JS/JSON-labelled block.
+  if (!lang || ['text','plaintext','ascii'].includes(lang)) {
+    if (/^\s*(?:%%[^\n]*\n\s*)*(?:flowchart|graph)\s+(?:TD|TB|LR)\b/.test(source))return parseMermaid(source);
+    if (/^\s*\{/.test(source)) {
+      let data;try{data=JSON.parse(source);}catch{return null;}
+      if(data?.type==='artifact'&&typeof data.id==='string'&&typeof data.title==='string'&&typeof data.html==='string')return normalizeArtifact(data);
+      if(data && ['bar','line','pie','donut','stacked'].includes(data.type) && Array.isArray(data.labels) && Array.isArray(data.series))return normalizeChart(data);
+      if(data && RICH_TYPES.includes(data.type)&&typeof data.title==='string')return normalizeRich(data);
+      if(data && ((data.type==='quiz'&&Array.isArray(data.questions))||(data.type==='explorer'&&Array.isArray(data.parameters)&&Array.isArray(data.series))||(data.type==='form'&&Array.isArray(data.fields))))return normalizeInteractive(data);
+      if(data && ((data.type==='flow'&&Array.isArray(data.nodes)&&Array.isArray(data.edges))||(data.type==='fields'&&Array.isArray(data.rows))))return normalizeDiagram(data);
+    }
+    if (/^\s*\\(?:frac|dfrac|tfrac|operatorname|sum|int|sqrt|begin|mathbf|mathrm)\b/.test(source))return parseContent('latex',source);
+  }
+  if (['math','latex','tex'].includes(lang)) {
+    let formula=source.trim().replace(/^\$\$([\s\S]*)\$\$$/,'$1').replace(/^\\\[([\s\S]*)\\\]$/,'$1').trim();
+    if (!formula || formula.length>2500 || /\\(?:href|url|html\w*|include\w*|require|def|gdef|newcommand|renewcommand|macro)\b/.test(formula)) return fail('公式包含暂不处理的命令或过长，显示原文');
+    return {kind:'math',formula,title:''};
+  }
+  if (!lang || ['text','plaintext','ascii'].includes(lang)) return parseAscii(source) || parseTextFlow(source);
+  return null;
+}
+module.exports={MAX_SOURCE,normalizeDiagram,normalizeChart,parseMermaid,parseAscii,parseTextFlow,parseContent,visualWidth};
+
+},
+"./content-view.cjs":(require,module,exports)=>{'use strict';
+const { visualWidth } = require('./content-model.cjs');
+const { layoutFlow } = require('./flow-layout.cjs');
+let sequence=0;
+const SVG_NS='http://www.w3.org/2000/svg';
+function el(doc,tag,attrs={},value) {
+  const node=doc.createElement(tag);
+  for (const [key,v] of Object.entries(attrs)) if(v!==undefined)node.setAttribute(key,String(v));
+  if(value!==undefined)node.textContent=String(value);
+  return node;
+}
+function svgEl(doc,tag,attrs={},value) {
+  const node=doc.createElementNS(SVG_NS,tag);
+  for (const [key,v] of Object.entries(attrs))node.setAttribute(key,String(v));
+  if(value!==undefined)node.textContent=String(value);
+  return node;
+}
+function wrap(value,width=23) {
+  const result=[];
+  for (const paragraph of value.split('\n')) {
+    let line='';
+    for(const c of paragraph) {if(visualWidth(line+c)>width&&line){result.push(line);line='';}line+=c;}
+    result.push(line);
+  }
+  return result;
+}
+function svgText(doc,parent,value,x,y,{width=24,line=20,anchor='middle',className='dsh-rb-svg-text'}={}) {
+  const lines=wrap(value,width),node=svgEl(doc,'text',{x,y,'text-anchor':anchor,class:className});
+  lines.forEach((s,i)=>node.append(svgEl(doc,'tspan',{x,dy:i===0?0:line},s)));
+  parent.append(node);return lines.length;
+}
+function makeSvg(doc,width,height,title,description) {
+  const id='dsh-rb-visual-'+(++sequence);
+  const svg=svgEl(doc,'svg',{viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-labelledby':id,class:'dsh-rb-svg'});
+  svg.append(svgEl(doc,'title',{id},title || '图示'));
+  if(description)svg.append(svgEl(doc,'desc',{},description));
+  return svg;
+}
+function renderFields(doc,model) {
+  const body=el(doc,'div',{class:'dsh-rb-fields'});
+  if(model.prefix)body.append(el(doc,'pre',{class:'dsh-rb-ruler'},model.prefix));
+  const table=el(doc,'div',{class:'dsh-rb-field-grid',role:'table','aria-label':model.title || '字段结构图'});
+  // Narrow fields retain legible labels. Overflow stays inside this figure.
+  const min=Math.max(300,...model.rows.map(r=>r.cells.length*68));
+  table.style.minWidth=min+'px';
+  model.rows.forEach((row,index)=>{
+    const group=el(doc,'div',{class:'dsh-rb-field-row',role:'row','data-shade':index%2});
+    const cells=el(doc,'div',{class:'dsh-rb-field-cells',role:'presentation'});
+    cells.style.gridTemplateColumns=row.cells.map(c=>`${c.weight}fr`).join(' ');
+    row.cells.forEach(cell=>{
+      const item=el(doc,'div',{class:'dsh-rb-field',role:'cell','data-tone':cell.tone},cell.label);
+      if(cell.bits!==undefined)item.append(el(doc,'span',{class:'dsh-rb-field-bits'},`${cell.bits} bit`));
+      cells.append(item);
+    });
+    group.append(cells);
+    if(model.rows.some(r=>r.note))group.append(el(doc,'div',{class:'dsh-rb-row-note',role:'cell'},row.note));
+    table.append(group);
+  });
+  body.append(table);
+  if(model.suffix)body.append(el(doc,'pre',{class:'dsh-rb-ruler'},model.suffix));
+  return body;
+}
+function renderFlow(doc,model) {
+  const context=doc.createElement('canvas').getContext('2d');
+  if(context)context.font='12px Arial,"Microsoft YaHei",sans-serif';
+  const plan=layoutFlow(model,context?{measure:s=>context.measureText(s).width}:{});
+  const svg=makeSvg(doc,plan.width,plan.height,model.title || '流程关系图',model.nodes.map(n=>n.label).join('；'));
+  const arrowId='dsh-rb-arrow-'+(++sequence),defs=svgEl(doc,'defs'),marker=svgEl(doc,'marker',{id:arrowId,markerWidth:8,markerHeight:8,refX:7,refY:4,orient:'auto',markerUnits:'userSpaceOnUse'});
+  marker.append(svgEl(doc,'path',{d:'M0 0L8 4L0 8Z',class:'dsh-rb-arrow'}));defs.append(marker);svg.append(defs);
+  plan.edges.forEach(edge=>{
+    const d=edge.points.map((p,i)=>`${i?'L':'M'}${p.x},${p.y}`).join(' ');
+    svg.append(svgEl(doc,'path',{d,class:'dsh-rb-edge','marker-end':`url(#${arrowId})`}));
+  });
+  plan.nodes.forEach((n,index)=>{
+    const {x,y,width:nodeW,height:nodeH}=n,g=svgEl(doc,'g',{'data-tone':n.tone,'data-shade':index%2});
+    if(n.shape==='decision')g.append(svgEl(doc,'polygon',{points:`${x+nodeW/2},${y} ${x+nodeW},${y+nodeH/2} ${x+nodeW/2},${y+nodeH} ${x},${y+nodeH/2}`,class:'dsh-rb-node'}));
+    else g.append(svgEl(doc,'rect',{x,y,width:nodeW,height:nodeH,rx:n.shape==='round'?nodeH/2:10,class:'dsh-rb-node'}));
+    const lines=wrap(n.label,24);
+    svgText(doc,g,n.label,x+nodeW/2,y+nodeH/2-(lines.length-1)*10+5,{width:24});
+    svg.append(g);
+  });
+  // Labels have their own collision-checked boxes and are painted after nodes.
+  plan.edges.forEach(edge=>{
+    if(!edge.label)return;
+    const {x,y,width,height,lines}=edge.label;
+    svg.append(svgEl(doc,'rect',{x,y,width,height,rx:4,class:'dsh-rb-edge-label-bg'}));
+    const text=svgEl(doc,'text',{x:x+width/2,y:y+18,'text-anchor':'middle',class:'dsh-rb-edge-label'});
+    lines.forEach((s,i)=>text.append(svgEl(doc,'tspan',{x:x+width/2,dy:i?16:0},s)));
+    svg.append(text);
+  });
+  return svg;
+}
+function renderChart(doc,model) {
+  const w=Math.max(610,model.labels.length*52+108),left=76,right=24,top=32,plotH=232;
+  const plotW=w-left-right,band=plotW/model.labels.length;
+  const labelWidth=Math.max(6,Math.floor(band/7)),labelLines=Math.max(...model.labels.map(s=>wrap(s,labelWidth).length));
+  const legendContext=doc.createElement('canvas').getContext('2d');
+  if(legendContext)legendContext.font='12px Arial,"Microsoft YaHei",sans-serif';
+  const legendChars=Math.floor(Math.min(200,plotW-24)/7),legendRows=[];
+  model.series.forEach((s,index)=>{
+    const lines=wrap(s.name,legendChars);
+    const textWidth=Math.max(...lines.map(line=>legendContext?legendContext.measureText(line).width:visualWidth(line)*7));
+    const item={name:s.name,index,width:20+textWidth,lines:lines.length};
+    let row=legendRows.at(-1);
+    if(!row || row.width+28+item.width>plotW){row={items:[],width:0};legendRows.push(row);}
+    row.width+=(row.items.length?28:0)+item.width;row.items.push(item);
+  });
+  const legendHeights=legendRows.map(row=>Math.max(...row.items.map(s=>s.lines))*16+16);
+  const legendTop=top+plotH+25+(labelLines-1)*16+42,h=legendTop+legendHeights.reduce((a,b)=>a+b,0)+12;
+  const values=model.series.flatMap(s=>s.values);
+  let min=Math.min(0,...values),max=Math.max(0,...values);
+  if(min===max)max=min+1;
+  const span=max-min;
+  const y=v=>top+(max-v)/span*plotH;
+  const svg=makeSvg(doc,w,h,model.title || '数据图表',`${model.chartType==='bar'?'柱状图':'折线图'}；单位：${model.unit || '未标注'}；完整数值见数据表`);
+  const format=v=>Number(v.toPrecision(5)).toLocaleString('zh-CN',{maximumFractionDigits:8});
+  for(let i=0;i<=4;i++) {
+    const value=min+span*i/4,py=y(value);
+    svg.append(svgEl(doc,'line',{x1:left,y1:py,x2:w-right,y2:py,class:'dsh-rb-gridline'}));
+    svgText(doc,svg,format(value),left-10,py+4,{anchor:'end',className:'dsh-rb-axis-text',width:22});
+  }
+  svg.append(svgEl(doc,'line',{x1:left,y1:y(0),x2:w-right,y2:y(0),class:'dsh-rb-zero-line'}));
+  if(model.unit)svgText(doc,svg,model.unit,left,18,{anchor:'start',className:'dsh-rb-axis-text',width:32});
+  const x=i=>left+band*(i+.5);
+  model.labels.forEach((name,i)=>svgText(doc,svg,name,x(i),top+plotH+25,{width:labelWidth,line:16,className:'dsh-rb-axis-text'}));
+  model.series.forEach((series,s)=>{
+    if(model.chartType==='line')svg.append(svgEl(doc,'polyline',{points:series.values.map((v,i)=>`${x(i)},${y(v)}`).join(' '),fill:'none',class:'dsh-rb-series-line','data-series':s}));
+    series.values.forEach((v,i)=>{
+      let shape;
+      if(model.chartType==='bar') {
+        const bw=Math.min(42,band*.75/model.series.length),px=x(i)-bw*model.series.length/2+bw*s;
+        shape=svgEl(doc,'rect',{x:px+1,y:Math.min(y(v),y(0)),width:Math.max(1,bw-2),height:Math.abs(y(v)-y(0)),rx:2,class:'dsh-rb-series-point','data-series':s});
+      } else shape=svgEl(doc,'circle',{cx:x(i),cy:y(v),r:4,class:'dsh-rb-series-point','data-series':s});
+      shape.setAttribute('data-label-index',i);
+      shape.append(svgEl(doc,'title',{},`${model.labels[i]} · ${series.name}：${v}${model.unit?' '+model.unit:''}`));svg.append(shape);
+    });
+  });
+  let legendY=legendTop;
+  legendRows.forEach((row,r)=>{
+    const group=svgEl(doc,'g',{class:'dsh-rb-chart-legend','data-legend-row':r});
+    let px=left+(plotW-row.width)/2;
+    row.items.forEach(s=>{
+      group.append(svgEl(doc,'rect',{x:px,y:legendY-8,width:12,height:8,rx:2,class:'dsh-rb-series-point','data-series':s.index}));
+      svgText(doc,group,s.name,px+20,legendY,{width:legendChars,line:16,anchor:'start',className:'dsh-rb-axis-text'});
+      px+=s.width+28;
+    });svg.append(group);legendY+=legendHeights[r];
+  });
+  const group=el(doc,'div');group.append(svg);
+  const details=el(doc,'details',{class:'dsh-rb-chart-data'});details.append(el(doc,'summary',{},'查看数据'));
+  const table=el(doc,'table'),head=el(doc,'thead'),tr=el(doc,'tr');
+  tr.append(el(doc,'th',{scope:'col'},'分类'));model.series.forEach(s=>tr.append(el(doc,'th',{scope:'col'},s.name+(model.unit?` (${model.unit})`:''))));head.append(tr);table.append(head);
+  const tbody=el(doc,'tbody');model.labels.forEach((name,i)=>{const row=el(doc,'tr');row.append(el(doc,'th',{scope:'row'},name));model.series.forEach(s=>row.append(el(doc,'td',{},s.values[i])));tbody.append(row);});
+  table.append(tbody);details.append(table);group.append(details);return group;
+}
+
+function renderContent(doc,model,mountMath) {
+  if(model.kind==='fields')return {node:renderFields(doc,model)};
+  if(model.kind==='flow')return {node:renderFlow(doc,model)};
+  if(model.kind==='chart')return {node:renderChart(doc,model)};
+  if(model.kind==='math') {
+    const node=el(doc,'div',{class:'dsh-rb-math'});
+    return {node,mount:()=>mountMath?.(node,model.formula)};
+  }
+  throw new Error('Unsupported content');
+}
+function serializeSvg(svg) {
+  const doc=svg.ownerDocument,view=doc.defaultView,clone=svg.cloneNode(true);
+  const originals=[svg,...svg.querySelectorAll('*')],copies=[clone,...clone.querySelectorAll('*')];
+  originals.forEach((n,i)=>{
+    const s=view.getComputedStyle(n);
+    for(const p of ['fill','stroke','stroke-width','font-family','font-size','font-weight','paint-order'])copies[i].style.setProperty(p,s.getPropertyValue(p));
+  });
+  clone.setAttribute('xmlns',SVG_NS);clone.removeAttribute('class');
+  return new view.XMLSerializer().serializeToString(clone);
+}
+function exportSvg(svg) {
+  const doc=svg.ownerDocument,view=doc.defaultView;
+  const blob=new view.Blob([serializeSvg(svg)],{type:'image/svg+xml;charset=utf-8'}),url=view.URL.createObjectURL(blob);
+  const a=el(doc,'a',{href:url,download:'dsh-diagram.svg'});doc.body.append(a);a.click();a.remove();view.setTimeout(()=>view.URL.revokeObjectURL(url),1000);
+}
+module.exports={el,svgEl,wrap,renderContent,serializeSvg,exportSvg};
+
+},
+"./core.cjs":(require,module,exports)=>{'use strict';
+
+const STORAGE_KEY = 'dsh.reply-beautify.v1';
+const CODE_FONT = '"Cascadia Code",Consolas,"Microsoft YaHei",monospace';
+const PRESETS = Object.freeze({
+  default: Object.freeze({ label: '默认', font: 15, code: 13, leading: 1.7, paragraph: 14,
+    family: '"Segoe UI","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif',
+    description: '清晰的中英混排，克制的标题与留白' }),
+  chatgpt: Object.freeze({ label: 'ChatGPT', font: 15, code: 13, leading: 1.75, paragraph: 16,
+    family: 'system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif',
+    description: '无衬线字体与清晰层次，偏简洁的对话阅读感' }),
+  claude: Object.freeze({ label: 'Claude', font: 15, code: 13, leading: 1.8, paragraph: 17,
+    family: 'Georgia,"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif',
+    description: '衬线正文与舒展行距，偏书页式阅读感' })
+});
+const RANGES = Object.freeze({ font: [12, 20, 1], code: [11, 18, 1], leading: [1.4, 2, 0.05], paragraph: [8, 24, 1] });
+// These are semantic Chat row markers plus the Markdown class stem in DSH 0.2.1.
+// Do not use body-wide tokens: they also change the composer and user messages.
+const REPLY_SELECTOR = '[data-chat-flow-kind="assistant-step"]:not([data-chat-group-part="reasoning"]) [class^="_markdown_"]:not([data-markdown-variant="compact"])';
+// DSH 0.2.1's official SVG wordmark: replace only the leading lowercase d.
+// Default retains the other native letters; alternate names retain the native badge.
+const CAPITAL_D_PATH = 'M26.9563 4.62842H31.05C35.12 4.62842 37.3611 7.06 37.3611 11.625S35.12 18.6219 31.05 18.6219H26.9563ZM29.352 6.8V16.45H30.95C33.62 16.45 34.965 14.84 34.965 11.625S33.62 6.8 30.95 6.8Z';
+const BRAND_COLORS = Object.freeze({ default: '#4D6BFE', chatgpt: '#FFFFFF', claude: '#D97757' });
+const ORANGE_SCALE = Object.freeze({ 50:'#fff4ee', '50p':'#fff0e7', 75:'#ffede2', 100:'#fde7d9', 200:'#f8d0b7', 300:'#efb18f', 400:'#D97757', 450:'#D97757', 500:'#b55c3d', 600:'#98472e', 700:'#7b3926', 800:'#59372b', 900:'#3f2b24', 950:'#2f211c' });
+
+function claudeAccentCSS() {
+  const declarations = Object.entries(ORANGE_SCALE).flatMap(([level,color]) => ['blue','deepseek'].map(family => `--dsw-static-${family}-${level}:${color}`));
+  declarations.push('--dsw-static-deepseek-700-delete:#7b3926',
+    '--dsw-alias-brand-primary-new-colorprimary-new-color:var(--dsw-alias-state-business-primary)',
+    '--dsw-alias-onboarding-accent:#D97757','--dsh-boot-brand:#D97757',
+    '--dsw-gradient-onboarding-blue-stops:#b55c3d 18.75%,#D97757 51.78%,#efb18f 86.252%,#b55c3d',
+    '--dsw-gradient-onboarding-cyan-stops:#98472e 21.154%,#D97757 50.954%,#f8d0b7 85.326%,#98472e',
+    '--dsw-gradient-onboarding-violet-stops:#98472e 33.102%,#D97757 50.954%,#f8d0b7 85.326%,#98472e');
+  // The native theme is lazy-loaded and may append its body rules AFTER ours.
+  // Outrank both native light/dark selectors rather than depending on load order.
+  return `html body,html body[data-ds-dark-theme]{${declarations.join(';')}}
+body{--dsh-rb-trajectory-assistant:#7650bf;--dsh-rb-trajectory-tool:#956600;--dsh-rb-trajectory-subtool:#92733a}
+body[data-ds-dark-theme]{--dsh-rb-trajectory-assistant:#b39bf5;--dsh-rb-trajectory-tool:#dfb45c;--dsh-rb-trajectory-subtool:#bb9b61}
+body .haSm5q_assistantVioletBright{color:var(--dsh-rb-trajectory-assistant);background:color-mix(in srgb,var(--dsh-rb-trajectory-assistant) 16%,var(--dsw-alias-bg-layer-1))}
+body .haSm5q_toolAmber{color:var(--dsh-rb-trajectory-tool);background:color-mix(in srgb,var(--dsh-rb-trajectory-tool) 16%,var(--dsw-alias-bg-layer-1))}
+body .haSm5q_subtoolAmber{color:var(--dsh-rb-trajectory-subtool);background:color-mix(in srgb,var(--dsh-rb-trajectory-subtool) 12%,var(--dsw-alias-bg-layer-1))}
+body .ZNyiNW_span[data-timeline-span=message]{--trajectory-assistant-decoding-color:var(--dsh-rb-trajectory-assistant);--trajectory-assistant-ttft-color:color-mix(in srgb,var(--dsh-rb-trajectory-assistant) 48%,var(--dsw-alias-bg-layer-2))}
+body .ZNyiNW_span:is([data-timeline-span=tool],[data-timeline-span=subtool]):not([data-error=true]){background:var(--dsh-rb-trajectory-tool)}
+[data-platform=darwin] .BynINW_sidebarCol{background:linear-gradient(to bottom,#d977571a,#d9775700 35%,#b55c3d00 68%,#b55c3d17),color-mix(in srgb,var(--dsw-specific-sidebar-fill) 97%,#D97757)}
+[data-platform=darwin] [data-ds-dark-theme] .BynINW_sidebarCol{background:linear-gradient(to bottom,#d9775714,#d9775700 35%,#b55c3d00 68%,#b55c3d12),color-mix(in srgb,var(--dsw-specific-sidebar-fill) 50%,transparent)}`;
+}
+
+// Leave the wordmark at its original position. Move the badge to the common
+// letter baseline, deliberately excluding p's descender per the user's request.
+function alignBrandCaption(caption) {
+  const view = caption.ownerDocument.defaultView;
+  const svg = caption.querySelector('svg');
+  if (!svg) return;
+  const style = view.getComputedStyle(caption,'::before');
+  if (style.content === 'none' || style.content === 'normal') return;
+  const ctx = caption.ownerDocument.createElement('canvas').getContext('2d');
+  if (!ctx) return;
+  ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const m = ctx.measureText('Deeseek');
+  const ascent = m.fontBoundingBoxAscent, descent = m.fontBoundingBoxDescent;
+  if (![ascent,descent,m.actualBoundingBoxDescent].every(Number.isFinite)) return;
+  const line = parseFloat(style.lineHeight);
+  const target = svg.getBoundingClientRect().top - caption.getBoundingClientRect().top + svg.getBoundingClientRect().height * 19.5 / 24;
+  const inkBottom = (line-ascent-descent)/2 + ascent + m.actualBoundingBoxDescent;
+  caption.style.setProperty('--dsh-rb-badge-shift',`${Number((inkBottom-target).toFixed(3))}px`);
+  return { originalBadgeBottom:target,letterBottom:inkBottom,badgeShift:inkBottom-target };
+}
+
+function pageCSS(input) {
+  const s = normalize(input);
+  if (!s.enabled) return '';
+  const sidebar = '._2H3hWW_root';
+  const caption = sidebar + ' ._2H3hWW_brandName';
+  // Native slot rendering can wrap the artwork; do not require a direct child.
+  const wordmark = caption + ' svg';
+  const alternateName = s.preset === 'chatgpt' || s.preset === 'claude';
+  return `
+${s.preset === 'chatgpt' ? `body{--dsw-font-family:${PRESETS.chatgpt.family};font-family:${PRESETS.chatgpt.family}}` : ''}
+${s.preset === 'claude' ? claudeAccentCSS() : ''}
+${sidebar}{--dsh-rb-brand-accent:${BRAND_COLORS[s.preset]}}
+${sidebar} :is(._2H3hWW_brandMark,._2H3hWW_railMark){color:var(--dsh-rb-brand-accent)}
+${wordmark}>path:nth-of-type(2){d:path("${CAPITAL_D_PATH}");fill-rule:evenodd}
+${wordmark}>rect{fill:var(--dsh-rb-brand-accent)}
+${wordmark}>g[clip-path="url(#dsh-wordmark-badge-clip)"] path{fill:#000}
+${alternateName ? `
+${caption}{position:relative}
+${wordmark}>path{visibility:hidden}
+${caption}::before{content:"Deepseek";position:absolute;left:0;top:0;z-index:1;pointer-events:none;white-space:nowrap;font:${s.preset === 'chatgpt' ? '600 20px/24px Arial,Helvetica,sans-serif' : '500 22px/24px Georgia,"Times New Roman",serif'};letter-spacing:0;color:inherit}
+${wordmark}>rect,${wordmark}>g[clip-path="url(#dsh-wordmark-badge-clip)"]{transform:translateY(var(--dsh-rb-badge-shift,0px))}
+` : ''}
+${s.preset === 'chatgpt' ? `body:not([data-ds-dark-theme]) ${sidebar} :is(._2H3hWW_brandMark,._2H3hWW_railMark),body:not([data-ds-dark-theme]) ${wordmark}>rect{filter:drop-shadow(0 0 .6px #000b)}` : ''}
+`;
+}
+
+function validPreset(value) { return typeof value === 'string' && Object.hasOwn(PRESETS, value); }
+function normalize(input) {
+  const data = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
+  const preset = validPreset(data.preset) ? data.preset : 'default';
+  const result = { schema: 1, enabled: typeof data.enabled === 'boolean' ? data.enabled : true, preset };
+  for (const [key, [min, max, step]] of Object.entries(RANGES)) {
+    const value = typeof data[key] === 'number' && Number.isFinite(data[key]) ? data[key] : PRESETS[preset][key];
+    result[key] = Number((Math.round(Math.min(max, Math.max(min, value)) / step) * step).toFixed(2));
+  }
+  return Object.freeze(result);
+}
+function parsePreferences(raw) {
+  try {
+    const data = JSON.parse(raw);
+    if (data?.schema !== undefined && data.schema !== 1) return normalize();
+    return normalize(data);
+  } catch { return normalize(); }
+}
+function presetValues(preset) {
+  const chosen = validPreset(preset) ? preset : 'default';
+  const p = PRESETS[chosen];
+  return { preset: chosen, font: p.font, code: p.code, leading: p.leading, paragraph: p.paragraph };
+}
+function isCustom(state) { return Object.keys(RANGES).some(key => Math.abs(state[key] - PRESETS[state.preset][key]) > 0.001); }
+
+function createPreferences(storage) {
+  let state;
+  let storageAvailable = true;
+  try { state = parsePreferences(storage.getItem(STORAGE_KEY)); } catch { state = normalize(); storageAvailable = false; }
+  let snapshot = Object.freeze({ preferences: state, storageAvailable });
+  const listeners = new Set();
+  function publish() { snapshot = Object.freeze({ preferences: state, storageAvailable }); for (const callback of [...listeners]) callback(); }
+  function update(patch) {
+    state = normalize({ ...state, ...patch });
+    try { storage.setItem(STORAGE_KEY, JSON.stringify(state)); storageAvailable = true; } catch { storageAvailable = false; }
+    publish();
+  }
+  return {
+    getSnapshot: () => snapshot,
+    subscribe(callback) { listeners.add(callback); return () => listeners.delete(callback); },
+    update,
+    setPreset(preset) { update(presetValues(preset)); },
+    reset() { update(presetValues(state.preset)); },
+    receive(raw) { state = parsePreferences(raw); publish(); },
+    dispose() { listeners.clear(); }
+  };
+}
+
+function replyCSS(input) {
+  const s = normalize(input);
+  if (!s.enabled) return '';
+  const q = REPLY_SELECTOR;
+  const family = PRESETS[s.preset].family;
+  const codeLine = Number((s.code * 1.75).toFixed(2));
+  return `
+${q}{
+  font-family:${family};font-size:${s.font}px;line-height:${s.leading};
+  --ds-font-family-code:${CODE_FONT};
+  --dsw-font-markdown-code-block:400 ${s.code}px/${codeLine}px ${CODE_FONT};
+  --dsw-font-markdown-code-block-small:400 ${s.code}px/${codeLine}px ${CODE_FONT};
+}
+${q} :where(h1,h2,h3,h4,h5,h6){font-family:${family};font-weight:600;line-height:1.45;letter-spacing:normal;margin:${s.paragraph + 10}px 0 ${Math.max(8,s.paragraph-3)}px}
+${q} h1{font-size:${s.font+7}px}
+${q} h2{font-size:${s.font+4}px}
+${q} h3{font-size:${s.font+2}px}
+${q} :where(h4,h5,h6){font-size:${s.font}px}
+${q} p{margin:0 0 ${s.paragraph}px}
+${q} :where(table,div:has(>table))+p{margin-top:${Math.max(16,s.paragraph)}px}
+${q}>:first-child{margin-top:0}
+${q}>:last-child{margin-bottom:0}
+${q} :where(ul,ol){margin:${s.paragraph}px 0;padding-left:1.5em}
+${q} li:not(:first-child){margin-top:6px}
+${q} li::marker{line-height:inherit}
+${q} li>p{margin:6px 0}
+${q} li>:where(ul,ol){margin-top:6px;margin-bottom:6px}
+${q} blockquote{margin:${s.paragraph}px 0;padding:3px 0 3px 15px;border-left:2px solid var(--dsw-alias-border-l3);color:var(--dsw-alias-label-secondary)}
+${q} blockquote p:last-child{margin-bottom:0}
+${q} .md-code-block{margin:${s.paragraph}px 0}
+${q} pre{font-family:${CODE_FONT};font-size:${s.code}px;line-height:${codeLine}px;tab-size:4}
+${q} :not(pre)>code{font-family:${CODE_FONT}}
+${q} .md-table-wide{box-sizing:border-box;width:100%;max-width:100%;margin-left:0;padding-left:0}
+${q} table{border-collapse:collapse}
+${q} :where(th,td){font-family:${family};font-size:${Math.max(12,s.font-1)}px;line-height:${s.leading};padding:10px 14px;min-width:0}
+${q} th{font-weight:600}
+${q} .katex{font-size:1.12em}
+${q} .katex-display{margin:${s.paragraph}px 0;overflow-x:auto;overflow-y:hidden}
+${s.preset === 'claude' ? `
+${q},${q} :where(h1,h2,h3,h4,h5,h6,th,td){font-variant-numeric:lining-nums tabular-nums}
+${q} :where(code,pre,.katex){font-variant-numeric:normal}
+` : ''}
+`;
+}
+
+module.exports = { STORAGE_KEY, CODE_FONT, PRESETS, RANGES, REPLY_SELECTOR, CAPITAL_D_PATH, BRAND_COLORS, ORANGE_SCALE, alignBrandCaption, normalize, parsePreferences, presetValues, isCustom, createPreferences, replyCSS, pageCSS };
+
+},
+"./expression.cjs":(require,module,exports)=>{'use strict';
+// Small data-only arithmetic grammar. Never eval/Function/property access.
+const FUNCTIONS=Object.freeze({sin:[Math.sin,1,1],cos:[Math.cos,1,1],tan:[Math.tan,1,1],exp:[Math.exp,1,1],log:[Math.log,1,1],ln:[Math.log,1,1],sqrt:[Math.sqrt,1,1],abs:[Math.abs,1,1],floor:[Math.floor,1,1],ceil:[Math.ceil,1,1],round:[Math.round,1,1],pow:[Math.pow,2,2],min:[Math.min,2,8],max:[Math.max,2,8],clamp:[(x,a,b)=>Math.min(b,Math.max(a,x)),3,3]});
+const CONSTANTS=Object.freeze({pi:Math.PI,e:Math.E});
+function compileExpression(source,variables) {
+  if(typeof source!=='string'||!source.trim()||source.length>600)throw Error('表达式需为 1–600 字符');
+  const allowed=new Set(variables),tokens=[];let i=0;
+  while(i<source.length){const s=source.slice(i);const ws=/^\s+/.exec(s);if(ws){i+=ws[0].length;continue;}
+    const m=/^(?:(\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[A-Za-z_][A-Za-z_0-9]*|\*\*|[+*/^(),-])/.exec(s);
+    if(!m)throw Error('表达式只能包含算术、变量和支持的函数');tokens.push(m[0]);i+=m[0].length;if(tokens.length>220)throw Error('表达式过于复杂');
+  }
+  let pos=0,depth=0;const peek=()=>tokens[pos],take=()=>tokens[pos++];
+  function primary(){if(++depth>32)throw Error('表达式嵌套过深');let node;const token=take();
+    if(token==='('){node=add();if(take()!==')')throw Error('括号不匹配');}
+    else if(token&&/^(?:\d|\.)/.test(token)){const n=Number(token);if(!Number.isFinite(n))throw Error('数字必须有限');node={type:'number',value:n};}
+    else if(token&&/^[A-Za-z_]/.test(token)){
+      if(peek()==='('){take();const spec=Object.hasOwn(FUNCTIONS,token)?FUNCTIONS[token]:null;if(!spec)throw Error('不支持的函数：'+token);const args=[];if(peek()!==')'){args.push(add());while(peek()===','){take();args.push(add());}}if(take()!==')'||args.length<spec[1]||args.length>spec[2])throw Error('函数参数不正确：'+token);node={type:'call',name:token,args};}
+      else if(Object.hasOwn(CONSTANTS,token))node={type:'number',value:CONSTANTS[token]};
+      else if(allowed.has(token))node={type:'variable',name:token};
+      else throw Error('未声明变量：'+token);
+    }else throw Error('表达式不完整');depth--;return node;
+  }
+  function power(){let n=primary();if(peek()==='^'||peek()==='**'){take();n={type:'binary',op:'^',left:n,right:unary()};}return n;}
+  function unary(){if(peek()==='+'||peek()==='-'){const op=take();return{type:'unary',op,value:unary()};}return power();}
+  function multiply(){let n=unary();while(peek()==='*'||peek()==='/'){const op=take();n={type:'binary',op,left:n,right:unary()};}return n;}
+  function add(){let n=multiply();while(peek()==='+'||peek()==='-'){const op=take();n={type:'binary',op,left:n,right:multiply()};}return n;}
+  const tree=add();if(pos!==tokens.length)throw Error('表达式中有未识别的内容');return tree;
+}
+function evaluateExpression(tree,values){
+  function run(n){switch(n.type){case'number':return n.value;case'variable':return Object.hasOwn(values,n.name)?values[n.name]:NaN;case'unary':return(n.op==='-'?-1:1)*run(n.value);case'call':return FUNCTIONS[n.name][0](...n.args.map(run));case'binary':{const a=run(n.left),b=run(n.right);return n.op==='+'?a+b:n.op==='-'?a-b:n.op==='*'?a*b:n.op==='/'?a/b:Math.pow(a,b);}default:return NaN;}}
+  const value=run(tree);return Number.isFinite(value)?value:null;
+}
+module.exports={FUNCTIONS,CONSTANTS,compileExpression,evaluateExpression};
+
+},
+"./flow-layout.cjs":(require,module,exports)=>{'use strict';
+// Deterministic orthogonal DAG layout, independent of browser geometry.
+const units=s=>[...s].reduce((n,c)=>n+(/[^\u0000-\u00ff]/.test(c)?2:1),0);
+function flowLines(value,limit=24){const out=[];for(const part of value.split('\n')){let line='';for(const c of part){if(units(line+c)>limit&&line){out.push(line);line='';}line+=c;}out.push(line);}return out;}
+function intersects(a,b,pad=0){return a.x<b.x+b.width+pad&&a.x+a.width>b.x-pad&&a.y<b.y+b.height+pad&&a.y+a.height>b.y-pad;}
+function segmentHitsBox(a,b,box,pad=0){const left=box.x-pad,right=box.x+box.width+pad,top=box.y-pad,bottom=box.y+box.height+pad;
+ if(a.x===b.x)return a.x>left&&a.x<right&&Math.max(a.y,b.y)>top&&Math.min(a.y,b.y)<bottom;
+ return a.y>top&&a.y<bottom&&Math.max(a.x,b.x)>left&&Math.min(a.x,b.x)<right;
+}
+function simplify(points){const out=[];for(const p of points){const last=out.at(-1);if(last&&last.x===p.x&&last.y===p.y)continue;const prev=out.at(-2);if(prev&&last&&(prev.x===last.x&&last.x===p.x||prev.y===last.y&&last.y===p.y))out.pop();out.push(p);}return out;}
+function layoutFlow(model,{measure=s=>units(s)*7}={}){
+ const vertical=model.direction==='TD',ranks=[];model.nodes.forEach(n=>(ranks[n.rank]??=[]).push(n));
+ const labels=model.edges.map(e=>{if(!e.label)return null;const lines=flowLines(e.label);return{lines,width:Math.max(34,...lines.map(s=>Math.max(measure(s),units(s)*7)+16)),height:lines.length*16+12};});
+ const labelW=Math.max(0,...labels.filter(Boolean).map(b=>b.width)),labelH=Math.max(0,...labels.filter(Boolean).map(b=>b.height));
+ const nodeW=218,nodeH=Math.max(64,...model.nodes.map(n=>flowLines(n.label).length*20+28));
+ const gapX=vertical?Math.max(80,labelW+32):Math.max(90,2*(labelW+18)),gapY=vertical?Math.max(100,2*(labelH+18)):Math.max(90,labelH+30);
+ const cross=Math.max(...ranks.map(r=>r.length)),baseW=vertical?cross*(nodeW+gapX)-gapX+48:ranks.length*(nodeW+gapX)-gapX+48,baseH=vertical?ranks.length*(nodeH+gapY)-gapY+48:cross*(nodeH+gapY)-gapY+48;
+ const nodes=[],positions=new Map();ranks.forEach((row,rank)=>row.forEach((n,index)=>{const box={...n,x:vertical?(baseW-row.length*(nodeW+gapX)+gapX)/2+index*(nodeW+gapX):24+rank*(nodeW+gapX),y:vertical?24+rank*(nodeH+gapY):(baseH-row.length*(nodeH+gapY)+gapY)/2+index*(nodeH+gapY),width:nodeW,height:nodeH};nodes.push(box);positions.set(n.id,box);}));
+ let lanes=0;
+ const edges=model.edges.map((e,index)=>{const a=positions.get(e.from),b=positions.get(e.to),skip=b.rank-a.rank>1;let points;
+  if(vertical){const x1=a.x+nodeW/2,y1=a.y+nodeH,x2=b.x+nodeW/2,y2=b.y-3;if(skip){const lane=baseW+36+(lanes++)*(labelW+32);points=[{x:x1,y:y1},{x:x1,y:y1+gapY/3},{x:lane,y:y1+gapY/3},{x:lane,y:b.y-gapY/3},{x:x2,y:b.y-gapY/3},{x:x2,y:y2}];}else{const mid=(y1+b.y)/2;points=[{x:x1,y:y1},{x:x1,y:mid},{x:x2,y:mid},{x:x2,y:y2}];}}
+  else{const x1=a.x+nodeW,y1=a.y+nodeH/2,x2=b.x-3,y2=b.y+nodeH/2;if(skip){const lane=baseH+36+(lanes++)*(labelH+32);points=[{x:x1,y:y1},{x:x1+gapX/3,y:y1},{x:x1+gapX/3,y:lane},{x:b.x-gapX/3,y:lane},{x:b.x-gapX/3,y:y2},{x:x2,y:y2}];}else{const mid=(x1+b.x)/2;points=[{x:x1,y:y1},{x:mid,y:y1},{x:mid,y:y2},{x:x2,y:y2}];}}
+  return{...e,index,points:simplify(points),label:null};
+ });
+ const segments=edges.flatMap(e=>e.points.slice(1).map((b,i)=>({a:e.points[i],b}))),placed=[],notes=[];
+ let width=Math.max(baseW,...edges.flatMap(e=>e.points.map(p=>p.x+24))),height=Math.max(baseH,...edges.flatMap(e=>e.points.map(p=>p.y+24)));
+ function free(box){return box.x>=12&&box.y>=12&&!nodes.some(n=>intersects(box,n,8))&&!placed.some(b=>intersects(box,b,8))&&!segments.some(s=>segmentHitsBox(s.a,s.b,box,7));}
+ edges.forEach(e=>{const size=labels[e.index];if(!size)return;const runs=e.points.slice(1).map((b,i)=>({a:e.points[i],b})).sort((s,t)=>(Math.abs(t.b.x-t.a.x)+Math.abs(t.b.y-t.a.y))-(Math.abs(s.b.x-s.a.x)+Math.abs(s.b.y-s.a.y)));
+  for(const run of runs){for(const t of [.5,.25,.75,.15,.85]){const x=run.a.x+(run.b.x-run.a.x)*t,y=run.a.y+(run.b.y-run.a.y)*t;
+    const candidates=run.a.y===run.b.y?[{x:x-size.width/2,y:y-size.height-10},{x:x-size.width/2,y:y+10}]:[{x:x+10,y:y-size.height/2},{x:x-size.width-10,y:y-size.height/2}];
+    for(const p of candidates){const box={...size,...p};if(free(box)){e.label=box;placed.push(box);width=Math.max(width,box.x+box.width+24);height=Math.max(height,box.y+box.height+24);return;}}
+  }}
+  // A dense graph must never force text over a node/arrow. Preserve the exact
+  // branch wording in a keyed source→target note instead of drawing it on top.
+  notes.push(e);
+ });
+ for(const e of notes){
+  const value=positions.get(e.from).label+' → '+positions.get(e.to).label+'：'+model.edges[e.index].label,lines=flowLines(value,Math.min(80,Math.max(24,Math.floor((width-64)/7))));
+  const box={x:24,y:height+8,width:Math.max(...lines.map(s=>Math.max(measure(s),units(s)*7)))+16,height:lines.length*16+12,lines,note:true};e.label=box;placed.push(box);width=Math.max(width,box.x+box.width+24);height=box.y+box.height+16;
+ }
+ return{width,height,nodes,edges};
+}
+module.exports={layoutFlow,flowLines,intersects,segmentHitsBox};
+
+},
+"./interactive-model.cjs":(require,module,exports)=>{'use strict';
+const {compileExpression,evaluateExpression,FUNCTIONS,CONSTANTS}=require('./expression.cjs');
+const fail=error=>({error});
+const str=(v,max=240)=>typeof v==='string'&&v.trim()&&v.length<=max;
+const validId=v=>str(v,60)&&/^[A-Za-z][A-Za-z0-9_-]*$/.test(v)&&!['constructor','prototype','__proto__'].includes(v);
+const finite=v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<=1e9;
+function optionsOf(raw){if(!Array.isArray(raw)||raw.length<2||raw.length>10)return null;const ids=new Set(),out=[];for(const o of raw){if(!o||!validId(o.id)||ids.has(o.id)||!str(o.label,300))return null;ids.add(o.id);out.push({id:o.id,label:o.label});}return out;}
+function numericValue(raw,min,max,step){const n=typeof raw==='number'?raw:Number(raw);if(!Number.isFinite(n))return null;const v=min+Math.round((Math.max(min,Math.min(max,n))-min)/step)*step;return Math.max(min,Math.min(max,Number(v.toPrecision(15))));}
+function normalizeInteractive(data){
+ if(!data||typeof data!=='object'||Array.isArray(data))return fail('交互内容需要 JSON 对象');
+ if(!str(data.title,160))return fail('交互组件需要标题');
+ if(data.description!==undefined&&!str(data.description,600))return fail('组件说明无效');
+ const base={title:data.title,description:data.description||'',kind:data.type,version:1};
+ if(data.type==='quiz'){
+  if(!Array.isArray(data.questions)||!data.questions.length||data.questions.length>12)return fail('选择题需要 1–12 个问题');
+  const ids=new Set(),questions=[];
+  for(const q of data.questions){const options=optionsOf(q?.options);if(!q||!validId(q.id)||ids.has(q.id)||!str(q.prompt,600)||!options||q.multiple!==undefined&&typeof q.multiple!=='boolean')return fail('题目、选项或编号无效');ids.add(q.id);
+   if(q.correct!==undefined&&(!Array.isArray(q.correct)||!q.correct.length||q.correct.some(id=>!options.some(o=>o.id===id))||new Set(q.correct).size!==q.correct.length||!q.multiple&&q.correct.length!==1))return fail('正确答案必须引用有效选项，单选题只能有一个答案');
+   if(q.explanation!==undefined&&!str(q.explanation,1200))return fail('答案说明无效');
+   questions.push({id:q.id,prompt:q.prompt,options,multiple:q.multiple===true,correct:q.correct?[...q.correct]:null,explanation:q.explanation||''});
+  }return{...base,questions};
+ }
+ if(data.type==='form'){
+  if(!Array.isArray(data.fields)||!data.fields.length||data.fields.length>12)return fail('表单需要 1–12 项');
+  const ids=new Set(),fields=[];
+  for(const f of data.fields){if(!f||!validId(f.id)||ids.has(f.id)||!str(f.label,240)||!['text','number','select','multiselect'].includes(f.type)||f.required!==undefined&&typeof f.required!=='boolean')return fail('表单字段无效');ids.add(f.id);const item={id:f.id,label:f.label,type:f.type,required:f.required===true};
+   if(f.type==='select'||f.type==='multiselect'){item.options=optionsOf(f.options);if(!item.options)return fail('表单选项无效');}
+   if(f.type==='number'){if(!finite(f.min)||!finite(f.max)||f.min>=f.max||f.step!==undefined&&(!finite(f.step)||f.step<=0))return fail('数值字段需要有效的范围');item.min=f.min;item.max=f.max;item.step=f.step||1;}
+   if(f.type==='text')item.maxLength=800;
+   fields.push(item);
+  }return{...base,fields};
+ }
+ if(data.type==='explorer'){
+  if(!Array.isArray(data.parameters)||!data.parameters.length||data.parameters.length>6)return fail('参数图需要 1–6 个参数');
+  const ids=new Set(['x',...Object.keys(FUNCTIONS),...Object.keys(CONSTANTS)]),parameters=[];
+  for(const p of data.parameters){if(!p||!validId(p.id)||p.id.includes('-')||ids.has(p.id)||!str(p.label,100)||!finite(p.min)||!finite(p.max)||p.min>=p.max||!finite(p.step)||p.step<=0||p.step<(p.max-p.min)/100000||!finite(p.value)||p.value<p.min||p.value>p.max||p.unit!==undefined&&!str(p.unit,24))return fail('参数的名称、默认值、范围或步长无效');ids.add(p.id);parameters.push({id:p.id,label:p.label,min:p.min,max:p.max,step:p.step,value:numericValue(p.value,p.min,p.max,p.step),unit:p.unit||''});}
+  const x=data.x;if(!x||!finite(x.min)||!finite(x.max)||x.min>=x.max||Math.abs(x.min)>1e6||Math.abs(x.max)>1e6||x.label!==undefined&&!str(x.label,80)||x.points!==undefined&&(!Number.isInteger(x.points)||x.points<40||x.points>400))return fail('横轴需要有效范围和 40–400 个采样点');
+  if(data.unit!==undefined&&!str(data.unit,32))return fail('纵轴单位无效');
+  if(!Array.isArray(data.series)||!data.series.length||data.series.length>4)return fail('需要 1–4 条曲线');
+  if(data.metrics!==undefined&&(!Array.isArray(data.metrics)||data.metrics.length>6))return fail('最多提供 6 个计算结果');
+  const vars=parameters.map(p=>p.id);
+  try{
+   const series=data.series.map(s=>{if(!s||!str(s.name,80))throw Error('曲线名称无效');return{name:s.name,expression:s.expression,tree:compileExpression(s.expression,['x',...vars])};});
+   const metrics=(data.metrics||[]).map(m=>{if(!m||!str(m.label,100)||m.unit!==undefined&&!str(m.unit,32))throw Error('计算结果标签无效');return{label:m.label,expression:m.expression,tree:compileExpression(m.expression,vars),unit:m.unit||''};});
+   return{...base,parameters,x:{min:x.min,max:x.max,label:x.label||'x',points:x.points||160},series,metrics,unit:data.unit||''};
+  }catch(e){return fail(e.message);}
+ }
+ return fail('不支持的交互组件类型');
+}
+function quizResult(model,selections){const answers=[],missing=[];let score=0,total=0;for(const q of model.questions){const selected=Array.isArray(selections[q.id])?[...new Set(selections[q.id])].filter(id=>q.options.some(o=>o.id===id)):[];if(!selected.length)missing.push(q.id);const correct=q.correct?selected.length===q.correct.length&&selected.every(id=>q.correct.includes(id)):null;if(q.correct){total++;if(correct)score++;}answers.push({id:q.id,prompt:q.prompt,selected,labels:selected.map(id=>q.options.find(o=>o.id===id).label),correct,explanation:q.explanation});}return{answers,missing,score,total};}
+function formResult(model,values){const result={},errors={};for(const f of model.fields){const v=values[f.id];if(f.type==='text'){const s=typeof v==='string'?v.trim().slice(0,f.maxLength):'';if(f.required&&!s)errors[f.id]='请填写这一项';result[f.id]=s;}
+ else if(f.type==='number'){if(v===''||v===undefined||v===null){if(f.required)errors[f.id]='请填写数值';result[f.id]=null;}else{const n=Number(v);if(!Number.isFinite(n)||n<f.min||n>f.max||Math.abs((n-f.min)/f.step-Math.round((n-f.min)/f.step))>1e-6)errors[f.id]=`请填写 ${f.min}–${f.max} 内符合步长的数值`;result[f.id]=Number.isFinite(n)?n:null;}}
+ else{const a=(f.type==='select'?[v]:Array.isArray(v)?v:[]).filter(id=>f.options.some(o=>o.id===id));if(f.required&&!a.length)errors[f.id]='请选择这一项';result[f.id]=f.type==='select'?(a[0]||''):a;}}
+ return{values:result,errors};}
+function explorerData(model,raw={}){const parameters={};for(const p of model.parameters)parameters[p.id]=numericValue(raw[p.id]??p.value,p.min,p.max,p.step)??p.value;
+ const xs=Array.from({length:model.x.points},(_,i)=>model.x.min+(model.x.max-model.x.min)*i/(model.x.points-1));
+ const series=model.series.map(s=>({name:s.name,expression:s.expression,values:xs.map(x=>evaluateExpression(s.tree,{...parameters,x}))}));
+ const metrics=model.metrics.map(m=>({label:m.label,unit:m.unit,value:evaluateExpression(m.tree,parameters)}));
+ return{parameters,x:xs,series,metrics};}
+module.exports={normalizeInteractive,numericValue,quizResult,formResult,explorerData};
+
+},
+"./interactive-state.cjs":(require,module,exports)=>{'use strict';
+const KEY='dsh.reply-beautify.interactions.v1',MAX_RECORDS=80,MAX_BYTES=280000,MAX_MEMORY_RECORDS=160,MAX_MEMORY_CHARS=560000;
+function fingerprint(s){let a=2166136261,b=3339675911;for(let i=0;i<s.length;i++){a=Math.imul(a^s.charCodeAt(i),16777619);b=Math.imul(b^s.charCodeAt(i),2246822519);}return(a>>>0).toString(16).padStart(8,'0')+(b>>>0).toString(16).padStart(8,'0');}
+function createInteractionState(storage){let records=Object.create(null),available=typeof storage?.getItem==='function'&&typeof storage?.setItem==='function',stamp=Date.now(),chars=0;const memory=new Map(),nodes=new WeakMap(),failed=new Set();let seq=0;
+ function markFailed(key){if(typeof key==='string'){failed.add(key);if(failed.size>MAX_MEMORY_RECORDS)failed.delete(failed.values().next().value);}return false;}
+ const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
+ try{const raw=storage?.getItem(KEY);if(raw&&raw.length<=300000){const parsed=JSON.parse(raw);if(parsed?.schema===1&&object(parsed.entries)){
+  const valid=Object.entries(parsed.entries).filter(([k,v])=>k.startsWith('p:')&&object(v)&&Number.isFinite(v.updated)&&object(v.state)).sort((a,b)=>b[1].updated-a[1].updated).slice(0,MAX_RECORDS);
+  records=Object.fromEntries(valid);for(const [,v]of valid)stamp=Math.max(stamp,v.updated);
+ }}}catch{available=false;}
+ function remember(key,text){if(memory.has(key)){chars-=memory.get(key).length;memory.delete(key);}memory.set(key,text);chars+=text.length;
+  while(memory.size>MAX_MEMORY_RECORDS||chars>MAX_MEMORY_CHARS){const first=memory.keys().next().value;chars-=memory.get(first).length;memory.delete(first);failed.delete(first);}
+ }
+ function keyFor(node,source){const session=node.closest('[data-dsh-rb-session]')?.getAttribute('data-dsh-rb-session'),row=node.closest('[data-chat-node-key]');const id=row?.getAttribute('data-chat-node-key');
+  if(session&&id){const blocks=[...row.querySelectorAll('.md-code-block,p')].filter(n=>!n.closest('[data-dsh-rb-owned]'));return'p:'+fingerprint(session+'\n'+id+'\n'+blocks.indexOf(node)+'\n'+source);}
+  if(!nodes.has(node))nodes.set(node,++seq);return'm:'+nodes.get(node)+':'+fingerprint(source);
+ }
+ return{keyFor,load(key){try{const cached=memory.get(key);if(cached){remember(key,cached);return JSON.parse(cached);}const value=records[key]?.state;return object(value)?JSON.parse(JSON.stringify(value)):{};}catch{return{};}},
+  save(key,state){let text;try{if(typeof key!=='string'||!object(state))return markFailed(key);text=JSON.stringify(state);if(text.length>MAX_BYTES)return markFailed(key);JSON.parse(text);}catch{return markFailed(key);}
+   remember(key,text);if(!key.startsWith('p:'))return false;
+   stamp=Math.max(stamp+1,Date.now());const next={...records,[key]:{updated:stamp,state:JSON.parse(text)}};
+   const sorted=Object.entries(next).sort((a,b)=>b[1].updated-a[1].updated).slice(0,MAX_RECORDS),proposal=Object.fromEntries(sorted);
+   try{let value=JSON.stringify({schema:1,entries:proposal});while(value.length>MAX_BYTES&&Object.keys(proposal).length>1){delete proposal[Object.keys(proposal).at(-1)];value=JSON.stringify({schema:1,entries:proposal});}if(value.length>MAX_BYTES)throw Error('state too large');storage.setItem(KEY,value);records=proposal;available=true;failed.delete(key);return true;}catch{available=false;return markFailed(key);}
+  },
+  persistent(key){if(!available||typeof key!=='string'||!key.startsWith('p:')||failed.has(key))return false;const cached=memory.get(key);return !cached||JSON.stringify(records[key]?.state)===cached;}
+ };
+}
+module.exports={KEY,fingerprint,createInteractionState};
+
+},
+"./interactive-view.cjs":(require,module,exports)=>{'use strict';
+const {el,svgEl,wrap}=require('./content-view.cjs');
+const {quizResult,formResult,explorerData,numericValue}=require('./interactive-model.cjs');
+const {TYPES:RICH_TYPES}=require('./rich-model.cjs');
+const {renderRich}=require('./rich-view.cjs');
+const {createScenarios}=require('./scenario-view.cjs');
+let unique=0;
+const format=v=>v===null?'未定义':v!==0&&(Math.abs(v)<1e-4||Math.abs(v)>=1e7)?v.toExponential(4):Number(v.toPrecision(6)).toLocaleString('zh-CN',{maximumFractionDigits:6});
+function renderInteractive(doc,model,{stateStore,stateKey}={}){
+ if(model.kind==='chart'||RICH_TYPES.includes(model.kind))return renderRich(doc,model,{stateStore,stateKey});
+ const view=doc.defaultView,host=el(doc,'div',{class:'dsh-rb-interactive','data-interactive-kind':model.kind});
+ let state=stateStore?.load(stateKey)||{},disposed=false,frame;
+ const note=el(doc,'p',{class:'dsh-rb-local-note'}),status=el(doc,'div',{class:'dsh-rb-interaction-status',role:'status','aria-live':'polite'});
+ function saved(){note.textContent=(stateStore?.persistent(stateKey)?'状态保存在本机。':'状态仅在本次页面保留。')+'结果可复制到对话继续讨论。';}
+ function persist(){stateStore?.save(stateKey,state);saved();}
+ function button(label,fn){const b=el(doc,'button',{type:'button',class:'dsh-rb-action'},label);b.addEventListener('click',fn);return b;}
+ async function copy(value){try{await view.navigator.clipboard.writeText(value);status.textContent='结果已复制，可粘贴到对话继续讨论';}catch{let area=host.querySelector('.dsh-rb-copy-fallback');if(!area){area=el(doc,'textarea',{class:'dsh-rb-copy-fallback',readonly:'','aria-label':'可复制的当前结果'});host.append(area);}area.value=value;area.focus();area.select();status.textContent='请复制选中的结果';}}
+ function options(fieldset,options,multiple,selected,onChange,name){const inputs=[];for(const option of options){const label=el(doc,'label',{class:'dsh-rb-option'}),input=el(doc,'input',{type:multiple?'checkbox':'radio',name,value:option.id});input.checked=selected.includes(option.id);input.addEventListener('change',()=>{const values=inputs.filter(i=>i.checked).map(i=>i.value);onChange(values);});inputs.push(input);label.append(input,el(doc,'span',{},option.label));fieldset.append(label);}return inputs;}
+ const actions=el(doc,'div',{class:'dsh-rb-interaction-actions'});
+ if(model.kind==='quiz'){
+  const selections={};for(const q of model.questions){const raw=state.selections?.[q.id];selections[q.id]=Array.isArray(raw)?raw.filter(id=>q.options.some(o=>o.id===id)).slice(0,q.multiple?10:1):[];}
+  state={selections,submitted:state.submitted===true};if(quizResult(model,selections).missing.length)state.submitted=false;const feedback=new Map(),fieldsets=new Map();
+  function resultText(){const r=quizResult(model,state.selections);return model.title+'\n'+r.answers.map(a=>a.prompt+'\n选择：'+(a.labels.join('、')||'未作答')+(state.submitted&&a.correct!==null?'\n核对：'+(a.correct?'正确':'需复习'):'')+(state.submitted&&a.explanation?'\n说明：'+a.explanation:'')).join('\n\n')+(state.submitted&&r.total?'\n得分：'+r.score+'/'+r.total:'');}
+  function showFeedback(){const r=quizResult(model,state.selections);for(const a of r.answers){const node=feedback.get(a.id);node.textContent=state.submitted?(a.correct===null?'已记录你的选择。':a.correct?'回答正确。':'这题还需要复习。')+(a.explanation?' '+a.explanation:''):'';node.dataset.verdict=a.correct===null?'recorded':a.correct?'correct':'incorrect';node.hidden=!state.submitted;}
+   if(state.submitted)status.textContent=r.total?`核对完成：${r.score} / ${r.total} 题正确`:'选择已在本地记录，可复制结果继续讨论';
+  }
+  for(const q of model.questions){const f=el(doc,'fieldset',{class:'dsh-rb-question'});f.append(el(doc,'legend',{},q.prompt));const group='dsh-rb-q-'+(++unique);options(f,q.options,q.multiple,state.selections[q.id],values=>{state.selections[q.id]=values;state.submitted=false;status.textContent='选择已更新，请核对答案';showFeedback();persist();},group);const msg=el(doc,'div',{class:'dsh-rb-answer-feedback',hidden:''});feedback.set(q.id,msg);fieldsets.set(q.id,f);f.append(msg);host.append(f);}
+  actions.append(button(model.questions.some(q=>q.correct)?'核对答案':'确认选择',()=>{const r=quizResult(model,state.selections);if(r.missing.length){status.textContent='请先完成所有问题';fieldsets.get(r.missing[0]).querySelector('input')?.focus();return;}state.submitted=true;showFeedback();persist();}),button('复制结果',()=>copy(resultText())),button('重新作答',()=>{state={selections:{},submitted:false};for(const q of model.questions)state.selections[q.id]=[];host.querySelectorAll('input').forEach(i=>i.checked=false);status.textContent='已清空本组件的作答';showFeedback();persist();}));
+  showFeedback();
+ }else if(model.kind==='form'){
+  const values={};for(const f of model.fields){const v=state.values?.[f.id];values[f.id]=f.type==='multiselect'?(Array.isArray(v)?v.filter(id=>f.options.some(o=>o.id===id)):[]):f.type==='select'?(f.options.some(o=>o.id===v)?v:''):f.type==='text'?(typeof v==='string'?v.slice(0,800):''):(typeof v==='number'||typeof v==='string'?v:'');}
+  state={values,submitted:state.submitted===true};const inputs=new Map(),errors=new Map(),summary=el(doc,'div',{class:'dsh-rb-form-summary',hidden:''});
+  function update(id,value){state.values[id]=value;state.submitted=false;summary.hidden=true;errors.get(id).textContent='';inputs.get(id)?.removeAttribute('aria-invalid');status.textContent='内容已更新，确认后可复制结果';persist();}
+  for(const f of model.fields){const field=el(doc,'fieldset',{class:'dsh-rb-question'});field.append(el(doc,'legend',{},f.label+(f.required?'（必填）':'')));const error=el(doc,'div',{class:'dsh-rb-field-error',id:'dsh-rb-error-'+(++unique)});errors.set(f.id,error);
+   if(f.type==='select'||f.type==='multiselect'){const a=options(field,f.options,f.type==='multiselect',f.type==='select'?[state.values[f.id]]:state.values[f.id],v=>update(f.id,f.type==='select'?(v[0]||''):v),'dsh-rb-field-'+unique);inputs.set(f.id,a[0]);a.forEach(i=>i.setAttribute('aria-describedby',error.id));}
+   else{const input=el(doc,f.type==='text'?'textarea':'input',{'aria-label':f.label,'aria-describedby':error.id,class:'dsh-rb-field-input'});if(f.type==='number'){input.type='number';input.min=f.min;input.max=f.max;input.step=f.step;}else input.maxLength=800;input.value=state.values[f.id];input.addEventListener('input',()=>update(f.id,input.value));inputs.set(f.id,input);field.append(input);}field.append(error);host.append(field);
+  }
+  function submit(){const r=formResult(model,state.values);for(const f of model.fields){errors.get(f.id).textContent=r.errors[f.id]||'';if(r.errors[f.id])inputs.get(f.id)?.setAttribute('aria-invalid','true');else inputs.get(f.id)?.removeAttribute('aria-invalid');}if(Object.keys(r.errors).length){status.textContent='请检查标记的项目';inputs.get(Object.keys(r.errors)[0])?.focus();return null;}state.submitted=true;summary.hidden=false;summary.textContent='信息已在本地整理完成。';status.textContent='可复制结果到对话，由 DeepSeek 继续处理';persist();return r;}
+  function text(){const r=formResult(model,state.values);return model.title+'\n'+model.fields.map(f=>{const value=r.values[f.id];const formatted=f.options?(Array.isArray(value)?value:[value]).map(id=>f.options.find(o=>o.id===id)?.label||'').filter(Boolean).join('、'):value===null?'':String(value);return f.label+'：'+(formatted||'未填写');}).join('\n');}
+  actions.append(button('确认填写',submit),button('复制结果',()=>{if(submit())copy(text());}),button('清空填写',()=>{state={values:Object.fromEntries(model.fields.map(f=>[f.id,f.type==='multiselect'?[]:''])),submitted:false};host.querySelectorAll('input,textarea').forEach(i=>{if(i.type==='radio'||i.type==='checkbox')i.checked=false;else i.value='';i.removeAttribute('aria-invalid');});errors.forEach(e=>e.textContent='');summary.hidden=true;status.textContent='已清空本组件的填写';persist();}));host.append(summary);
+  if(state.submitted&&Object.keys(formResult(model,state.values).errors).length===0){summary.hidden=false;summary.textContent='已恢复上次在本地确认的信息。';}
+ }else if(model.kind==='explorer'){
+  state={parameters:explorerData(model,state.parameters).parameters,snapshots:state.snapshots,scenarioCurve:state.scenarioCurve};const controls=el(doc,'div',{class:'dsh-rb-parameters'}),metrics=el(doc,'div',{class:'dsh-rb-metrics'}),chart=el(doc,'div',{class:'dsh-rb-live-chart'}),dataPanel=el(doc,'div',{class:'dsh-rb-explorer-data'}),mapping=new Map();let current;
+  const scenarios=createScenarios(doc,model,state,{plot:renderNumericPlot,onRestore:parameters=>{state.parameters=parameters;recompute();},copy,save:persist,button});
+  function recompute(){if(disposed)return;current=explorerData(model,state.parameters);state.parameters=current.parameters;for(const [id,{range,number,value,p}] of mapping){range.value=number.value=current.parameters[id];value.textContent=format(current.parameters[id])+(p.unit?' '+p.unit:'');}metrics.replaceChildren(...current.metrics.map(m=>{const item=el(doc,'div',{class:'dsh-rb-metric'});item.append(el(doc,'span',{},m.label),el(doc,'strong',{},format(m.value)+(m.unit?' '+m.unit:'')));return item;}));
+   // Data belongs below the whole composition, never inside the chart column.
+   const open=dataPanel.querySelector('details')?.open,drawing=renderNumericPlot(doc,model,current),details=drawing.querySelector('details');
+   details.open=Boolean(open);dataPanel.replaceChildren(details);chart.replaceChildren(drawing);
+   scenarios.update();const missing=current.series.reduce((s,v)=>s+v.values.filter(n=>n===null).length,0);status.textContent=missing?`${missing} 个采样值未定义，曲线在这些位置断开。`:'';persist();}
+  function schedule(){if(frame)view.cancelAnimationFrame(frame);frame=view.requestAnimationFrame(()=>{frame=null;recompute();});}
+  for(const p of model.parameters){const item=el(doc,'div',{class:'dsh-rb-parameter'}),label=el(doc,'label',{for:'dsh-rb-param-'+(++unique)},p.label),value=el(doc,'output',{}),range=el(doc,'input',{type:'range',id:label.htmlFor,min:p.min,max:p.max,step:p.step,'aria-label':p.label}),number=el(doc,'input',{type:'number',min:p.min,max:p.max,step:p.step,'aria-label':p.label+'数值',class:'dsh-rb-number-input'});range.value=number.value=state.parameters[p.id];range.addEventListener('input',()=>{state.parameters[p.id]=Number(range.value);schedule();});number.addEventListener('change',()=>{const n=number.value.trim()?numericValue(number.value,p.min,p.max,p.step):null;if(n===null){status.textContent='请输入范围内的有限数值';number.value=state.parameters[p.id];return;}state.parameters[p.id]=n;schedule();});mapping.set(p.id,{p,range,number,value});const heading=el(doc,'div',{class:'dsh-rb-parameter-heading'});heading.append(label,value);item.append(heading,range,number);controls.append(item);}
+  actions.append(button('恢复参数',()=>{state.parameters=Object.fromEntries(model.parameters.map(p=>[p.id,p.value]));recompute();}),button('复制当前结果',()=>{current=explorerData(model,state.parameters);copy(JSON.stringify({title:model.title,parameters:current.parameters,metrics:current.metrics,x:current.x,series:current.series.map(s=>({name:s.name,values:s.values})),unit:model.unit},null,2));}));
+  const explorer=el(doc,'div',{class:'dsh-rb-explorer-body'}),layout=el(doc,'div',{class:'dsh-rb-explorer-layout','data-has-metrics':String(model.metrics.length>0)});
+  metrics.setAttribute('role','group');metrics.setAttribute('aria-label','当前指标');metrics.hidden=model.metrics.length===0;
+  layout.append(chart,metrics);explorer.append(layout,dataPanel);host.append(controls,explorer,scenarios.node);recompute();
+ }
+ host.append(actions,status,note);saved();
+ return{node:host,cleanup(){disposed=true;if(frame)view.cancelAnimationFrame(frame);stateStore?.save(stateKey,state);}};
+}
+
+function renderNumericPlot(doc,model,data){
+ const width=640,left=70,right=24,top=28,height=336,bottom=76,pw=width-left-right,ph=height-top-bottom;
+ const values=data.series.flatMap(s=>s.values).filter(v=>v!==null),min=Math.min(0,...values),rawMax=Math.max(0,...values),max=rawMax===min?min+1:rawMax;
+ const scale=Math.max(Math.abs(min),Math.abs(max),1e-300),low=min/scale,high=max/scale;
+ const x=v=>left+(v-model.x.min)/(model.x.max-model.x.min)*pw,y=v=>top+(high-v/scale)/(high-low)*ph;
+ const svg=svgEl(doc,'svg',{viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-label':model.title,class:'dsh-rb-svg dsh-rb-numeric-plot'});svg.append(svgEl(doc,'title',{},model.title));
+ for(let i=0;i<=4;i++){const v=(low+(high-low)*i/4)*scale,py=y(v);svg.append(svgEl(doc,'line',{x1:left,y1:py,x2:width-right,y2:py,class:'dsh-rb-gridline'}));const t=svgEl(doc,'text',{x:left-9,y:py+4,'text-anchor':'end',class:'dsh-rb-axis-text'},format(v));svg.append(t);}
+ for(let i=0;i<=4;i++){const v=model.x.min+(model.x.max-model.x.min)*i/4;svg.append(svgEl(doc,'text',{x:x(v),y:top+ph+23,'text-anchor':'middle',class:'dsh-rb-axis-text'},format(v)));}
+ svg.append(svgEl(doc,'line',{x1:left,y1:y(0),x2:width-right,y2:y(0),class:'dsh-rb-zero-line'}));svg.append(svgEl(doc,'text',{x:left+pw/2,y:height-34,'text-anchor':'middle',class:'dsh-rb-axis-text'},model.x.label));if(model.unit)svg.append(svgEl(doc,'text',{x:left,y:16,class:'dsh-rb-axis-text'},model.unit));
+ data.series.forEach((s,index)=>{let segment=[];const flush=()=>{if(segment.length)svg.append(svgEl(doc,'polyline',{points:segment.join(' '),fill:'none',class:'dsh-rb-series-line','data-series':index}));segment=[];};s.values.forEach((v,i)=>{if(v===null){flush();return;}segment.push(x(data.x[i])+','+y(v));});flush();});
+ const ctx=doc.createElement('canvas').getContext('2d');if(ctx)ctx.font='12px Arial,"Microsoft YaHei",sans-serif';
+ const legendWidths=data.series.map(s=>Math.max(...wrap(s.name,24).map(l=>ctx?ctx.measureText(l).width:l.length*12))+20);
+ let legendY=height+12,row=[],sum=0,maxLines=1;
+ const legendRow=()=>{if(!row.length)return;let px=left+(pw-sum)/2;for(const {s,index,w} of row){svg.append(svgEl(doc,'rect',{x:px,y:legendY-8,width:12,height:8,rx:2,class:'dsh-rb-series-point','data-series':index}));const t=svgEl(doc,'text',{x:px+20,y:legendY,class:'dsh-rb-axis-text'});wrap(s.name,24).forEach((line,i)=>t.append(svgEl(doc,'tspan',{x:px+20,dy:i?16:0},line)));svg.append(t);px+=w+24;}legendY+=maxLines*16+16;row=[];sum=0;maxLines=1;};
+ data.series.forEach((s,index)=>{const w=legendWidths[index];if(sum+(row.length?24:0)+w>pw)legendRow();sum+=(row.length?24:0)+w;row.push({s,index,w});maxLines=Math.max(maxLines,wrap(s.name,24).length);});legendRow();svg.setAttribute('height',legendY+8);svg.setAttribute('viewBox',`0 0 ${width} ${legendY+8}`);
+ const root=el(doc,'div'),scroll=el(doc,'div',{class:'dsh-rb-plot-scroll',tabindex:'0','aria-label':'参数曲线，可横向滚动'});scroll.append(svg);root.append(scroll);
+ const details=el(doc,'details',{class:'dsh-rb-chart-data'});details.append(el(doc,'summary',{},'查看采样数据'));const table=el(doc,'table'),thead=el(doc,'thead'),head=el(doc,'tr');head.append(el(doc,'th',{},model.x.label));data.series.forEach(s=>head.append(el(doc,'th',{},s.name)));thead.append(head);table.append(thead);const body=el(doc,'tbody');
+ const stride=Math.max(1,Math.ceil(data.x.length/25));for(let i=0;i<data.x.length;i+=stride){const r=el(doc,'tr');r.append(el(doc,'td',{},format(data.x[i])));data.series.forEach(s=>r.append(el(doc,'td',{},format(s.values[i]))));body.append(r);}table.append(body);details.append(el(doc,'p',{},'下表为抽样展示；复制当前结果可获取全部采样点。'),table);root.append(details);return root;
+}
+module.exports={renderInteractive,renderNumericPlot};
+
+},
+"./rich-model.cjs":(require,module,exports)=>{'use strict';
+const {compileExpression,evaluateExpression,FUNCTIONS,CONSTANTS}=require('./expression.cjs');
+const TYPES=['table','calculator','compare','schedule','board','tree','steps','wizard','diff','sources','dashboard'];
+const own=(o,k)=>Object.hasOwn(o||{},k),txt=(v,n=240)=>typeof v==='string'&&v.trim().length>0&&v.length<=n;
+const num=v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<=1e12;
+const id=v=>txt(v,60)&&/^[A-Za-z][\w-]*$/.test(v)&&!['__proto__','constructor','prototype'].includes(v);
+const variable=v=>id(v)&&!v.includes('-')&&!own(FUNCTIONS,v)&&!own(CONSTANTS,v);
+function need(v,message){if(!v)throw Error(message);}
+function array(v,max,min=1){return Array.isArray(v)&&v.length>=min&&v.length<=max;}
+function unique(items){return new Set(items.map(i=>i.id)).size===items.length;}
+function date(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return null;const t=Date.parse(v+'T00:00:00Z');return Number.isFinite(t)&&new Date(t).toISOString().slice(0,10)===v?t:null;}
+function safeURL(v){try{const u=new URL(v);return ['https:','http:'].includes(u.protocol)&&!u.username&&!u.password?u.href:null;}catch{return null;}}
+function tableSpec(d){
+ need(array(d.columns,12)&&array(d.rows,200,0),'表格最多12列、200行');
+ const columns=d.columns.map(c=>{need(c&&variable(c.id)&&txt(c.label,100)&&['text','number',undefined].includes(c.type),'列名或类型无效');return{id:c.id,label:c.label,type:c.type||'text',editable:c.editable===true,expression:c.expression};});need(unique(columns),'列ID重复');
+ const inputs=columns.filter(c=>!c.expression);for(const c of columns)if(c.expression){need(c.type==='number'&&!c.editable,'公式列必须为只读数字列');c.tree=compileExpression(c.expression,inputs.filter(c=>c.type==='number').map(c=>c.id));}
+ const rows=d.rows.map(r=>{need(r&&id(r.id)&&r.values&&typeof r.values==='object'&&!Array.isArray(r.values),'行格式无效');const values={};for(const c of inputs){const v=r.values[c.id];need(c.type==='number'?num(v):typeof v==='string'&&v.length<=800,'单元格值无效');values[c.id]=v;}return{id:r.id,values};});need(unique(rows),'行ID重复');
+ let chart=null;if(d.chart){need(['bar','line'].includes(d.chart.type)&&columns.some(c=>c.id===d.chart.category)&&array(d.chart.series,4)&&d.chart.series.every(k=>columns.some(c=>c.id===k&&c.type==='number')),'联动图列无效');chart={type:d.chart.type,category:d.chart.category,series:d.chart.series};}
+ return{columns,rows,chart};
+}
+function normalizeRich(d){try{
+ need(d&&TYPES.includes(d.type)&&txt(d.title,160),'组件类型或标题无效');need(d.description===undefined||txt(d.description,600),'说明无效');const base={kind:d.type,title:d.title,description:d.description||''};
+ if(d.type==='table')return{...base,...tableSpec(d)};
+ if(d.type==='calculator'){
+  need(array(d.fields,12)&&array(d.results,12),'计算器需要1–12输入及结果');const fields=d.fields.map(f=>{need(f&&variable(f.id)&&txt(f.label,100)&&num(f.min)&&num(f.max)&&f.min<f.max&&num(f.value)&&f.value>=f.min&&f.value<=f.max&&(f.unit===undefined||txt(f.unit,32)),'计算输入无效');return{id:f.id,label:f.label,min:f.min,max:f.max,value:f.value,unit:f.unit||'',step:num(f.step)&&f.step>0?f.step:'any'};});need(unique(fields),'输入ID重复');const results=d.results.map(r=>{need(r&&txt(r.label,120)&&(r.unit===undefined||txt(r.unit,32)),'结果无效');return{label:r.label,expression:r.expression,tree:compileExpression(r.expression,fields.map(f=>f.id)),unit:r.unit||''};});return{...base,fields,results};
+ }
+ if(d.type==='compare'){
+  need(array(d.criteria,10)&&array(d.options,10,2),'比较需要1–10准则、2–10方案');const criteria=d.criteria.map(c=>{need(c&&id(c.id)&&txt(c.label,100)&&num(c.min)&&num(c.max)&&c.min<c.max&&num(c.weight)&&c.weight>=0&&c.weight<=10&&['higher','lower'].includes(c.prefer),'准则必须给出范围、方向和0–10权重');return{...c};});need(unique(criteria),'准则ID重复');
+  const options=d.options.map(o=>{need(o&&id(o.id)&&txt(o.label,100)&&(!o.summary||txt(o.summary,600))&&criteria.every(c=>num(o.scores?.[c.id])&&o.scores[c.id]>=c.min&&o.scores[c.id]<=c.max),'方案分值或说明无效');for(const k of ['pros','cons'])need(o[k]===undefined||array(o[k],8,0)&&o[k].every(s=>txt(s,240)),'优缺点无效');return{id:o.id,label:o.label,summary:o.summary||'',pros:o.pros||[],cons:o.cons||[],scores:Object.fromEntries(criteria.map(c=>[c.id,o.scores[c.id]]))};});need(unique(options),'方案ID重复');return{...base,criteria,options};
+ }
+ if(d.type==='schedule'){
+  need(array(d.items,80)&&['timeline','gantt','calendar',undefined].includes(d.view),'排期格式无效');const items=d.items.map(t=>{const start=date(t?.start),end=date(t?.end||t?.start);need(t&&id(t.id)&&txt(t.title,160)&&start!==null&&end!==null&&end>=start&&(!t.description||txt(t.description,600))&&(t.progress===undefined||num(t.progress)&&t.progress>=0&&t.progress<=100),'日期必须为有效YYYY-MM-DD，进度0–100');return{id:t.id,title:t.title,start:t.start,end:t.end||t.start,description:t.description||'',progress:t.progress??null,dependsOn:t.dependsOn||[]};});need(unique(items),'排期ID重复');need(items.every(t=>array(t.dependsOn,20,0)&&t.dependsOn.every(k=>k!==t.id&&items.some(i=>i.id===k))),'依赖引用无效');const min=Math.min(...items.map(i=>date(i.start))),max=Math.max(...items.map(i=>date(i.end)));need(max-min<=366*86400000,'一次排期跨度最多366天');const visiting=new Set(),done=new Set();function visit(k){need(!visiting.has(k),'排期依赖不能成环');if(done.has(k))return;visiting.add(k);items.find(i=>i.id===k).dependsOn.forEach(visit);visiting.delete(k);done.add(k);}items.forEach(i=>visit(i.id));return{...base,items,view:d.view||'timeline',min,max};
+ }
+ if(d.type==='board'){
+  need(array(d.columns,8)&&d.columns.every(c=>c&&id(c.id)&&txt(c.label,100))&&unique(d.columns)&&array(d.items,100,0),'看板列或项目无效');const items=d.items.map(i=>{need(i&&id(i.id)&&txt(i.label,240)&&d.columns.some(c=>c.id===i.column),'项目引用无效');return{id:i.id,label:i.label,column:i.column,done:i.done===true};});need(unique(items),'项目ID重复');return{...base,columns:d.columns.map(c=>({id:c.id,label:c.label})),items};
+ }
+ if(d.type==='tree'){
+  const ids=new Set();let count=0;function nodes(raw,depth){need(depth<=7&&array(raw,80,0),'层级最多7层、80节点');return raw.map(n=>{need(n&&id(n.id)&&!ids.has(n.id)&&txt(n.label,200)&&(!n.body||txt(n.body,4000))&&++count<=80,'节点格式无效或过多');ids.add(n.id);return{id:n.id,label:n.label,body:n.body||'',children:nodes(n.children||[],depth+1)};});}const result=nodes(d.nodes,0);need(result.length&&['tree','mindmap','accordion',undefined].includes(d.view),'树视图无效');return{...base,nodes:result,view:d.view||'tree'};
+ }
+ if(d.type==='steps'){
+  need(array(d.steps,40),'步骤需要1–40步');const scene=d.scene||d.steps.map(s=>({id:s.id,label:s.title}));need(array(scene,40)&&scene.every(n=>n&&id(n.id)&&txt(n.label,100))&&unique(scene),'场景节点无效');const steps=d.steps.map(s=>{need(s&&id(s.id)&&txt(s.title,160)&&txt(s.body,3000)&&(!s.active||array(s.active,40,0)&&s.active.every(k=>scene.some(n=>n.id===k))),'步骤无效');return{id:s.id,title:s.title,body:s.body,active:s.active||[s.id].filter(k=>scene.some(n=>n.id===k))};});need(unique(steps),'步骤ID重复');return{...base,steps,scene,interval:num(d.interval)?Math.max(700,Math.min(10000,d.interval)):1800};
+ }
+ if(d.type==='wizard'){
+  need(array(d.nodes,24),'向导最多24节点');const nodes=d.nodes.map(n=>{need(n&&id(n.id)&&txt(n.title,160)&&(!n.body||txt(n.body,2000)),'向导节点无效');let options=[];if(n.options){need(array(n.options,10,2)&&n.options.every(o=>o&&id(o.id)&&txt(o.label,200)&&id(o.next))&&unique(n.options),'向导选项无效');options=n.options.map(o=>({id:o.id,label:o.label,next:o.next}));}return{id:n.id,title:n.title,body:n.body||'',options};});need(unique(nodes)&&nodes.some(n=>n.id===d.start)&&nodes.every(n=>n.options.every(o=>nodes.some(t=>t.id===o.next))),'向导起点或引用无效');const visiting=new Set(),done=new Set();function visit(k){need(!visiting.has(k),'向导分支不能成环');if(done.has(k))return;visiting.add(k);nodes.find(n=>n.id===k).options.forEach(o=>visit(o.next));visiting.delete(k);done.add(k);}nodes.forEach(n=>visit(n.id));return{...base,nodes,start:d.start};
+ }
+ if(d.type==='diff'){
+  need(typeof d.before==='string'&&typeof d.after==='string'&&d.before.length<=12000&&d.after.length<=12000&&d.before.split('\n').length<=300&&d.after.split('\n').length<=300,'对照最多每侧12000字符、300行');need(d.notes===undefined||array(d.notes,30,0)&&d.notes.every(n=>n&&Number.isInteger(n.afterLine)&&n.afterLine>0&&n.afterLine<=d.after.split('\n').length&&txt(n.text,600)),'修订说明行号无效');return{...base,before:d.before,after:d.after,notes:d.notes||[]};
+ }
+ if(d.type==='sources'){
+  need(array(d.sources,30)&&array(d.claims,50),'来源或结论数量无效');const sources=d.sources.map(s=>{need(s&&id(s.id)&&txt(s.title,200)&&safeURL(s.url)&&(!s.excerpt||txt(s.excerpt,1600)),'来源需要有效http(s)链接，不支持凭据URL');return{id:s.id,title:s.title,url:safeURL(s.url),excerpt:s.excerpt||''};});need(unique(sources),'来源ID重复');const claims=d.claims.map(c=>{need(c&&id(c.id)&&txt(c.text,1600)&&array(c.sourceIds,30)&&c.sourceIds.every(k=>sources.some(s=>s.id===k)),'结论来源引用无效');return{id:c.id,text:c.text,sourceIds:[...new Set(c.sourceIds)]};});need(unique(claims),'结论ID重复');return{...base,sources,claims};
+ }
+ if(d.type==='dashboard'){
+  const data=tableSpec(d.data||{});need(array(d.views,8),'仪表盘需要1–8个视图');const views=d.views.map(v=>{need(v&&id(v.id)&&txt(v.title,160)&&['table','chart','metrics'].includes(v.kind),'视图类型无效');if(v.kind==='chart')need(['bar','line','pie','donut','stacked'].includes(v.chartType)&&data.columns.some(c=>c.id===v.category)&&array(v.series,4)&&v.series.every(k=>data.columns.some(c=>c.id===k&&c.type==='number'))&&(!['pie','donut'].includes(v.chartType)||v.series.length===1),'图表列无效');if(v.kind==='metrics')need(array(v.metrics,8)&&v.metrics.every(m=>m&&txt(m.label,100)&&['sum','mean','count'].includes(m.op)&&(m.op==='count'||data.columns.some(c=>c.id===m.column&&c.type==='number'))),'指标聚合无效');return{...v};});need(unique(views),'视图ID重复');need(!d.filterColumn||data.columns.some(c=>c.id===d.filterColumn),'筛选列无效');return{...base,data,views,filterColumn:d.filterColumn||null};
+ }
+ throw Error('不支持的组件');
+}catch(e){return{error:e.message};}}
+function tableRows(model,edits={}){return model.rows.map(r=>{const values={...r.values};for(const c of model.columns)if(c.editable&&own(edits[r.id],c.id)){const v=edits[r.id][c.id];if(c.type==='number'?num(v):typeof v==='string'&&v.length<=800)values[c.id]=v;}for(const c of model.columns)if(c.tree)values[c.id]=evaluateExpression(c.tree,values);return{id:r.id,values};});}
+function selectRows(rows,columns,{query='',sort='',descending=false,filterColumn='',filterValue=''}={}){const q=String(query).toLocaleLowerCase();let out=rows.filter(r=>(!q||columns.some(c=>String(r.values[c.id]??'').toLocaleLowerCase().includes(q)))&&(!filterColumn||filterValue===''||String(r.values[filterColumn])===filterValue));const col=columns.find(c=>c.id===sort);if(col)out=out.map((r,i)=>({r,i})).sort((a,b)=>{const x=a.r.values[sort],y=b.r.values[sort];const cmp=x===null?y===null?0:1:y===null?-1:col.type==='number'?x-y:String(x).localeCompare(String(y),'zh-CN',{numeric:true});return(descending?-cmp:cmp)||a.i-b.i;}).map(x=>x.r);return out;}
+function csvText(columns,rows){const cell=v=>{const s=typeof v==='string'&&/^(?:\s*[=+\-@＝＋－＠]|[\t\r\n])/.test(v)?"'"+v:String(v??'');return '"'+s.replace(/"/g,'""')+'"';};return '\ufeff'+[columns.map(c=>cell(c.label)).join(','),...rows.map(r=>columns.map(c=>cell(r.values[c.id])).join(','))].join('\r\n');}
+function compareScores(model,raw={}){raw=raw&&typeof raw==='object'?raw:{};const weights=Object.fromEntries(model.criteria.map(c=>[c.id,num(raw[c.id])?Math.max(0,Math.min(10,raw[c.id])):c.weight])),sum=Object.values(weights).reduce((a,b)=>a+b,0);return{weights,results:model.options.map(o=>({id:o.id,label:o.label,score:sum?100*model.criteria.reduce((s,c)=>{let v=(o.scores[c.id]-c.min)/(c.max-c.min);return s+weights[c.id]*(c.prefer==='lower'?1-v:v);},0)/sum:null})).sort((a,b)=>(b.score??0)-(a.score??0))};}
+function calculation(model,raw={}){const values={},errors={};for(const f of model.fields){const v=raw[f.id]??f.value,n=typeof v==='string'&&!v.trim()?NaN:Number(v);if(!Number.isFinite(n)||n<f.min||n>f.max)errors[f.id]=`请输入${f.min}–${f.max}内数值`;else values[f.id]=n;}return{values,errors,results:model.results.map(r=>({label:r.label,unit:r.unit,expression:r.expression,value:Object.keys(errors).length?null:evaluateExpression(r.tree,values)}))};}
+function aggregate(rows,metric){if(metric.op==='count')return rows.length;const values=rows.map(r=>r.values[metric.column]);if(values.some(v=>!num(v))||!values.length)return null;const sum=values.reduce((s,v)=>s+v,0);return Number.isFinite(sum)?metric.op==='mean'?sum/values.length:sum:null;}
+function diffLines(before,after){const a=before.split('\n'),b=after.split('\n'),dp=Array.from({length:a.length+1},()=>new Uint16Array(b.length+1));for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);let i=0,j=0;const out=[];while(i<a.length||j<b.length){if(i<a.length&&j<b.length&&a[i]===b[j]){out.push({type:'same',left:a[i],right:b[j],leftLine:++i,rightLine:++j});}else if(i<a.length&&(j===b.length||dp[i+1][j]>=dp[i][j+1]))out.push({type:'delete',left:a[i],leftLine:++i});else out.push({type:'add',right:b[j],rightLine:++j});}return out;}
+module.exports={TYPES,normalizeRich,tableRows,selectRows,csvText,compareScores,calculation,aggregate,diffLines,date,safeURL};
+
+},
+"./rich-view.cjs":(require,module,exports)=>{'use strict';
+const {el,svgEl,wrap,renderContent,exportSvg}=require('./content-view.cjs');
+const {tableRows,selectRows,csvText,compareScores,calculation,aggregate,diffLines,date}=require('./rich-model.cjs');
+const fmt=v=>v===null||v===undefined?'未定义':typeof v==='number'?(Number.isFinite(v)?Number(v.toPrecision(7)).toLocaleString('zh-CN',{maximumFractionDigits:8}):'未定义'):String(v);
+let sequence=0;
+function download(doc,text,name,type){const w=doc.defaultView,url=w.URL.createObjectURL(new w.Blob([text],{type})),a=el(doc,'a',{href:url,download:name});doc.body.append(a);a.click();a.remove();w.setTimeout(()=>w.URL.revokeObjectURL(url),1000);}
+function renderRich(doc,model,{stateStore,stateKey}={}){
+ const uid=++sequence,w=doc.defaultView,root=el(doc,'div',{class:'dsh-rb-rich','data-rich-kind':model.kind}),bar=el(doc,'div',{class:'dsh-rb-rich-bar'}),body=el(doc,'div',{class:'dsh-rb-rich-body'}),status=el(doc,'p',{class:'dsh-rb-interaction-status',role:'status','aria-live':'polite'}),note=el(doc,'p',{class:'dsh-rb-local-note'});
+ let state=stateStore?.load(stateKey)||{},cleanup=()=>{},disposed=false;const disposers=[];
+ const save=()=>{stateStore?.save(stateKey,state);note.textContent=(stateStore?.persistent(stateKey)?'状态保存在本机。':'状态仅在本次页面保留。')+'操作不会自动发送消息。';};
+ const button=(label,fn)=>{const b=el(doc,'button',{type:'button',class:'dsh-rb-action'},label);b.addEventListener('click',fn);return b;};
+ const input=(label,value,type='text')=>{const i=el(doc,'input',{type,'aria-label':label,class:'dsh-rb-field-input'});i.value=value??'';return i;};
+ const select=(label,choices,value,fn)=>{const s=el(doc,'select',{'aria-label':label,class:'dsh-rb-field-input'});choices.forEach(c=>s.append(el(doc,'option',{value:c.id},c.label)));s.value=value; s.addEventListener('change',()=>fn(s.value));return s;};
+ const copy=async value=>{try{await w.navigator.clipboard.writeText(typeof value==='string'?value:JSON.stringify(value,null,2));status.textContent='结果已复制，请自行粘贴发送';}catch{let area=root.querySelector('.dsh-rb-copy-fallback');if(!area){area=el(doc,'textarea',{class:'dsh-rb-copy-fallback',readonly:'','aria-label':'可复制的结果'});root.append(area);}area.value=typeof value==='string'?value:JSON.stringify(value,null,2);area.focus();area.select();status.textContent='请复制选中的结果';}};
+ const tabs=(values,current,fn)=>{const g=el(doc,'div',{class:'dsh-rb-rich-tabs',role:'group'});values.forEach(c=>{const b=button(c.label,()=>{g.querySelectorAll('button').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));fn(c.id);});b.setAttribute('aria-pressed',String(c.id===current));g.append(b);});return g;};
+ const labeled=(label,control)=>{const l=el(doc,'label',{class:'dsh-rb-rich-label'});l.append(el(doc,'span',{},label),control);return l;};
+ const message=s=>el(doc,'p',{class:'dsh-rb-rich-hint'},s);
+ const card=(title,text)=>{const c=el(doc,'section',{class:'dsh-rb-rich-card'});c.append(el(doc,'strong',{},title));if(text)c.append(el(doc,'p',{},text));return c;};
+ const dataTable=(columns,rows,{edit,onHover,onSelect}={})=>{
+  const scroll=el(doc,'div',{class:'dsh-rb-table-scroll'}),table=el(doc,'table',{class:'dsh-rb-data-table'}),head=el(doc,'thead'),tr=el(doc,'tr');
+  columns.forEach(c=>{const th=el(doc,'th',{scope:'col'});th.append(onSelect?button(c.label,()=>onSelect(c.id)):doc.createTextNode(c.label));tr.append(th);});head.append(tr);table.append(head);const tbody=el(doc,'tbody');
+  rows.forEach((r,index)=>{const row=el(doc,'tr',{'data-row-id':r.id});columns.forEach(c=>{const cell=el(doc,'td');if(edit&&c.editable&&!c.expression){const i=input(c.label+' · '+r.id,r.values[c.id],c.type==='number'?'number':'text');if(c.type==='number')i.step='any';i.addEventListener('change',()=>edit(r.id,c,i));cell.append(i);}else cell.textContent=fmt(r.values[c.id]);row.append(cell);});if(onHover){row.addEventListener('pointerenter',()=>onHover(index));row.addEventListener('focusin',()=>onHover(index));}tbody.append(row);});table.append(tbody);scroll.append(table);return scroll;
+ };
+ const fromRows=(spec,columns,rows,title)=>{
+  const category=columns.find(c=>c.id===spec.category);if(!rows.length)return message('筛选结果为空');if(rows.length>24)return message('联动图最多24行；请先筛选，表格和导出仍保留当前全部行。');
+  const chart={kind:'chart',chartType:spec.type||spec.chartType,title,unit:'',labels:rows.map(r=>String(r.values[category.id])),series:spec.series.map(k=>({name:columns.find(c=>c.id===k).label,values:rows.map(r=>r.values[k])}))};
+  if(chart.series.some(s=>s.values.some(v=>typeof v!=='number'||!Number.isFinite(v))))return message('存在未定义结果，图表暂不绘制。');
+  if(['pie','donut'].includes(chart.chartType)&&(chart.series.length!==1||chart.series[0].values.some(v=>v<0)||!chart.series[0].values.some(v=>v>0)))return message('比例图需要一组非负、总和大于零的数据。');
+  return chartDrawing(doc,chart);
+ };
+ root.append(bar,body,status,note);
+ if(model.kind==='chart'){
+  state.hidden=Array.isArray(state.hidden)?state.hidden.filter(n=>Number.isInteger(n)&&n>=0&&n<model.series.length):[];
+  state.from=Number.isInteger(state.from)?Math.max(0,Math.min(model.labels.length-1,state.from)):0;state.to=Number.isInteger(state.to)?Math.max(state.from,Math.min(model.labels.length-1,state.to)):model.labels.length-1;
+  const tooltip=el(doc,'p',{class:'dsh-rb-chart-readout',role:'status'});let tableNode,chartNode,dragStart=null,highlight=null;
+  function highlightAt(i){highlight=i;tooltip.textContent=model.labels[i]+'：'+model.series.map(s=>s.name+' '+fmt(s.values[i])+(model.unit?' '+model.unit:'')).join('；');if(tableNode)tableNode.querySelectorAll('tbody tr').forEach((r,j)=>r.toggleAttribute('data-highlight',j===i));if(chartNode)chartNode.querySelectorAll('[data-label-index]').forEach(n=>n.setAttribute('data-highlight',String(Number(n.getAttribute('data-label-index'))+state.from===i)));}
+  function draw(){
+   const choices=model.labels.map((s,i)=>({id:String(i),label:s})),rangeControls=el(doc,'div',{class:'dsh-rb-range-controls'}),seriesControls=el(doc,'div',{class:'dsh-rb-rich-tabs','aria-label':'图表系列',role:'group'});
+   rangeControls.append(labeled('起点',select('图表起点',choices,String(state.from),v=>{state.from=Number(v);state.to=Math.max(state.from,state.to);draw();save();})),labeled('终点',select('图表终点',choices,String(state.to),v=>{state.to=Number(v);state.from=Math.min(state.from,state.to);draw();save();})));
+   model.series.forEach((s,i)=>{const b=button(s.name,()=>{state.hidden=state.hidden.includes(i)?state.hidden.filter(x=>x!==i):[...state.hidden,i];draw();save();});b.setAttribute('aria-pressed',String(!state.hidden.includes(i)));seriesControls.append(b);});
+   bar.replaceChildren(rangeControls,seriesControls,button('恢复全图',()=>{state.from=0;state.to=model.labels.length-1;state.hidden=[];draw();save();}));
+   const selected=model.series.map((s,i)=>({...s,original:i})).filter(s=>!state.hidden.includes(s.original));
+   chartNode=selected.length?chartDrawing(doc,{...model,labels:model.labels.slice(state.from,state.to+1),series:selected.map(s=>({...s,values:s.values.slice(state.from,state.to+1)}))}):message('系列均已隐藏，请选择至少一组。');
+   chartNode.querySelectorAll('[data-series]').forEach(n=>{const s=selected[Number(n.getAttribute('data-series'))];if(s)n.setAttribute('data-series',s.original);});
+   chartNode.querySelectorAll('[data-label-index]').forEach(n=>{const pick=()=>highlightAt(Number(n.getAttribute('data-label-index'))+state.from);n.setAttribute('tabindex','0');n.addEventListener('pointerenter',pick);n.addEventListener('focus',pick);n.addEventListener('click',pick);});
+   const svg=chartNode.querySelector('svg');if(svg&&['bar','line','stacked'].includes(model.chartType)){
+    const position=e=>{const rect=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal;const x=(e.clientX-rect.left)/rect.width*vb.width;return Math.max(0,Math.min(state.to-state.from,Math.floor((x-76)/(vb.width-100)*(state.to-state.from+1))))+state.from;};
+    svg.addEventListener('pointerdown',e=>{if(e.button===0){dragStart=position(e);svg.setPointerCapture?.(e.pointerId);}});
+    svg.addEventListener('pointermove',e=>{if(dragStart!==null)tooltip.textContent='框选：'+model.labels[dragStart]+' → '+model.labels[position(e)];});
+    svg.addEventListener('pointerup',e=>{if(dragStart===null)return;const end=position(e),start=dragStart;dragStart=null;if(start!==end){state.from=Math.min(start,end);state.to=Math.max(start,end);draw();save();}});svg.addEventListener('pointercancel',()=>dragStart=null);
+   }
+   const cols=[{id:'label',label:'分类'},...model.series.map((s,i)=>({id:'s'+i,label:s.name+(model.unit?' ('+model.unit+')':'')}))],rows=model.labels.map((label,i)=>({id:'r'+i,values:{label,...Object.fromEntries(model.series.map((s,j)=>['s'+j,s.values[i]]))}}));
+   tableNode=dataTable(cols,rows,{onHover:highlightAt});const details=el(doc,'details',{class:'dsh-rb-chart-data'});details.open=state.dataOpen===true;details.addEventListener('toggle',()=>{if(details.isConnected){state.dataOpen=details.open;save();}});details.append(el(doc,'summary',{},'查看完整数据'),message('系列开关和框选只改变图形；表中保留原始全部数据。'),tableNode);body.replaceChildren(chartNode,tooltip,details);bar.append(button('导出当前SVG',()=>{const svg=chartNode.querySelector('svg');if(svg){exportSvg(svg);status.textContent='当前图形已导出';}else status.textContent='请先显示至少一组数据';}));if(highlight!==null)highlightAt(highlight);
+  }draw();
+ }else if(model.kind==='table'){
+  state.edits=state.edits&&typeof state.edits==='object'?state.edits:{};state.query=typeof state.query==='string'?state.query:'';state.hidden=Array.isArray(state.hidden)?state.hidden.filter(k=>model.columns.some(c=>c.id===k)):[];
+  const search=input('搜索表格',state.query,'search'),columnsPanel=el(doc,'details',{class:'dsh-rb-chart-data'});columnsPanel.append(el(doc,'summary',{},'显示列'));model.columns.forEach(c=>{const i=input('显示 '+c.label,'','checkbox');i.checked=!state.hidden.includes(c.id);i.addEventListener('change',()=>{if(!i.checked&&state.hidden.length===model.columns.length-1){i.checked=true;status.textContent='至少保留一列';return;}state.hidden=i.checked?state.hidden.filter(k=>k!==c.id):[...state.hidden,c.id];draw();save();});columnsPanel.append(labeled(c.label,i));});
+  let current=[];const count=message('');bar.append(search,button('导出当前CSV',()=>download(doc,csvText(model.columns.filter(c=>!state.hidden.includes(c.id)),current),'dsh-table.csv','text/csv;charset=utf-8')),button('复制当前表格',()=>copy(current)),button('恢复原始数据',()=>{state.edits={};draw();save();}),columnsPanel);
+  function draw(){current=selectRows(tableRows(model,state.edits),model.columns,state);count.textContent=`当前 ${current.length} / ${model.rows.length} 行；点击列名排序。`;const content=dataTable(model.columns.filter(c=>!state.hidden.includes(c.id)),current,{onSelect:k=>{state.descending=state.sort===k?!state.descending:false;state.sort=k;draw();save();},edit:(rid,c,i)=>{const v=c.type==='number'?(i.value.trim()?Number(i.value):NaN):i.value;if(c.type==='number'?!Number.isFinite(v)||Math.abs(v)>1e12:v.length>800){i.setAttribute('aria-invalid','true');status.textContent='该单元格值无效，未保存';return;}state.edits[rid]={...(state.edits[rid]||{}),[c.id]:v};draw();save();}});body.replaceChildren(count,content);if(model.chart)body.append(fromRows(model.chart,model.columns,current,model.title));}
+  search.addEventListener('input',()=>{state.query=search.value;draw();save();});draw();
+ }else if(model.kind==='calculator'){
+  state.values=state.values&&typeof state.values==='object'?state.values:{};const fields=el(doc,'div',{class:'dsh-rb-rich-grid'}),results=el(doc,'div',{class:'dsh-rb-rich-grid'}),inputs=new Map();
+  const draw=()=>{const r=calculation(model,state.values);inputs.forEach((i,k)=>i.setAttribute('aria-invalid',String(Boolean(r.errors[k]))));results.replaceChildren(...r.results.map(m=>{const c=card(m.label,fmt(m.value)+(m.unit?' '+m.unit:''));c.append(el(doc,'code',{},m.expression));return c;}));status.textContent=Object.values(r.errors).join('；');save();};
+  model.fields.forEach(f=>{const i=input(f.label,state.values[f.id]??f.value,'number');i.min=f.min;i.max=f.max;i.step=f.step;inputs.set(f.id,i);i.addEventListener('input',()=>{state.values[f.id]=i.value;draw();});fields.append(labeled(f.label+(f.unit?' ('+f.unit+')':''),i));});bar.append(button('恢复输入',()=>{state.values={};inputs.forEach((i,k)=>i.value=model.fields.find(f=>f.id===k).value);draw();}),button('复制计算结果',()=>copy(calculation(model,state.values))));body.append(fields,results);draw();
+ }else if(model.kind==='compare'){
+  const controls=el(doc,'div',{class:'dsh-rb-rich-grid'}),resultsArea=el(doc,'div');state.weights=compareScores(model,state.weights).weights;
+  body.append(controls,message('按给定范围归一化后加权；权重和评分依据来自原文，分数不是客观结论。'),resultsArea);
+  function draw(){const r=compareScores(model,state.weights);state.weights=r.weights;const grid=el(doc,'div',{class:'dsh-rb-rich-grid'});r.results.forEach((result,index)=>{const o=model.options.find(o=>o.id===result.id),c=card((index+1)+'. '+o.label,o.summary);c.append(el(doc,'strong',{},result.score===null?'权重全为0，无法评分':fmt(result.score)+' / 100'),el(doc,'progress',{max:100,value:result.score??0,'aria-label':o.label+'加权分'}));if(o.pros.length)c.append(message('优点：'+o.pros.join('；')));if(o.cons.length)c.append(message('不足：'+o.cons.join('；')));grid.append(c);});const rows=model.options.map(o=>({id:o.id,values:{option:o.label,...o.scores}}));resultsArea.replaceChildren(grid,dataTable([{id:'option',label:'方案'},...model.criteria],rows));save();}
+  model.criteria.forEach(c=>{const i=input(c.label+'权重',state.weights[c.id],'range'),value=el(doc,'output',{},fmt(state.weights[c.id]));i.min=0;i.max=10;i.step=.1;i.addEventListener('input',()=>{state.weights[c.id]=Number(i.value);value.textContent=i.value;draw();});const label=labeled(c.label,i);label.append(value);controls.append(label);});bar.append(button('恢复权重',()=>{state.weights={};state.weights=compareScores(model).weights;controls.querySelectorAll('input').forEach((i,j)=>{i.value=state.weights[model.criteria[j].id];i.nextElementSibling.textContent=fmt(Number(i.value));});draw();}),button('复制比较结果',()=>copy(compareScores(model,state.weights))));draw();
+ }else if(model.kind==='schedule'){
+  state.view=['timeline','gantt','calendar'].includes(state.view)?state.view:model.view;const first=new Date(model.min);let month=typeof state.month==='string'&&date(state.month+'-01')!==null?state.month:first.toISOString().slice(0,7);
+  const iso=t=>new Date(t).toISOString().slice(0,10);
+  function draw(){bar.replaceChildren(tabs(['timeline','gantt','calendar'].map(id=>({id,label:{timeline:'时间轴',gantt:'甘特图',calendar:'日历'}[id]})),state.view,v=>{state.view=v;draw();save();}),button('复制排期',()=>copy(model.items)));body.replaceChildren();const sorted=[...model.items].sort((a,b)=>a.start.localeCompare(b.start));
+   if(state.view==='timeline'){const list=el(doc,'ol',{class:'dsh-rb-timeline'});sorted.forEach(i=>{const li=el(doc,'li'),c=card(i.title,i.start+(i.end!==i.start?' → '+i.end:''));c.append(message(i.description));if(i.dependsOn.length)c.append(message('依赖：'+i.dependsOn.map(k=>model.items.find(t=>t.id===k).title).join('、')));if(i.progress!==null)c.append(el(doc,'progress',{value:i.progress,max:100,'aria-label':i.title+'进度'}),message(i.progress+'%'));li.append(c);list.append(li);});body.append(list);}
+   if(state.view==='gantt'){const scroll=el(doc,'div',{class:'dsh-rb-table-scroll'}),g=el(doc,'div',{class:'dsh-rb-gantt',style:'min-width:'+Math.max(620,(model.max-model.min)/86400000*12)+'px'});g.append(message(iso(model.min)+' — '+iso(model.max)+'（条形位置和长度按真实日期绘制，包含结束日）'));sorted.forEach(i=>{const r=el(doc,'div',{class:'dsh-rb-gantt-row'}),track=el(doc,'div',{class:'dsh-rb-gantt-track'}),start=(date(i.start)-model.min)/86400000,days=(date(i.end)-date(i.start))/86400000+1,total=(model.max-model.min)/86400000+1,b=el(doc,'div',{class:'dsh-rb-gantt-bar',title:i.title+' '+i.start+'–'+i.end,style:'left:'+(start/total*100)+'%;width:'+(days/total*100)+'%'});b.textContent=i.progress===null?'':i.progress+'%';track.append(b);r.append(el(doc,'span',{},i.title),track);g.append(r);if(i.dependsOn.length)g.append(message(i.title+' 依赖 '+i.dependsOn.map(k=>model.items.find(t=>t.id===k).title).join('、')));});scroll.append(g);body.append(scroll);}
+   if(state.view==='calendar'){const t=Date.parse(month+'-01T00:00:00Z'),d=new Date(t),grid=el(doc,'div',{class:'dsh-rb-calendar'});const move=n=>{const next=new Date(t);next.setUTCMonth(next.getUTCMonth()+n);if(next.getUTCFullYear()<1||next.getUTCFullYear()>9999)return;month=next.toISOString().slice(0,7);state.month=month;draw();save();};bar.append(button('上月',()=>move(-1)),el(doc,'strong',{},month),button('下月',()=>move(1)));['一','二','三','四','五','六','日'].forEach(s=>grid.append(el(doc,'strong',{},s)));const start=t-((d.getUTCDay()+6)%7)*86400000;for(let n=0;n<42;n++){const stamp=start+n*86400000,day=iso(stamp),cell=el(doc,'div',{class:'dsh-rb-calendar-day','data-muted':String(!day.startsWith(month))});cell.append(el(doc,'span',{},day.slice(-2)));model.items.filter(i=>day>=i.start&&day<=i.end).forEach(i=>cell.append(el(doc,'div',{class:'dsh-rb-calendar-event',title:i.description},i.title)));grid.append(cell);}const scroll=el(doc,'div',{class:'dsh-rb-table-scroll'});scroll.append(grid);body.append(scroll);}
+   save();
+  }draw();
+ }else if(model.kind==='board'){
+  state.items=state.items&&typeof state.items==='object'?state.items:{};state.view=['board','list'].includes(state.view)?state.view:'board';let dragging=null;
+  const items=()=>model.items.map(i=>{const s=state.items[i.id]||{};return{...i,column:model.columns.some(c=>c.id===s.column)?s.column:i.column,done:typeof s.done==='boolean'?s.done:i.done};});
+  const update=(id,patch)=>{state.items[id]={...(state.items[id]||{}),...patch};draw();save();};
+  function itemCard(i){const c=card(i.label);c.draggable=true;c.addEventListener('dragstart',e=>{dragging=i.id;e.dataTransfer?.setData('text/plain',i.id);});c.addEventListener('dragend',()=>dragging=null);const check=input('完成 '+i.label,'','checkbox');check.checked=i.done;check.addEventListener('change',()=>update(i.id,{done:check.checked}));c.append(labeled('已完成',check),select('移动 '+i.label,model.columns,i.column,v=>update(i.id,{column:v})));return c;}
+  function draw(){const list=items(),done=list.filter(i=>i.done).length;bar.replaceChildren(tabs([{id:'board',label:'看板'},{id:'list',label:'清单'}],state.view,v=>{state.view=v;draw();save();}),message(`${done} / ${list.length} 已完成`),button('复制进度',()=>copy(list)));body.replaceChildren(el(doc,'progress',{max:Math.max(1,list.length),value:done,'aria-label':'计划完成进度'}));if(state.view==='list')list.forEach(i=>body.append(itemCard(i)));else{const grid=el(doc,'div',{class:'dsh-rb-board'});model.columns.forEach(col=>{const section=card(col.label);section.addEventListener('dragover',e=>{if(dragging)e.preventDefault();});section.addEventListener('drop',e=>{if(dragging&&model.items.some(i=>i.id===dragging)){e.preventDefault();update(dragging,{column:col.id});dragging=null;}});list.filter(i=>i.column===col.id).forEach(i=>section.append(itemCard(i)));grid.append(section);});body.append(grid);}save();}draw();
+ }else if(model.kind==='tree'){
+  state.view=['tree','mindmap','accordion'].includes(state.view)?state.view:model.view;state.open=state.open&&typeof state.open==='object'?state.open:{};const query=input('搜索层级内容','','search');let expand=null;
+  const matches=(n,q)=>!q||(n.label+' '+n.body).toLocaleLowerCase().includes(q)||n.children.some(c=>matches(c,q));
+  function draw(){const q=query.value.toLocaleLowerCase();body.replaceChildren();body.className='dsh-rb-rich-body dsh-rb-outline-'+state.view;function branch(nodes){const ul=el(doc,'ul',{class:'dsh-rb-outline'});nodes.filter(n=>matches(n,q)).forEach(n=>{const li=el(doc,'li'),details=el(doc,'details',{class:'dsh-rb-outline-node'});details.open=q?true:expand??state.open[n.id]??true;details.append(el(doc,'summary',{},n.label));if(n.body)details.append(el(doc,'p',{},n.body));if(n.children.length)details.append(branch(n.children));details.addEventListener('toggle',()=>{if(!q&&details.isConnected){state.open[n.id]=details.open;save();}});li.append(details);ul.append(li);});return ul;}body.append(branch(model.nodes));expand=null;save();}
+  bar.append(query,tabs(['tree','mindmap','accordion'].map(id=>({id,label:{tree:'层级树',mindmap:'思维导图',accordion:'折叠阅读'}[id]})),state.view,v=>{state.view=v;draw();save();}),button('展开全部',()=>{expand=true;draw();}),button('折叠全部',()=>{expand=false;draw();}));query.addEventListener('input',draw);draw();
+ }else if(model.kind==='steps'){
+  state.index=Number.isInteger(state.index)?Math.max(0,Math.min(model.steps.length-1,state.index)):0;let timer=null;const stop=()=>{if(timer!==null)w.clearInterval(timer);timer=null;};
+  function draw(){const s=model.steps[state.index];bar.replaceChildren(button('上一步',()=>{stop();state.index=Math.max(0,state.index-1);draw();save();}),button(timer?'暂停':'播放',()=>{if(timer)stop();else{if(state.index===model.steps.length-1)state.index=0;timer=w.setInterval(()=>{if(disposed){stop();return;}if(state.index<model.steps.length-1)state.index++;if(state.index===model.steps.length-1)stop();draw();save();},model.interval);}draw();save();}),button('下一步',()=>{stop();state.index=Math.min(model.steps.length-1,state.index+1);draw();save();}),message((state.index+1)+' / '+model.steps.length));const scene=el(doc,'div',{class:'dsh-rb-step-scene'});model.scene.forEach(n=>scene.append(el(doc,'div',{class:'dsh-rb-rich-card','data-active':String(s.active.includes(n.id))},n.label)));const nav=el(doc,'div',{class:'dsh-rb-rich-tabs'});model.steps.forEach((s,i)=>{const b=button(s.title,()=>{stop();state.index=i;draw();save();});b.setAttribute('aria-pressed',String(i===state.index));nav.append(b);});body.replaceChildren(nav,scene,card(s.title,s.body));}cleanup=stop;draw();
+ }else if(model.kind==='wizard'){
+  state.answers=state.answers&&typeof state.answers==='object'?state.answers:{};let path=[model.start];if(Array.isArray(state.path)){for(const next of state.path.slice(1,24)){const prev=model.nodes.find(n=>n.id===path.at(-1));if(prev.options.some(o=>o.id===state.answers[prev.id]&&o.next===next))path.push(next);else break;}}
+  function draw(){state.path=[...path];const n=model.nodes.find(n=>n.id===path.at(-1));bar.replaceChildren(button('返回上一步',()=>{if(path.length>1)path.pop();draw();save();}),button('重新开始',()=>{path=[model.start];state.answers={};draw();save();}),button('复制当前路径',()=>copy(path.map(k=>{const n=model.nodes.find(n=>n.id===k);return{question:n.title,answer:n.options.find(o=>o.id===state.answers[k])?.label||n.body};}))));body.replaceChildren(card(n.title,n.body));if(n.options.length){const group=el(doc,'fieldset',{class:'dsh-rb-question'});group.append(el(doc,'legend',{},'请选择下一步'));n.options.forEach(o=>{const i=input(o.label,'','radio');i.name='dsh-rich-wizard-'+uid;i.checked=state.answers[n.id]===o.id;i.addEventListener('change',()=>{state.answers[n.id]=o.id;save();});group.append(labeled(o.label,i));});body.append(group,button('继续',()=>{const o=n.options.find(o=>o.id===state.answers[n.id]);if(!o){status.textContent='请先选择';return;}status.textContent='';path.push(o.next);draw();save();}));}else body.append(message('已到此分支的结束节点。'));save();}draw();
+ }else if(model.kind==='diff'){
+  state.unified=state.unified===true;state.onlyChanges=state.onlyChanges===true;const changes=diffLines(model.before,model.after);
+  function draw(){bar.replaceChildren(button(state.unified?'切换并排':'切换统一视图',()=>{state.unified=!state.unified;draw();save();}),button(state.onlyChanges?'显示全部行':'只看修改',()=>{state.onlyChanges=!state.onlyChanges;draw();save();}),button('复制修改后内容',()=>copy(model.after)));const rows=changes.filter(r=>!state.onlyChanges||r.type!=='same'),scroll=el(doc,'div',{class:'dsh-rb-table-scroll'}),table=el(doc,'table',{class:'dsh-rb-diff-table'});const head=el(doc,'tr');(state.unified?['变化','原行','新行','内容']:['修改前','修改后']).forEach(s=>head.append(el(doc,'th',{scope:'col'},s)));table.append(head);rows.forEach(r=>{const tr=el(doc,'tr',{'data-change':r.type});if(state.unified){[r.type==='add'?'+':r.type==='delete'?'−':'',r.leftLine||'',r.rightLine||'',r.type==='delete'?r.left:r.right].forEach(s=>tr.append(el(doc,'td',{},s)));}else{tr.append(el(doc,'td',{},r.leftLine?`${r.leftLine}  ${r.left}`:''),el(doc,'td',{},r.rightLine?`${r.rightLine}  ${r.right}`:''));}table.append(tr);});scroll.append(table);body.replaceChildren(scroll);model.notes.forEach(n=>body.append(message('新内容第'+n.afterLine+'行：'+n.text)));save();}draw();
+ }else if(model.kind==='sources'){
+  const search=input('搜索结论和来源','','search');state.selected=Array.isArray(state.selected)?state.selected.filter(k=>model.sources.some(s=>s.id===k)):[];
+  function draw(){const q=search.value.toLocaleLowerCase(),claims=el(doc,'div'),sources=el(doc,'div',{class:'dsh-rb-rich-grid'});model.sources.forEach(s=>{const c=card(s.title),a=el(doc,'a',{href:s.url,target:'_blank',rel:'noopener noreferrer'},s.url);c.id='dsh-source-'+uid+'-'+s.id;c.append(a);if(s.excerpt)c.append(el(doc,'blockquote',{},s.excerpt));const i=input('筛选来源 '+s.title,'','checkbox');i.checked=state.selected.includes(s.id);i.addEventListener('change',()=>{state.selected=i.checked?[...state.selected,s.id]:state.selected.filter(k=>k!==s.id);draw();save();});c.append(labeled('筛选引用此来源的结论',i));sources.append(c);});model.claims.filter(c=>(!state.selected.length||c.sourceIds.some(k=>state.selected.includes(k)))&&(!q||(c.text+' '+c.sourceIds.map(k=>{const s=model.sources.find(s=>s.id===k);return s.title+' '+s.excerpt;}).join(' ')).toLocaleLowerCase().includes(q))).forEach(c=>{const item=card(c.text);c.sourceIds.forEach(k=>item.append(button(model.sources.find(s=>s.id===k).title,()=>{const target=sources.querySelector('#dsh-source-'+uid+'-'+k);target?.scrollIntoView?.({block:'nearest'});target?.setAttribute('data-highlight','');})));claims.append(item);});body.replaceChildren(message('以下结论、来源和摘录来自回复原文；插件不联网核实。点击链接才会打开外部页面。'),claims,sources);save();}bar.append(search,button('复制来源与结论',()=>copy({claims:model.claims,sources:model.sources})));search.addEventListener('input',draw);draw();
+ }else if(model.kind==='dashboard'){
+  state.query=typeof state.query==='string'?state.query:'';state.filterValue=typeof state.filterValue==='string'?state.filterValue:'';state.active=model.views.some(v=>v.id===state.active)?state.active:'all';const search=input('筛选全部视图',state.query,'search');let current=[];
+  function draw(){current=selectRows(tableRows(model.data),model.data.columns,{query:state.query,filterColumn:model.filterColumn,filterValue:state.filterValue});const grid=el(doc,'div',{class:'dsh-rb-dashboard'});model.views.filter(v=>state.active==='all'||state.active===v.id).forEach(v=>{const section=card(v.title);if(v.kind==='table')section.append(dataTable(model.data.columns,current));if(v.kind==='chart')section.append(fromRows(v,model.data.columns,current,v.title));if(v.kind==='metrics'){const m=el(doc,'div',{class:'dsh-rb-rich-grid'});v.metrics.forEach(metric=>m.append(card(metric.label,fmt(aggregate(current,metric)))));section.append(m);}grid.append(section);});body.replaceChildren(message('当前共'+current.length+'行，所有视图共用此筛选结果。'),tabs([{id:'all',label:'全部视图'},...model.views.map(v=>({id:v.id,label:v.title}))],state.active,v=>{state.active=v;draw();save();}),grid);save();}
+  bar.append(search);if(model.filterColumn){const values=[...new Set(tableRows(model.data).map(r=>String(r.values[model.filterColumn])))];bar.append(select('分类筛选',[{id:'',label:'全部分类'},...values.map(s=>({id:s,label:s}))],state.filterValue,v=>{state.filterValue=v;draw();}));}bar.append(button('导出当前CSV',()=>download(doc,csvText(model.data.columns,current),'dsh-report.csv','text/csv;charset=utf-8')),button('复制当前数据',()=>copy(current)));search.addEventListener('input',()=>{state.query=search.value;draw();});draw();
+ }
+ save();return{node:root,cleanup(){disposed=true;cleanup();disposers.forEach(fn=>fn());stateStore?.save(stateKey,state);}};
+}
+function chartDrawing(doc,model){
+ if(['bar','line'].includes(model.chartType)){const node=renderContent(doc,model).node;node.querySelector('details')?.remove();return node;}
+ const root=el(doc,'div',{class:'dsh-rb-custom-chart'}),svg=svgEl(doc,'svg',{viewBox:'0 0 640 400',width:640,height:400,class:'dsh-rb-svg',role:'img','aria-label':model.title||'数据图表'});svg.append(svgEl(doc,'title',{},model.title||'数据图表'));root.append(svg);
+ const valueTitle=(shape,label,series,value)=>{shape.append(svgEl(doc,'title',{},label+' · '+series+'：'+fmt(value)+(model.unit?' '+model.unit:'')));};
+ const categoryColor=i=>i<4?`var(--rb-series-${i})`:`hsl(${(i*137.508+10)%360} 48% 58%)`;
+ // Keep legends inside SVG so exported pie/stacked charts retain labels/colors.
+ const legendSVG=(entries,start)=>{let y=start;for(let i=0;i<entries.length;i+=2){let lines=1;entries.slice(i,i+2).forEach((entry,j)=>{const x=35+j*300,parts=wrap(entry.label,27);lines=Math.max(lines,parts.length);const swatch=svgEl(doc,'rect',{x,y:y-8,width:12,height:8,rx:2,fill:entry.color});if(entry.series!==undefined){swatch.setAttribute('class','dsh-rb-series-point');swatch.setAttribute('data-series',entry.series);}svg.append(swatch);const text=svgEl(doc,'text',{x:x+20,y,class:'dsh-rb-axis-text'});parts.forEach((p,k)=>text.append(svgEl(doc,'tspan',{x:x+20,dy:k?16:0},p)));svg.append(text);});y+=lines*16+14;}svg.setAttribute('viewBox',`0 0 640 ${y+10}`);svg.setAttribute('height',y+10);};
+ if(['pie','donut'].includes(model.chartType)){
+  const values=model.series[0].values,total=values.reduce((a,b)=>a+b,0);let angle=-Math.PI/2;const cx=320,cy=165,r=130;
+  values.forEach((v,i)=>{const delta=v/total*2*Math.PI,end=angle+delta;let shape;if(delta>=2*Math.PI-1e-10)shape=svgEl(doc,'circle',{cx,cy,r});else shape=svgEl(doc,'path',{d:`M ${cx} ${cy} L ${cx+r*Math.cos(angle)} ${cy+r*Math.sin(angle)} A ${r} ${r} 0 ${delta>Math.PI?1:0} 1 ${cx+r*Math.cos(end)} ${cy+r*Math.sin(end)} Z`});shape.setAttribute('class','dsh-rb-series-point');shape.style.setProperty('fill',categoryColor(i));shape.setAttribute('data-label-index',i);valueTitle(shape,model.labels[i],model.series[0].name,v);svg.append(shape);angle=end;});
+  if(model.chartType==='donut'){svg.append(svgEl(doc,'circle',{cx,cy,r:76,fill:'var(--rb-fill)'}));svg.append(svgEl(doc,'text',{x:cx,y:cy+5,'text-anchor':'middle',class:'dsh-rb-axis-text'},'合计 '+fmt(total)));}
+  legendSVG(model.labels.map((s,i)=>({label:s+' '+fmt(values[i])+' · '+fmt(values[i]/total*100)+'%',color:categoryColor(i)})),335);
+ }else if(model.chartType==='stacked'){
+  const pos=model.labels.map((_,i)=>model.series.reduce((s,v)=>s+Math.max(0,v.values[i]),0)),neg=model.labels.map((_,i)=>model.series.reduce((s,v)=>s+Math.min(0,v.values[i]),0)),min=Math.min(0,...neg),rawMax=Math.max(0,...pos),max=rawMax===min?min+1:rawMax,span=max-min,left=76,pw=540,top=30,ph=240,band=pw/model.labels.length,y=v=>top+(max-v)/span*ph;
+  for(let n=0;n<=4;n++){const v=min+span*n/4;svg.append(svgEl(doc,'line',{x1:left,x2:left+pw,y1:y(v),y2:y(v),class:'dsh-rb-gridline'}),svgEl(doc,'text',{x:left-8,y:y(v)+4,'text-anchor':'end',class:'dsh-rb-axis-text'},fmt(v)));}svg.append(svgEl(doc,'line',{x1:left,x2:left+pw,y1:y(0),y2:y(0),class:'dsh-rb-zero-line'}));const accP=model.labels.map(()=>0),accN=model.labels.map(()=>0);model.series.forEach((s,j)=>s.values.forEach((v,i)=>{const acc=v>=0?accP:accN,base=acc[i];acc[i]+=v;const shape=svgEl(doc,'rect',{x:left+band*i+band*.18,y:Math.min(y(base),y(acc[i])),width:band*.64,height:Math.abs(y(base)-y(acc[i])),class:'dsh-rb-series-point','data-series':j,'data-label-index':i});valueTitle(shape,model.labels[i],s.name,v);svg.append(shape);}));const chars=Math.max(4,Math.floor(band/7)),lineCount=Math.max(...model.labels.map(s=>wrap(s,chars).length));model.labels.forEach((s,i)=>{const tx=left+band*(i+.5),text=svgEl(doc,'text',{x:tx,y:295,'text-anchor':'middle',class:'dsh-rb-axis-text'});wrap(s,chars).forEach((line,j)=>text.append(svgEl(doc,'tspan',{x:tx,dy:j?16:0},line)));svg.append(text);});if(model.unit)svg.append(svgEl(doc,'text',{x:left,y:18,class:'dsh-rb-axis-text'},model.unit));legendSVG(model.series.map((s,i)=>({label:s.name,color:'var(--rb-series-'+i+')',series:i})),337+(lineCount-1)*16);
+ }return root;
+}
+module.exports={renderRich,chartDrawing,download};
+
+},
+"./scenario-view.cjs":(require,module,exports)=>{'use strict';
+const {el}=require('./content-view.cjs');
+const {explorerData}=require('./interactive-model.cjs');
+function createScenarios(doc,model,state,{plot,onRestore,copy,save,button}){
+ state.snapshots=(Array.isArray(state.snapshots)?state.snapshots:[]).slice(0,3).filter(s=>s&&typeof s.name==='string'&&s.name.length<=60&&s.parameters&&typeof s.parameters==='object').map((s,i)=>({id:'case'+i,name:s.name,parameters:explorerData(model,s.parameters).parameters}));
+ state.scenarioCurve=Number.isInteger(state.scenarioCurve)?Math.max(0,Math.min(model.series.length-1,state.scenarioCurve)):0;
+ const node=el(doc,'details',{class:'dsh-rb-scenarios'}),summary=el(doc,'summary',{},'情景快照与比较（最多3组）'),bar=el(doc,'div',{class:'dsh-rb-rich-bar'}),name=el(doc,'input',{class:'dsh-rb-field-input','aria-label':'情景名称',maxlength:60,placeholder:'例如：方案A'}),body=el(doc,'div'),status=el(doc,'p',{class:'dsh-rb-rich-hint',role:'status'});
+ const choose=el(doc,'select',{class:'dsh-rb-field-input','aria-label':'选择要比较的曲线'});model.series.forEach((s,i)=>choose.append(el(doc,'option',{value:i},s.name)));choose.value=state.scenarioCurve;choose.addEventListener('change',()=>{state.scenarioCurve=Number(choose.value);update();save();});
+ bar.append(name,button('保存当前情景',()=>{if(state.snapshots.length>=3){status.textContent='已保存3组，请先移除一组再保存。';return;}state.snapshots.push({id:'case'+Date.now(),name:name.value.trim()||'情景'+(state.snapshots.length+1),parameters:{...state.parameters}});name.value='';status.textContent='快照已保存在本机';update();save();}),choose,button('复制情景比较',()=>copy({title:model.title,current:explorerData(model,state.parameters),snapshots:state.snapshots.map(s=>({name:s.name,...explorerData(model,s.parameters)}))})));
+ node.append(summary,bar,status,body);
+ function update(){body.replaceChildren();if(!state.snapshots.length){body.append(el(doc,'p',{class:'dsh-rb-rich-hint'},'调整参数后保存，可将当前曲线与A/B/C情景叠加比较。'));return;}
+  const cards=el(doc,'div',{class:'dsh-rb-rich-grid'});state.snapshots.forEach(s=>{const c=el(doc,'section',{class:'dsh-rb-rich-card'});c.append(el(doc,'strong',{},s.name),el(doc,'p',{},model.parameters.map(p=>p.label+'='+s.parameters[p.id]+(p.unit?' '+p.unit:'')).join('；')),button('载入 '+s.name,()=>onRestore({...s.parameters})),button('移除 '+s.name,()=>{state.snapshots=state.snapshots.filter(i=>i!==s);update();save();}));cards.append(c);});
+  const current=explorerData(model,state.parameters),cases=state.snapshots.map(s=>({name:s.name,data:explorerData(model,s.parameters)}));
+  const series=[{...current.series[state.scenarioCurve],name:'当前：'+model.series[state.scenarioCurve].name},...cases.map(s=>({...s.data.series[state.scenarioCurve],name:s.name}))];
+  body.append(cards,el(doc,'p',{class:'dsh-rb-rich-hint'},'叠加比较：'+model.series[state.scenarioCurve].name+'；当前结果与快照使用同一横轴和纵轴。'),plot(doc,{...model,title:model.title+' · 情景比较'},{...current,series}));
+  if(model.metrics.length){const scroll=el(doc,'div',{class:'dsh-rb-table-scroll'}),table=el(doc,'table',{class:'dsh-rb-data-table'}),head=el(doc,'tr');head.append(el(doc,'th',{},'情景'));model.metrics.forEach(m=>head.append(el(doc,'th',{},m.label+(m.unit?' ('+m.unit+')':''))));table.append(head);[{name:'当前',data:current},...cases].forEach(c=>{const row=el(doc,'tr');row.append(el(doc,'th',{},c.name));c.data.metrics.forEach(m=>row.append(el(doc,'td',{},m.value===null?'未定义':String(Number(m.value.toPrecision(7))))));table.append(row);});scroll.append(table);body.append(scroll);}
+ }
+ return{node,update};
+}
+module.exports={createScenarios};
+
+}},cache={};function require(n){if(!cache[n]){cache[n]={exports:{}};factories[n](require,cache[n],cache[n].exports)}return cache[n].exports}const core=require('./core.cjs'),{parseContent}=require('./content-model.cjs'),{renderInteractive}=require('./interactive-view.cjs'),{createArtifactWorkspace}=require('./artifact-view.cjs');const preferences=core.createPreferences(null);function style(){document.getElementById('reply-css').textContent=core.replyCSS(preferences.getSnapshot().preferences);document.querySelectorAll('.dsh-rb-figure').forEach(n=>n.dataset.preset=preferences.getSnapshot().preferences.preset)}preferences.subscribe(style);style();document.getElementById('preset').onchange=e=>preferences.setPreset(e.target.value);document.getElementById('theme').onclick=()=>document.body.toggleAttribute('data-ds-dark-theme');const chart={"type":"bar","title":"预算与实际工时 · 示例数据","labels":["方案甲","方案乙","方案丙"],"series":[{"name":"预算","values":[12,18,9]},{"name":"实际","values":[10,20,8]}],"unit":"小时"},calc={"type":"calculator","title":"把答案变成可调整的计算","fields":[{"id":"hours","label":"投入工时","min":0,"max":100,"value":12,"unit":"h"},{"id":"rate","label":"每小时成本","min":0,"max":1000,"value":80,"unit":"元"}],"results":[{"label":"估算成本","expression":"hours*rate","unit":"元"}]},artifact={"type":"artifact","id":"public_counter","title":"隔离作品 · 点击计数","version":1,"html":"\u003ch2>一个本机小工具\u003c/h2>\u003cp>输入通过状态 API 恢复。\u003c/p>\u003cbutton id=\"increment\">点击 +1\u003c/button> \u003coutput id=\"count\">\u003c/output>\u003cscript>let n=Number(dshArtifact.getState().count)||0;const out=document.getElementById('count');out.textContent=n;document.getElementById('increment').onclick=()=>{out.textContent=++n;dshArtifact.setState({count:n})};\u003c/script>"};document.getElementById('source').textContent='```dsh-chart\n'+JSON.stringify(chart,null,2)+'\n```';for(const [lang,data]of [['dsh-chart',chart],['dsh-ui',calc]]){const figure=document.createElement('figure');figure.className='dsh-rb-figure';figure.dataset.preset='default';const caption=document.createElement('figcaption');caption.className='dsh-rb-title';caption.textContent=data.title;const viewport=document.createElement('div');viewport.className='dsh-rb-viewport';viewport.append(renderInteractive(document,parseContent(lang,JSON.stringify(data))).node);figure.append(caption,viewport);document.getElementById('target').append(figure)}const workspace=createArtifactWorkspace(document,preferences);const key=workspace.store.ingest('public-demo',parseContent('dsh-artifact',JSON.stringify(artifact)));workspace.mountSidebar(document.getElementById('artifact'),'public-demo');window.publicDemo={preferences,workspace};})();</script></html>

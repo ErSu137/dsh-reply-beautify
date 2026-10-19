@@ -37,7 +37,16 @@
     "docs/TESTING.md",
     "docs/COMMUNITY.md",
     "docs/demo/index.html",
-    "docs/demo/preview.png"
+    "docs/demo/preview.png",
+    "docs/demo/01-reading.png",
+    "docs/demo/02-chart.png",
+    "docs/demo/03-table.png",
+    "docs/demo/04-artifact.png",
+    "docs/demo/05-dsh-chart.png",
+    "docs/demo/06-dsh-curve.png",
+    "docs/demo/README.md",
+    "docs/demo/interactive.html",
+    "docs/demo/gallery.template.html"
   ],
   "dsh": {
     "bundle": {

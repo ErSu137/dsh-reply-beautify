@@ -4,7 +4,7 @@ const {chromium}=require('playwright');
 const fs=require('node:fs'),http=require('node:http'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..');
 (async()=>{
- const html=fs.readFileSync(path.join(root,'docs/demo/index.html'));
+ const html=fs.readFileSync(path.join(root,'docs/demo/interactive.html'));
  let probes=0;const server=http.createServer((req,res)=>{if(req.url.startsWith('/probe')){probes++;res.end('probe');return;}res.setHeader('Content-Type','text/html; charset=utf-8');res.end(html)});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  let browser;
@@ -25,7 +25,8 @@ const root=path.resolve(__dirname,'..');
   await page.selectOption('#preset','default');
   await page.getByRole('button',{name:'运行预览',exact:true}).click();
   await page.getByText('作品已就绪；状态仅在本次页面保留',{exact:true}).waitFor();
-  await page.screenshot({path:path.join(root,'docs/demo/preview.png'),fullPage:true});
+  fs.mkdirSync(path.join(root,'work'),{recursive:true});
+  await page.screenshot({path:path.join(root,'work/browser-smoke.png'),fullPage:true});
   await page.getByRole('button',{name:'停止预览',exact:true}).click();
   // Observe the real child protocol, rather than relying on a Playwright nested
   // OOPIF locator (some installed Chrome versions omit that nested frame event).

@@ -17,6 +17,7 @@ version = json.loads((root / 'package.json').read_text(encoding='utf-8'))['versi
 dist = root / 'dist'
 report = {'version': version, 'checks': []}
 manifest = json.loads((root / 'release-files.json').read_text(encoding='utf-8'))
+public_images = {'dsh-reply-beautify/docs/demo/04-artifact.png', 'dsh-reply-beautify/docs/demo/01-reading.png', 'dsh-reply-beautify/docs/demo/02-chart.png', 'dsh-reply-beautify/docs/demo/05-dsh-chart.png', 'dsh-reply-beautify/docs/demo/03-table.png', 'dsh-reply-beautify/docs/demo/preview.png', 'dsh-reply-beautify/docs/demo/06-dsh-curve.png'}
 def check(name, success):
     if not success:
         raise AssertionError(name)
@@ -35,7 +36,7 @@ with tarfile.open(dist / f'dsh-reply-beautify-{version}.tgz', 'r:gz') as archive
 with zipfile.ZipFile(dist / f'dsh-reply-beautify-{version}.zip') as archive:
     names = archive.namelist()
     check('source archive safe paths', all(safe(n) and n.startswith('dsh-reply-beautify/') for n in names))
-    check('source excludes work/profile/backups/git/screenshots', all(not any(p in {'work','backups','.git','.codex','evidence','node_modules'} for p in PurePosixPath(n).parts) and (Path(n).suffix.lower() not in {'.png','.jpg','.log'} or n == 'dsh-reply-beautify/docs/demo/preview.png') for n in names))
+    check('source excludes private work and unapproved images', all(not any(p in {'work','backups','.git','.codex','evidence','node_modules'} for p in PurePosixPath(n).parts) and (Path(n).suffix.lower() not in {'.png','.jpg','.log'} or n in public_images) for n in names))
     check('source matches explicit public inventory', set(names) == {'dsh-reply-beautify/' + n for n in manifest['source']})
     stage = root / 'work' / 'qa-stage6' / ('archive-' + uuid.uuid4().hex)
     stage.mkdir(parents=True)
@@ -62,9 +63,9 @@ if shell:
     check('extracted installer isolated tests pass', installed.returncode == 0)
 else:
     raise RuntimeError('pwsh is required for extracted installer checks')
-original_demo = (project / 'docs/demo/index.html').read_bytes()
+original_demo = {n:(project / 'docs/demo' / n).read_bytes() for n in ['index.html','interactive.html']}
 subprocess.run([args.node, 'scripts/build-demo.mjs'], cwd=project, check=True, capture_output=True)
-check('clean extracted demo builds identically', (project / 'docs/demo/index.html').read_bytes() == original_demo)
+check('clean extracted demo builds identically', {n:(project / 'docs/demo' / n).read_bytes() for n in original_demo} == original_demo)
 subprocess.run([shutil.which('python') or 'python', 'scripts/package.py'], cwd=project, check=True, capture_output=True)
 check('extracted source packages independently and identically', all((project / 'dist' / n).read_bytes() == (dist / n).read_bytes() for n in [f'dsh-reply-beautify-{version}.zip', f'dsh-reply-beautify-{version}.tgz']))
 report['extractedProject'] = str(project)
