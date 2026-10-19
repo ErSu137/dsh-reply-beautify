@@ -1,0 +1,27 @@
+name: Bug report / 问题反馈
+description: Use synthetic examples; do not share private chats, credentials or profile backups.
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 环境
+      description: Plugin and DSH versions, Windows version, theme/preset, scaling; install/update and DSH_HOME usage.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps and synthetic sample / 复现步骤与通用样例
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual / 预期与实际
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostic
+    attributes:
+      label: Redacted error / 脱敏错误信息
+      description: Remove personal paths, account details and conversations. Sensitive vulnerabilities belong in private reporting.

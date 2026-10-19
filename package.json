@@ -1,0 +1,83 @@
+{
+  "name": "dsh-reply-beautify",
+  "version": "0.6.0",
+  "description": "Unofficial DeepSeek Harness reply typography, interactive charts/tables and isolated HTML artifacts.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "install.ps1",
+    "tools/desktop-cli.mjs",
+    "tools/install-support.ps1",
+    "docs/第三阶段-输出格式.md",
+    "docs/第四阶段-输出格式.md",
+    "docs/高通用性功能-格式与限制.md",
+    "docs/高通用性功能-验收指南.md",
+    "docs/高通用性功能-验收样例.md",
+    "docs/第五阶段-作品格式.md",
+    "docs/第五阶段-验收指南.md",
+    "docs/第五阶段-固定样例.md",
+    "docs/第六阶段-验收指南.md",
+    "docs/第六阶段-检查报告.md",
+    "docs/安装更新与恢复.md",
+    "README.en.md",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md",
+    "CHANGELOG.md",
+    "docs/RELEASE_CHECKS.md",
+    "docs/TESTING.md",
+    "docs/COMMUNITY.md",
+    "docs/demo/index.html",
+    "docs/demo/preview.png"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ],
+      "immediately": true
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.cjs tests/*.test.mjs",
+    "demo": "node scripts/build-demo.mjs",
+    "package": "python scripts/package.py",
+    "verify:release": "python scripts/verify-release.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErSu137/dsh-reply-beautify.git"
+  },
+  "homepage": "https://github.com/ErSu137/dsh-reply-beautify",
+  "bugs": {
+    "url": "https://github.com/ErSu137/dsh-reply-beautify/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "typography",
+    "data-visualization",
+    "artifacts"
+  ],
+  "engines": {
+    "node": ">=22",
+    "dsh": "=0.2.1-rc.2"
+  }
+}
