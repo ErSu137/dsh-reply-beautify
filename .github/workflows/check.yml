@@ -21,6 +21,7 @@ jobs:
       - run: node scripts/build.mjs
       - run: node --test tests/*.test.cjs tests/*.test.mjs
       - run: ./tests/installer.test.ps1
+      - run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./tests/installer.test.ps1
       - run: node scripts/build-demo.mjs
       - run: python scripts/package.py
       - run: python scripts/verify-release.py

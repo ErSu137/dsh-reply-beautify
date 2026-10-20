@@ -8,6 +8,7 @@ import tarfile
 import zipfile
 import uuid
 import shutil
+import os
 
 root = Path(__file__).resolve().parent.parent
 args_parser = argparse.ArgumentParser()
@@ -63,6 +64,17 @@ if shell:
     installed = subprocess.run([shell, '-NoProfile', '-File', 'tests/installer.test.ps1'], cwd=project, capture_output=True, text=True, encoding='utf-8')
     (stage / 'installer-tests.txt').write_text(installed.stdout + installed.stderr, encoding='utf-8')
     check('extracted installer isolated tests pass', installed.returncode == 0)
+    windows_shell = shutil.which('powershell.exe')
+    if windows_shell:
+        legacy_env = dict(os.environ)
+        # Python bypasses pwsh's native-command cleanup of its PSModulePath.
+        # Let Windows PowerShell initialize its own Windows module locations.
+        for key in list(legacy_env):
+            if key.upper() == 'PSMODULEPATH':
+                del legacy_env[key]
+        legacy = subprocess.run([windows_shell, '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', 'tests/installer.test.ps1'], cwd=project, capture_output=True, env=legacy_env)
+        (stage / 'windows-powershell-tests.txt').write_bytes(legacy.stdout + legacy.stderr)
+        check('extracted Windows PowerShell installer tests pass', legacy.returncode == 0)
 else:
     raise RuntimeError('pwsh is required for extracted installer checks')
 original_demo = {n:(project / 'docs/demo' / n).read_bytes() for n in ['index.html','interactive.html']}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.5 — custom installation directories (2026-10-20)
+
+- Accept `-Installation` for check, install and uninstall; directory and full executable paths are supported without editing scripts.
+- When the default location is absent, inspect standard and registered locations; reject ambiguity and give an explicit path example.
+- Validate required application resources and DSH version before installation; preserve cleanup for identified DSH upgrades.
+- Read profile JSON as UTF-8 so Windows PowerShell 5.1 correctly recognizes installed links containing non-ASCII paths.
+- Add default/custom path, version and encoding regressions, including the actual public script and both Windows PowerShell 5.1 and PowerShell 7.
+
 ## 0.6.1 — chart fitting and zoom preview (2026-10-19)
 
 - Prefer supported visual components for trends, comparisons, structures and processes; distinguish justified numeric plots from labelled conceptual schematics. Model compliance is not guaranteed; missing data is never guessed.
