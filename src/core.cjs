@@ -74,21 +74,29 @@ function pageCSS(input) {
   // Native slot rendering can wrap the artwork; do not require a direct child.
   const wordmark = caption + ' svg';
   const alternateName = s.preset === 'chatgpt' || s.preset === 'claude';
+  const hero = 'body .Dc7zOa_root[data-phase="hero"] [data-conversation-content][data-content-phase="hero"]:not(.Dc7zOa_embeddedBody) .Hqq-bq_headline';
+  const brandFamily = s.preset === 'chatgpt' ? 'Arial,Helvetica,"Microsoft YaHei",sans-serif'
+    : s.preset === 'claude' ? 'Georgia,"Times New Roman","Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif' : PRESETS.default.family;
   return `
 ${s.preset === 'chatgpt' ? `body{--dsw-font-family:${PRESETS.chatgpt.family};font-family:${PRESETS.chatgpt.family}}` : ''}
 ${s.preset === 'claude' ? claudeAccentCSS() : ''}
-${sidebar}{--dsh-rb-brand-accent:${BRAND_COLORS[s.preset]}}
+${sidebar},${hero}{--dsh-rb-brand-accent:${BRAND_COLORS[s.preset]};--dsh-rb-brand-font:${brandFamily}}
 ${sidebar} :is(._2H3hWW_brandMark,._2H3hWW_railMark){color:var(--dsh-rb-brand-accent)}
+${hero}{color:var(--dsh-rb-brand-accent);font-family:var(--dsh-rb-brand-font);font-weight:${s.preset === 'chatgpt' ? 600 : 500}}
+${hero} :is(.Hqq-bq_fishHitbox,.Hqq-bq_fish,.Hqq-bq_titleGroup){color:inherit;font-family:inherit}
+${s.preset !== 'chatgpt' ? `${hero} .Hqq-bq_titleGroup>span:not(.Hqq-bq_previewBadge){color:var(--dsw-alias-label-primary)}` : ''}
+${hero} .Hqq-bq_previewBadge{color:var(--dsh-rb-brand-accent);font-family:var(--dsh-rb-brand-font);background:color-mix(in srgb,var(--dsh-rb-brand-accent) 12%,var(--dsw-alias-bg-layer-1));border-color:color-mix(in srgb,var(--dsh-rb-brand-accent) 28%,transparent)}
 ${wordmark}>path:nth-of-type(2){d:path("${CAPITAL_D_PATH}");fill-rule:evenodd}
 ${wordmark}>rect{fill:var(--dsh-rb-brand-accent)}
 ${wordmark}>g[clip-path="url(#dsh-wordmark-badge-clip)"] path{fill:#000}
 ${alternateName ? `
 ${caption}{position:relative}
 ${wordmark}>path{visibility:hidden}
-${caption}::before{content:"Deepseek";position:absolute;left:0;top:0;z-index:1;pointer-events:none;white-space:nowrap;font:${s.preset === 'chatgpt' ? '600 20px/24px Arial,Helvetica,sans-serif' : '500 22px/24px Georgia,"Times New Roman",serif'};letter-spacing:0;color:inherit}
+${caption}::before{content:"Deepseek";position:absolute;left:0;top:0;z-index:1;pointer-events:none;white-space:nowrap;font:${s.preset === 'chatgpt' ? '600 20px/24px' : '500 22px/24px'} var(--dsh-rb-brand-font);letter-spacing:0;color:inherit}
 ${wordmark}>rect,${wordmark}>g[clip-path="url(#dsh-wordmark-badge-clip)"]{transform:translateY(var(--dsh-rb-badge-shift,0px))}
 ` : ''}
-${s.preset === 'chatgpt' ? `body:not([data-ds-dark-theme]) ${sidebar} :is(._2H3hWW_brandMark,._2H3hWW_railMark),body:not([data-ds-dark-theme]) ${wordmark}>rect{filter:drop-shadow(0 0 .6px #000b)}` : ''}
+${s.preset === 'chatgpt' ? `body:not([data-ds-dark-theme]) ${sidebar},${hero.replace('body ', 'body:not([data-ds-dark-theme]) ')}{--dsh-rb-brand-accent:#202123}
+body:not([data-ds-dark-theme]) ${wordmark}>g[clip-path="url(#dsh-wordmark-badge-clip)"] path{fill:#fff}` : ''}
 `;
 }
 
